@@ -1,10 +1,18 @@
 package com.example.huaheejqc
 
+import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.huaheejqc.databinding.FragmentRegisterBinding
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +28,9 @@ class RegisterFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,8 +43,51 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        auth = Firebase.auth
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        val rootView = binding.root
+        binding.registerBtn.setOnClickListener { view: View ->
+            val email: String = binding.inputEmail.text.toString()
+            val password: String = binding.inputPassword.text.toString()
+            val confirmPW: String = binding.inputConfirmPassword.text.toString()
+            if (password != confirmPW) {
+                binding.statusText.text = "Password do not match.";
+                return@setOnClickListener
+            }
+
+            if(email.isEmpty()) {
+                binding.statusText.text = "Email cannot be empty";
+                return@setOnClickListener
+            }
+
+            if(password.isEmpty()) {
+                binding.statusText.text = "Password cannot be empty";
+                return@setOnClickListener
+            }
+
+            if(password.length < 6) {
+                binding.statusText.text = "Password length needs to be at least 6 character long";
+                return@setOnClickListener
+            }
+
+            Log.d("Debug", email)
+            Log.d("Debug", password)
+            Log.d("Debug", confirmPW)
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity as Activity) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val user = auth.currentUser
+                        binding.statusText.setTextColor(Color.parseColor("#00FF00"))
+                        binding.statusText.text = "Successfully Registered";
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.d("Debug", task.exception.toString())
+                        binding.statusText.text = "Fail to register";
+                    }
+                }
+        }
+        return rootView
     }
 
     companion object {
