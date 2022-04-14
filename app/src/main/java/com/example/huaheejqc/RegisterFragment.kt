@@ -83,7 +83,7 @@ class RegisterFragment : Fragment() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.d("Debug", task.exception.toString())
-                        binding.statusText.text = "Fail to register";
+                        binding.statusText.text = "Failed to register. Email had been registered before";
                     }
                 }
         }

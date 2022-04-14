@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
+            android:minHeight="48dp"
             android:text="" />
 
         <TextView
@@ -37,7 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -50,5 +52,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New User ?" />
+
+        <TextView
+            android:id="@+id/loginPageStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark" />
     </LinearLayout>
+
 </FrameLayout>
