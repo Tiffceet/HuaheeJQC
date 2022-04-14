@@ -13,16 +13,16 @@
         <include layout="@layout/component_back_header" />
 
         <ImageView
-            android:id="@+id/book_img"
+            android:id="@+id/addbook_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher_foreground" />
 
         <Button
-            android:id="@+id/pick_img"
+            android:id="@+id/addbook_img_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="ADD IMAGE"
             android:textAllCaps="false" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:text="Title" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/addbook_title_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -45,7 +45,7 @@
             android:text="Author" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/addbook_author_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -58,7 +58,7 @@
             android:text="Price" />
 
         <EditText
-            android:id="@+id/editTextNumberDecimal"
+            android:id="@+id/addbook_price_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -71,7 +71,7 @@
             android:text="Category" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/addbook_category_spin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/layoutPadding"
@@ -89,19 +89,25 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/not_posted"
+                android:id="@+id/addbook_not_posted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="Not Posted" />
 
             <RadioButton
-                android:id="@+id/posted"
+                android:id="@+id/addbook_posted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="Posted" />
 
         </RadioGroup>
+
+        <Button
+            android:id="@+id/addbook_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm" />
     </LinearLayout>
 </layout>
