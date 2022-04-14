@@ -13,16 +13,17 @@
         <include layout="@layout/component_back_header" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/book_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:src="@tools:sample/avatars" />
+            android:src="@drawable/ic_launcher_foreground" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/pick_img"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/textView"
