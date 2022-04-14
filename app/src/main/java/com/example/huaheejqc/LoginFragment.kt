@@ -66,6 +66,7 @@ class LoginFragment : Fragment() {
                         val user = auth.currentUser
                         binding.loginPageStatusText.setTextColor(Color.parseColor("#00FF00"))
                         binding.loginPageStatusText.text = "Login Successful"
+                        view.findNavController().navigate(R.id.action_loginFragment_to_mainMenu)
                     } else {
                         // If sign in fails, display a message to the user.
                         binding.loginPageStatusText.text = "Wrong email/password"
@@ -76,6 +77,7 @@ class LoginFragment : Fragment() {
         binding.btnRegister.setOnClickListener { view : View ->
             view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
+
         return view
     }
 
