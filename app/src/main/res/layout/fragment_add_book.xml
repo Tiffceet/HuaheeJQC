@@ -14,7 +14,10 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <include layout="@layout/component_back_header" />
+            <include
+                android:id="@+id/headerTitle"
+                layout="@layout/component_back_header"
+                app:headerTitle='@{"Add Book"}'/>
 
             <ImageView
                 android:id="@+id/addbook_img"
