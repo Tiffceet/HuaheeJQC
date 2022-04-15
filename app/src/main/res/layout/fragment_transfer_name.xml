@@ -15,33 +15,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
+            android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="Cash Out To:"
+            android:text="Transfer"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-        <Button
-            android:id="@+id/button_to_bank"
-            android:layout_marginStart="@dimen/layoutPadding"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:text="Bank Account"/>
-
-        <Button
-            android:id="@+id/button_to_other"
-            android:layout_toRightOf="@id/button_to_bank"
-            android:layout_marginStart="@dimen/layoutPadding"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:text="Bank Account"/>
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,28 +32,17 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="Enter your preferred amount"
+            android:layout_height="40dp"
+            android:text="Enter Target's Name"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/get_reload_number"
+            android:id="@+id/get_transfer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="text"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/layoutPadding">
 
-            <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="I have read, and agree to Principal's Terms &amp; Condition, the Prospections, the Product Highlight Sheet, and the Unit Trush Loan Financing Risk Disclosure Statement"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -81,11 +52,12 @@
         android:orientation="vertical">
 
         <Button
-            android:layout_width="130dp"
+            android:id="@+id/transfer_start"
+            android:layout_width="150dp"
             android:layout_height="60dp"
             android:padding="@dimen/layoutPadding"
             android:layout_gravity="center_vertical"
-            android:text="Reload"
+            android:text="Transfer"
             android:textSize="20sp"
             android:layout_marginStart="140dp"
             android:gravity="center_horizontal"/>
