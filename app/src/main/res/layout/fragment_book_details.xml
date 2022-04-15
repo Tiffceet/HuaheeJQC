@@ -20,29 +20,29 @@
                 app:headerTitle='@{"Book Details"}' />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/bookdetails_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher_foreground" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/bookdetails_bookname_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="Huahee Khaw Zhe Xue" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/bookdetails_price_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="RM 999.00"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/bookdetails_placeorder_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Place Order" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,24 +52,24 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/bookdetails_owner_imgbtn"
                     android:layout_width="10dp"
                     android:layout_height="60dp"
                     android:layout_weight="4"
                     android:src="@drawable/ic_launcher_foreground" />
 
                 <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/bookdetails_owner_txt"
+                    android:layout_width="160dp"
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/layoutPadding"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="TextView"
+                    android:text="Khaw Zhe Xue"
                     android:textSize="20sp" />
 
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/bookdetails_chat_imgbtn"
                     android:layout_width="10dp"
                     android:layout_height="60dp"
                     android:layout_weight="4"
@@ -78,11 +78,10 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layoutPadding"
-                android:text="TextView"
+                android:text="Description"
                 android:textSize="16sp" />
 
             <ScrollView
@@ -95,11 +94,11 @@
                     android:orientation="vertical" >
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/bookdetails_description_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/layoutPadding"
-                        android:text="TextView" />
+                        android:text="zhexue love his best friends" />
                 </LinearLayout>
             </ScrollView>
 
