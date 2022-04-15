@@ -31,6 +31,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/question_target_name"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Enter Target's Name"
@@ -42,7 +43,19 @@
             android:layout_height="wrap_content"
             android:inputType="text"/>
 
+        <TextView
+            android:layout_marginTop="40dp"
+            android:id="@+id/question_get_amount"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Enter your preferred amount"
+            android:textSize="20sp" />
 
+        <EditText
+            android:id="@+id/get_transfer_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
 
     </LinearLayout>
 
