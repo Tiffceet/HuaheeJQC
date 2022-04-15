@@ -58,8 +58,8 @@
                     android:id="@+id/reload_image"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@color/purple_200"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:src="@color/purple_200" />
 
                 <TextView
                     android:id="@+id/reload_title"
