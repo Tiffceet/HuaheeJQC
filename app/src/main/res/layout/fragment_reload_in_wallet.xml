@@ -20,6 +20,7 @@
             android:gravity="center_vertical"
             android:padding="10dp"
             android:text="Reload"
+            android:textColor="@color/black"
             android:textSize="25sp" />
 
     </LinearLayout>
@@ -49,16 +50,73 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp">
+                android:layout_height="80dp"
+                android:padding="@dimen/layoutPadding"
+                android:layout_weight="1">
 
                 <Button
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:padding="10dp" />
+                    android:id="@+id/reload_rm50"
+                    android:layout_width="115dp"
+                    android:layout_height="70dp"
+                    android:text="RM 50"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/reload_rm100"
+                    android:layout_width="115dp"
+                    android:layout_height="70dp"
+                    android:text="RM 100"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/reload_rm50"/>
+
+                <Button
+                    android:id="@+id/reload_rm150"
+                    android:layout_width="115dp"
+                    android:layout_height="70dp"
+                    android:text="RM 150"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/reload_rm100"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:padding="@dimen/layoutPadding"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/reload_rm200"
+                    android:layout_width="115dp"
+                    android:layout_height="70dp"
+                    android:text="RM 200"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/reload_rm250"
+                    android:layout_width="115dp"
+                    android:layout_height="70dp"
+                    android:text="RM 250"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/reload_rm200"/>
+
+                <Button
+                    android:id="@+id/reload_rm300"
+                    android:layout_width="115dp"
+                    android:layout_height="70dp"
+                    android:text="RM 300"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/reload_rm250"/>
+
             </RelativeLayout>
 
         </LinearLayout>
@@ -67,15 +125,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:orientation="vertical">
 
         <Button
             android:layout_width="130dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:padding="@dimen/layoutPadding"
             android:layout_gravity="center_vertical"
-            android:padding="10dp"
             android:text="Reload"
+            android:textSize="20sp"
             android:layout_marginStart="140dp"
             android:gravity="center_horizontal"/>
 
