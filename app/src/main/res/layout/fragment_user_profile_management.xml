@@ -18,7 +18,10 @@
             android:id="@+id/profile_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_centerInParent="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="132dp"
+            android:layout_marginTop="80dp"
             android:src="@color/white"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
@@ -121,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layoutPadding"
             android:padding="15dp"
             android:text="Edit" />
     </RelativeLayout>
@@ -186,6 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layoutPadding"
             android:padding="15dp"
             android:text="Edit" />
     </RelativeLayout>
@@ -197,9 +202,8 @@
         <Button
             android:layout_width="110dp"
             android:layout_height="70dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/layoutPadding"
             android:text="Chat"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
     </RelativeLayout>
 </LinearLayout>
