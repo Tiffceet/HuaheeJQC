@@ -1,12 +1,16 @@
 package com.example.huaheejqc
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.huaheejqc.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
@@ -24,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         if(true) {
             navController.navigate(R.id.action_mainMenu_to_loginFragment)
+            val navView = binding.navView
+            val nav_header: View = LayoutInflater.from(this).inflate(R.layout.nav_header, null)
+            (nav_header.findViewById(R.id.nav_header_content) as TextView).text = "dynamic content"
+            navView.addHeaderView(nav_header)
         }
 
     }
