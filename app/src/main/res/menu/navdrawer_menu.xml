@@ -11,4 +11,8 @@
     <item
         android:id="@+id/userProfileManagement"
         android:title="My Profile" />
+    <item
+        android:id="@+id/chatFragment"
+        android:title="Chat History" />
+
 </menu>

@@ -11,12 +11,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.huaheejqc.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         drawerLayout = binding.drawerLayout
 
@@ -26,12 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-        if(true) {
-            navController.navigate(R.id.action_mainMenu_to_loginFragment)
+        if(auth.currentUser != null) {
             val navView = binding.navView
             val nav_header: View = LayoutInflater.from(this).inflate(R.layout.nav_header, null)
             (nav_header.findViewById(R.id.nav_header_content) as TextView).text = "dynamic content"
             navView.addHeaderView(nav_header)
+        } else {
+            navController.navigate(R.id.action_mainMenu_to_loginFragment)
         }
 
     }
