@@ -10,18 +10,16 @@
     <RelativeLayout
         android:id="@+id/wallet_header_border"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="270dp"
         android:padding="10dp"
         android:background="@color/black">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="132dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="30dp"
             android:src="@color/white"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp" />
@@ -33,22 +31,17 @@
             android:layout_below="@id/profile_image"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:text="Khaw Zhe Xue"
-            android:layout_marginVertical="-90dp"
             android:textColor="@color/white"
             android:textSize="30dp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profile_name"
-            android:paddingTop="@dimen/layoutPadding">
 
             <TextView
                 android:id="@+id/profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="khawzx-pm19@gmail.com"
+                android:layout_below="@id/profile_name"
                 android:textColor="@color/white"
                 android:textSize="25dp" />
 
@@ -60,8 +53,6 @@
                 android:text="0195678987"
                 android:textColor="@color/white"
                 android:textSize="25dp" />
-
-        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -76,8 +67,8 @@
             android:layout_marginTop="5dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="269dp"
+                android:layout_height="78dp"
                 android:layout_marginVertical="10dp"
                 android:orientation="horizontal">
 
@@ -87,7 +78,7 @@
                     android:layout_marginStart="20dp"
                     android:src="@color/white"
                     app:civ_border_color="#FF000000"
-                    app:civ_border_width="6dp"/>
+                    app:civ_border_width="6dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -102,7 +93,7 @@
                         android:text="Order Details"
                         android:textColor="@color/black"
                         android:textSize="26sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -117,7 +108,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="-50dp">
+        android:layout_marginTop="-60dp">
 
         <Button
             android:id="@+id/button_to_order_details"
@@ -183,7 +174,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="-50dp">
+        android:layout_marginTop="-60dp">
 
         <Button
             android:id="@+id/go_to_preference"
