@@ -51,9 +51,13 @@ class ChatRecyclerViewAdapter(
         init {
             itemView.setOnClickListener {
                 Log.d("Debug", "Item clicked !")
-                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
+                val action =
+                    ChatFragmentDirections.actionChatFragmentToConversationFragment(chatId.text.toString())
+//                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
+                it.findNavController().navigate(action)
             }
         }
+
         override fun toString(): String {
             return super.toString() + " '" + chatTitle.text + "'"
         }

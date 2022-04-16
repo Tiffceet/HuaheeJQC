@@ -57,5 +57,9 @@
         android:id="@+id/conversationFragment"
         android:name="com.example.huaheejqc.chatpackage.ConversationFragment"
         android:label="fragment_conversation"
-        tools:layout="@layout/fragment_conversation" />
+        tools:layout="@layout/fragment_conversation" >
+        <argument
+            android:name="chatId"
+            app:argType="string" />
+    </fragment>
 </navigation>
