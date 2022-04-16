@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(binding.navView, navController)
 
+        if(true) {
+            navController.navigate(R.id.action_mainMenu_to_loginFragment)
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

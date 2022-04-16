@@ -63,14 +63,15 @@
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/searchPanel"
             tools:layout_editor_absoluteX="1dp">
+            <fragment
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/loginFragment"
+                android:name="com.example.huaheejqc.menu_showcase"
+                android:label="menu_showcase"
+                tools:layout="@layout/fragment_menu_showcase">
 
-            <include layout="@layout/component_menu_showcase" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="10dp" />
-
-            <include layout="@layout/component_menu_showcase" />
+            </fragment>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

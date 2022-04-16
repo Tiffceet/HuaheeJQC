@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/mainMenu">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.huaheejqc.LoginFragment"
@@ -27,5 +27,11 @@
         android:id="@+id/mainMenu"
         android:name="com.example.huaheejqc.MainMenu"
         android:label="Home"
-        tools:layout="@layout/fragment_main_menu" />
+        tools:layout="@layout/fragment_main_menu" >
+        <action
+            android:id="@+id/action_mainMenu_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/mainMenu"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
