@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.huaheejqc.R
 import com.example.huaheejqc.chatpackage.placeholder.PlaceholderContent
+import com.example.huaheejqc.data.Chat
 
 /**
  * A fragment representing a list of Items.
@@ -31,7 +32,13 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
-
+        val actual_data: MutableList<Chat> = ArrayList()
+        for (i in 1..100) {
+            actual_data.add(Chat("ID" + i.toString(), "Last Message", 100))
+        }
+        actual_data.add(Chat("ID2", "Last Message", 100))
+        actual_data.add(Chat("ID3", "Last Message", 100))
+        actual_data.add(Chat("ID4", "Last Message", 100))
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -39,7 +46,7 @@ class ChatFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ChatRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = ChatRecyclerViewAdapter(actual_data)
             }
         }
         return view
