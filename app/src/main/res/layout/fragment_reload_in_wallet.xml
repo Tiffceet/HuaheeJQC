@@ -43,10 +43,10 @@
             android:inputType="number" />
 
         <TextView
-            android:id="@+id/reload_get_amount_result"
+            android:id="@+id/ReloadPageStatusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:textColor="@android:color/holo_red_dark" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,10 +61,11 @@
 
                 <Button
                     android:id="@+id/reload_rm50"
+                    android:onClick="click_reload_rm50"
                     android:layout_width="115dp"
                     android:layout_height="70dp"
                     android:text="RM 50"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/reload_rm100"
@@ -129,6 +130,7 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/button_start_reload"
             android:layout_width="130dp"
             android:layout_height="60dp"
             android:padding="@dimen/layoutPadding"
