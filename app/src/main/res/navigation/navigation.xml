@@ -33,5 +33,12 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/mainMenu"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainMenu_to_userProfileManagement"
+            app:destination="@id/userProfileManagement" />
     </fragment>
+    <fragment
+        android:id="@+id/userProfileManagement"
+        android:name="com.example.huaheejqc.UserProfileManagement"
+        android:label="My Profile" />
 </navigation>
