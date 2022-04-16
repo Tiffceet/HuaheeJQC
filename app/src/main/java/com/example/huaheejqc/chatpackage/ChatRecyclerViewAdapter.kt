@@ -4,7 +4,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.huaheejqc.R
 import com.example.huaheejqc.chatpackage.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.huaheejqc.data.Chat
 import com.example.huaheejqc.databinding.FragmentChatTargetBinding
@@ -49,6 +51,7 @@ class ChatRecyclerViewAdapter(
         init {
             itemView.setOnClickListener {
                 Log.d("Debug", "Item clicked !")
+                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
             }
         }
         override fun toString(): String {

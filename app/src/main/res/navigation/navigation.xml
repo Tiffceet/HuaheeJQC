@@ -48,5 +48,14 @@
         android:id="@+id/chatFragment"
         android:name="com.example.huaheejqc.chatpackage.ChatFragment"
         android:label="Chats"
-        tools:layout="@layout/fragment_chat_list" />
+        tools:layout="@layout/fragment_chat_list" >
+        <action
+            android:id="@+id/action_chatFragment_to_conversationFragment"
+            app:destination="@id/conversationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/conversationFragment"
+        android:name="com.example.huaheejqc.chatpackage.ConversationFragment"
+        android:label="fragment_conversation"
+        tools:layout="@layout/fragment_conversation" />
 </navigation>
