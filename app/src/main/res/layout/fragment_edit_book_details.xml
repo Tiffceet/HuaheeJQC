@@ -108,32 +108,10 @@
                 android:minHeight="48dp"
                 android:padding="@dimen/layoutPadding" />
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Status" />
-
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/editbook_notposted_rdo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="Not Posted" />
-
-                <RadioButton
-                    android:id="@+id/editbook_posted_rad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Posted" />
-
-            </RadioGroup>
+                android:orientation="horizontal"/>
 
             <Button
                 android:id="@+id/editbook_confirm_btn"
