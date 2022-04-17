@@ -61,7 +61,6 @@
 
                 <Button
                     android:id="@+id/reload_rm50"
-                    android:onClick="click_reload_rm50"
                     android:layout_width="115dp"
                     android:layout_height="70dp"
                     android:text="RM 50"
@@ -104,10 +103,10 @@
                     android:id="@+id/reload_rm250"
                     android:layout_width="115dp"
                     android:layout_height="70dp"
-                    android:text="RM 250"
-                    android:textSize="20sp"
                     android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/reload_rm200"/>
+                    android:layout_toRightOf="@id/reload_rm200"
+                    android:text="RM 250"
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/reload_rm300"
