@@ -2,18 +2,14 @@ package com.example.huaheejqc.chatpackage
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.huaheejqc.R
-import com.example.huaheejqc.chatpackage.placeholder.PlaceholderContent
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.huaheejqc.data.Chat
 import com.example.huaheejqc.databinding.FragmentChatListBinding
-import com.example.huaheejqc.databinding.FragmentConversationBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,8 +18,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+
 
 /**
  * A fragment representing a list of Items.
@@ -72,7 +67,16 @@ class ChatFragment : Fragment() {
         // Set the adapter
         externalAdapter = ChatRecyclerViewAdapter(chatsArr)
         binding.chatListRecycleView.adapter = externalAdapter
-        binding.chatListRecycleView.layoutManager = LinearLayoutManager(context)
+        val externalLayoutManager = LinearLayoutManager(context)
+        binding.chatListRecycleView.layoutManager = externalLayoutManager
+        
+        // Set divider
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.chatListRecycleView.getContext(),
+            externalLayoutManager.orientation
+        )
+        binding.chatListRecycleView.addItemDecoration(dividerItemDecoration)
+
 
         return view
     }
