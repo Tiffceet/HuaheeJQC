@@ -105,9 +105,13 @@ class ChatFragment : Fragment() {
             val chatsRef = database.getReference("chats/$chatId")
             chatsRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
                     val vval = dataSnapshot.value
+                    if (vval == null) {
+                        return
+                    }
                     vval as HashMap<String, Any>
                     val inner_chatId = chatId
                     val lastMsg = vval["lastMsg"] as String

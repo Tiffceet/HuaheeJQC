@@ -77,6 +77,9 @@ class ConversationFragment : Fragment() {
         chatMessagesRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
+                if(value == null) {
+                    return
+                }
                 value as HashMap<String, HashMap<String, Any>>
                 for ((msgId, content) in value) {
                     if (messagesIDs.containsKey(msgId)) {
