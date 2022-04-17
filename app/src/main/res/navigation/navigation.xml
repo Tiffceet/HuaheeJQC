@@ -60,10 +60,13 @@
     <fragment
         android:id="@+id/conversationFragment"
         android:name="com.example.huaheejqc.chatpackage.ConversationFragment"
-        android:label="Conversation"
+        android:label="{conversationTitle}"
         tools:layout="@layout/fragment_conversation" >
         <argument
             android:name="chatId"
+            app:argType="string" />
+        <argument
+            android:name="conversationTitle"
             app:argType="string" />
     </fragment>
     <fragment

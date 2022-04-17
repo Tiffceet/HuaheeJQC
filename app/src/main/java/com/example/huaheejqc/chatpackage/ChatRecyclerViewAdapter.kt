@@ -52,7 +52,7 @@ class ChatRecyclerViewAdapter(
             itemView.setOnClickListener {
                 Log.d("Debug", "Item clicked !")
                 val action =
-                    ChatFragmentDirections.actionChatFragmentToConversationFragment(chatId.text.toString())
+                    ChatFragmentDirections.actionChatFragmentToConversationFragment(chatId.text.toString(), "sup")
 //                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
                 it.findNavController().navigate(action)
             }
