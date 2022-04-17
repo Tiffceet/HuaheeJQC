@@ -5,6 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
+import com.example.huaheejqc.adapter.ViewPagerAdapter
+import com.example.huaheejqc.databinding.FragmentLoginBinding
+import com.example.huaheejqc.databinding.FragmentSellerBookManagementBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,20 +27,51 @@ class SellerBookManagement : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding: FragmentSellerBookManagementBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        _binding = FragmentSellerBookManagementBinding.inflate(inflater, container, false)
+        val view = binding.root
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seller_book_management, container, false)
+        val tabLayout=binding.tabLayout
+        val viewPager2=binding.viewPager2
+
+        val adapter= ViewPagerAdapter(parentFragmentManager,lifecycle)
+
+        viewPager2.adapter=adapter
+
+        TabLayoutMediator(tabLayout,viewPager2){tab,position->
+            when(position){
+                0->{
+                    tab.text="Posted Item"
+                }
+                1->{
+                    tab.text="Pending Order"
+                }
+                2->{
+                    tab.text="Completed Order"
+                }
+            }
+        }.attach()
+
+
+        return view
     }
 
     companion object {
