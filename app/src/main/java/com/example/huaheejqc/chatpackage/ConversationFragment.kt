@@ -110,6 +110,9 @@ class ConversationFragment : Fragment() {
 
     private fun sendButtonOnClick() {
         val newMessage = binding.editGchatMessage.text.toString()
+        if(newMessage.trim() == "") {
+            return
+        }
         val timestamp = System.currentTimeMillis() / 1000L
         val newMsgObj = ChatMsg(
             newMessage,

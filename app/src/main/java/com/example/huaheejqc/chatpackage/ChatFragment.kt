@@ -133,6 +133,7 @@ class ChatFragment : Fragment() {
                 }
             })
         }
+        binding.chatListLoadingPanel.visibility = View.GONE
     }
 
     companion object {
