@@ -93,13 +93,15 @@ class ChatFragment : Fragment() {
 
         // For Each chatID
         for ((chatId, chatMembers) in value) {
+            // Skip if this chat dont belong to this user
+            if(!chatMembers.containsKey("logonUserID")) {
+                continue
+            }
             if (chatsIDs.containsKey(chatId)) {
                 // Do not check further if chat already exist
                 continue
             }
             chatsIDs.set(chatId, true)
-
-            // "Add code to check if current user belongs to chatMembers"
 
             // Get Chat Preview
             val chatsRef = database.getReference("chats/$chatId")
