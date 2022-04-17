@@ -10,6 +10,7 @@ import com.example.huaheejqc.R
 import com.example.huaheejqc.chatpackage.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.huaheejqc.data.Chat
 import com.example.huaheejqc.databinding.FragmentChatTargetBinding
+import java.text.SimpleDateFormat
 
 
 /**
@@ -35,7 +36,8 @@ class ChatRecyclerViewAdapter(
         holder.chatId.text = item.id
         holder.chatTitle.text = item.id
         holder.lastMessage.text = item.lastMsg
-        holder.timestamp.text = item.timestamp.toString()
+        val simpleDate = SimpleDateFormat("MMM, dd hh:mm")
+        holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
 
     }
 
