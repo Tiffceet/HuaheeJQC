@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import com.example.huaheejqc.R
 import com.example.huaheejqc.chatpackage.placeholder.PlaceholderContent
 import com.example.huaheejqc.data.Chat
+import com.example.huaheejqc.databinding.FragmentChatListBinding
+import com.example.huaheejqc.databinding.FragmentConversationBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -28,34 +30,26 @@ import kotlin.collections.HashMap
  */
 class ChatFragment : Fragment() {
 
-    private var columnCount = 1
     private lateinit var database: FirebaseDatabase
     private var chatsArr: MutableList<Chat> = ArrayList()
     private val chatsIDs: HashMap<String, Boolean> = HashMap()
     private lateinit var logonUserID: String
     private lateinit var externalAdapter: ChatRecyclerViewAdapter
+    private var _binding: FragmentChatListBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentChatListBinding.inflate(inflater, container, false)
+        val view = binding.root
         val auth = Firebase.auth
         logonUserID = auth.uid.toString()
         database = Firebase.database
-        val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
-//        for (i in 1..100) {
-//            actual_data.add(Chat("ID" + i.toString(), "Last Message", 100))
-//        }
-//        actual_data.add(Chat("ID2", "Last Message", 100))
-//        actual_data.add(Chat("ID3", "Last Message", 100))
-//        actual_data.add(Chat("ID4", "Last Message", 100))
 
         val chatMembersRef = database.getReference("chat-members")
         chatMembersRef.addValueEventListener(object : ValueEventListener {
@@ -72,16 +66,10 @@ class ChatFragment : Fragment() {
         })
 
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                externalAdapter = ChatRecyclerViewAdapter(chatsArr)
-                adapter = externalAdapter
-            }
-        }
+        externalAdapter = ChatRecyclerViewAdapter(chatsArr)
+        binding.chatListRecycleView.adapter = externalAdapter
+        binding.chatListRecycleView.layoutManager = LinearLayoutManager(context)
+
         return view
     }
 
@@ -94,7 +82,7 @@ class ChatFragment : Fragment() {
         // For Each chatID
         for ((chatId, chatMembers) in value) {
             // Skip if this chat dont belong to this user
-            if(!chatMembers.containsKey(logonUserID)) {
+            if (!chatMembers.containsKey(logonUserID)) {
                 continue
             }
             if (chatsIDs.containsKey(chatId)) {

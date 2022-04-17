@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController)
 
         if(auth.currentUser != null) {
+            Log.d("FirebaseAuth", "Current UserID: " + auth.currentUser?.uid.toString())
             val navView = binding.navView
             val nav_header: View = LayoutInflater.from(this).inflate(R.layout.nav_header, null)
             (nav_header.findViewById(R.id.nav_header_content) as TextView).text = "dynamic content"
