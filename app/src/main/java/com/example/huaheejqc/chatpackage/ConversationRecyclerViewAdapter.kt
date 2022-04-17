@@ -58,13 +58,13 @@ class ConversationRecyclerViewAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = values[position]
         if (holder is SentMessageHolder) {
-            holder.message.text = item.msg
-            val simpleDate = SimpleDateFormat("MMM, dd hh:mm")
+            holder.message.text = item.message
+            val simpleDate = SimpleDateFormat("MMM, dd HH:mm")
             holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
         }
         if (holder is ReceivedMessageHolder) {
-            holder.message.text = item.msg
-            val simpleDate = SimpleDateFormat("MMM, dd hh:mm")
+            holder.message.text = item.message
+            val simpleDate = SimpleDateFormat("MMM, dd HH:mm")
             holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
         }
 

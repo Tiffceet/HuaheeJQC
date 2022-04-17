@@ -41,6 +41,7 @@ class ConversationFragment : Fragment() {
     val args: ConversationFragmentArgs by navArgs()
     var conversationList: MutableList<ChatMsg> = ArrayList()
     var messagesIDs: HashMap<String, Boolean> = HashMap()
+    private lateinit var chatId: String
     private lateinit var logonUserID: String
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -63,7 +64,7 @@ class ConversationFragment : Fragment() {
         database = Firebase.database
         _binding = FragmentConversationBinding.inflate(inflater, container, false)
         val view = binding.root
-        val chatId = args.chatId
+        chatId = args.chatId
 
         binding.recyclerGchat.layoutManager = LinearLayoutManager(context)
         binding.recyclerGchat.adapter = ConversationRecyclerViewAdapter(conversationList, logonUserID)
@@ -89,8 +90,8 @@ class ConversationFragment : Fragment() {
                     conversationList.add(
                         ChatMsg(
                             content["message"] as String,
-                            (content["timestamp"] as Long).toInt(),
-                            content["from"] as String
+                            content["timestamp"] as Long,
+                            content["user"] as String
                         )
                     )
                     conversationList.sortBy { it.timestamp }
@@ -106,10 +107,18 @@ class ConversationFragment : Fragment() {
         return view
     }
 
-    fun sendButtonOnClick() {
-        conversationList.add(ChatMsg("uwu more data", 0, "1"))
-        binding.recyclerGchat.adapter?.notifyItemInserted(conversationList.size - 1)
-        binding.recyclerGchat.scrollToPosition(conversationList.size - 1)
+    private fun sendButtonOnClick() {
+        val newMessage = binding.editGchatMessage.text.toString()
+        val newMsgObj = ChatMsg(
+            newMessage,
+            System.currentTimeMillis() / 1000L,
+            logonUserID
+        )
+        database.getReference("chat-messages/$chatId").push().setValue(newMsgObj)
+        binding.editGchatMessage.setText("")
+//        conversationList.add(ChatMsg("uwu more data", 0, "1"))
+//        binding.recyclerGchat.adapter?.notifyItemInserted(conversationList.size - 1)
+//        binding.recyclerGchat.scrollToPosition(conversationList.size - 1)
     }
 
     companion object {

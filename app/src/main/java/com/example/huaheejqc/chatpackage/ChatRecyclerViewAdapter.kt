@@ -36,7 +36,7 @@ class ChatRecyclerViewAdapter(
         holder.chatId.text = item.id
         holder.chatTitle.text = item.id
         holder.lastMessage.text = item.lastMsg
-        val simpleDate = SimpleDateFormat("MMM, dd hh:mm")
+        val simpleDate = SimpleDateFormat("MMM, dd HH:mm")
         holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
 
     }
