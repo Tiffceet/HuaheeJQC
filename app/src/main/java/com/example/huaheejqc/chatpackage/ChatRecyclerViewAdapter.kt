@@ -36,7 +36,7 @@ class ChatRecyclerViewAdapter(
         holder.chatId.text = item.id
         holder.chatTitle.text = item.id
         holder.lastMessage.text = item.lastMsg
-        if (item.timestamp == 0) {
+        if (item.timestamp == 0L) {
             holder.timestamp.text = ""
         } else {
             val simpleDate = SimpleDateFormat("MMM, dd HH:mm")

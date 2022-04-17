@@ -108,7 +108,7 @@ class ChatFragment : Fragment() {
                     vval as HashMap<String, Any>
                     val inner_chatId = chatId
                     val lastMsg = vval["lastMsg"] as String
-                    val timestamp = (vval["timestamp"] as Long).toInt()
+                    val timestamp = vval["timestamp"] as Long
 
                     var changedIndex =
                         chatsArr.indices.firstOrNull { i -> chatsArr[i].id == inner_chatId }
