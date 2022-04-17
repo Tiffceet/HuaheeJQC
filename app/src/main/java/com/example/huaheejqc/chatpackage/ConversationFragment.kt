@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.huaheejqc.R
+import com.example.huaheejqc.data.Chat
+import com.example.huaheejqc.data.ChatMsg
 import com.example.huaheejqc.databinding.FragmentConversationBinding
 import com.example.huaheejqc.databinding.FragmentLoginBinding
 
@@ -42,7 +45,12 @@ class ConversationFragment : Fragment() {
     ): View? {
         _binding = FragmentConversationBinding.inflate(inflater, container, false)
         val view = binding.root
-        binding.sampleTextViewPlsDete.text = args.chatId
+        val chatId = args.chatId
+        val actual_data: MutableList<ChatMsg> = ArrayList()
+        actual_data.add(ChatMsg("This is a very ultra long message, how will androdi handle it hmm. When can i finish this assignmen aaaaaaaaaaaaaaaaaaaaaaaa",0, "1"))
+        actual_data.add(ChatMsg("hi",0, "2"))
+        binding.recyclerGchat.layoutManager = LinearLayoutManager(context)
+        binding.recyclerGchat.adapter = ConversationRecyclerViewAdapter(actual_data)
         return view
     }
 
