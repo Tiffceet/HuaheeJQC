@@ -23,7 +23,7 @@ class CompletedOrder : Fragment() {
     ): View? {
         _binding = FragmentCompletedOrderBinding.inflate(inflater, container, false)
         val view = binding.root
-        
+
         return view
     }
 
