@@ -83,13 +83,16 @@
         android:id="@+id/sellerBookManagement"
         android:name="com.example.huaheejqc.SellerBookManagement"
         android:label="fragment_seller_book_management"
-        tools:layout="@layout/fragment_seller_book_management" />
+        tools:layout="@layout/fragment_seller_book_management" >
+        <action
+            android:id="@+id/action_sellerBookManagement_to_bookDetails"
+            app:destination="@id/bookDetails" />
+    </fragment>
     <fragment
         android:id="@+id/orderStatus2"
         android:name="com.example.huaheejqc.OrderStatus"
         android:label="Order Status"
         tools:layout="@layout/fragment_order_status" >
-
         <action
             android:id="@+id/action_orderStatus2_to_bookDetails"
             app:destination="@id/bookDetails" />

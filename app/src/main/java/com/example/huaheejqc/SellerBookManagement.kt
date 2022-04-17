@@ -49,7 +49,7 @@ class SellerBookManagement : Fragment() {
         val tabLayout=binding.tabLayout
         val viewPager2=binding.viewPager2
 
-        val adapter= sallerBookManager_ViewPagerAdapter(parentFragmentManager,lifecycle)
+        val adapter= sallerBookManager_ViewPagerAdapter(childFragmentManager,lifecycle)
 
         viewPager2.adapter=adapter
 

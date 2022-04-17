@@ -16,13 +16,13 @@ class orderStatus_ViewPagerAdapter (fragmentManager: FragmentManager, lifecycle:
     override fun createFragment(position: Int): Fragment {
         return   when(position){
             0->{
-                PostedItem()
+                ToPay()
             }
             1->{
-                PendingOrder()
+                ToShip()
             }
             2->{
-                CompletedOrder()
+                ToReceive()
             }
             else->{
                 Fragment()

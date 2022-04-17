@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.huaheejqc.sallerBookManagement.sallerBookManager_ViewPagerAdapter
 import com.example.huaheejqc.databinding.FragmentOrderStatusBinding
+import com.example.huaheejqc.orderStatus.orderStatus_ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -51,7 +52,7 @@ class OrderStatus : Fragment() {
         val tabLayout=binding.orderStatusTabLayout
         val viewPager2=binding.orderStatusViewPager2
 
-        val adapter= sallerBookManager_ViewPagerAdapter(parentFragmentManager,lifecycle)
+        val adapter= orderStatus_ViewPagerAdapter(childFragmentManager,lifecycle)
 
         viewPager2.adapter=adapter
 

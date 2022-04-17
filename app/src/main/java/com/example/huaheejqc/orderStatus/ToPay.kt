@@ -1,4 +1,4 @@
-package com.example.huaheejqc
+package com.example.huaheejqc.orderStatus
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.example.huaheejqc.R
 import com.example.huaheejqc.databinding.FragmentToPayBinding
-import com.example.huaheejqc.databinding.FragmentUserProfileManagementBinding
 
 class ToPay : Fragment() {
     private var _binding: FragmentToPayBinding? = null
