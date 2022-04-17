@@ -119,6 +119,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layoutPadding"
                 android:text="Confirm" />
+
+            <Button
+                android:id="@+id/editbook_delete_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutPadding"
+                android:text="Delete" />
         </LinearLayout>
     </ScrollView>
 </layout>
