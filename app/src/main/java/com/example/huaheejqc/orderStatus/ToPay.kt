@@ -21,14 +21,12 @@ class ToPay : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentToPayBinding.inflate(inflater, container, false)
         val view = binding.root
 
         binding.topayViewdetailsBtn.setOnClickListener{view:View->
             view.findNavController().navigate(R.id.action_orderStatus2_to_bookDetails)
         }
-        // Inflate the layout for this fragment
         return view
     }
 }

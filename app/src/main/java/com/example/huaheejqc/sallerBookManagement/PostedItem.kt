@@ -6,20 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.huaheejqc.R
+import com.example.huaheejqc.databinding.FragmentPostedItemBinding
+import com.example.huaheejqc.databinding.FragmentToShipBinding
 
 class PostedItem : Fragment() {
+    private var _binding: FragmentPostedItemBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_posted_item, container, false)
+        _binding = FragmentPostedItemBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        return view
     }
 
 }
