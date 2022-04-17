@@ -1,6 +1,7 @@
 package com.example.huaheejqc.chatpackage
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,20 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SortedList
 import com.example.huaheejqc.R
 import com.example.huaheejqc.data.Chat
 import com.example.huaheejqc.data.ChatMsg
 import com.example.huaheejqc.databinding.FragmentConversationBinding
 import com.example.huaheejqc.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +39,11 @@ class ConversationFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     val args: ConversationFragmentArgs by navArgs()
-    var actual_data: MutableList<ChatMsg> = ArrayList()
+    var conversationList: MutableList<ChatMsg> = ArrayList()
+    var messagesIDs: HashMap<String, Boolean> = HashMap()
+    private lateinit var logonUserID: String
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
     private var _binding: FragmentConversationBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,31 +58,55 @@ class ConversationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        auth = Firebase.auth
+        logonUserID = auth.uid.toString()
+        database = Firebase.database
         _binding = FragmentConversationBinding.inflate(inflater, container, false)
         val view = binding.root
         val chatId = args.chatId
-        actual_data.add(
-            ChatMsg(
-                "This is a very ultra long message, how will androdi handle it hmm. When can i finish this assignmen aaaaaaaaaaaaaaaaaaaaaaaa",
-                0,
-                "1"
-            )
-        )
-        actual_data.add(ChatMsg("hi", 0, "2"))
+
         binding.recyclerGchat.layoutManager = LinearLayoutManager(context)
-        binding.recyclerGchat.adapter = ConversationRecyclerViewAdapter(actual_data)
-        binding.recyclerGchat.scrollToPosition(actual_data.size-1)
+        binding.recyclerGchat.adapter = ConversationRecyclerViewAdapter(conversationList, logonUserID)
+        binding.recyclerGchat.scrollToPosition(conversationList.size - 1)
         binding.buttonGchatSend.setOnClickListener(View.OnClickListener { view ->
             sendButtonOnClick()
+        })
+
+        val chatMessagesRef = database.getReference("chat-messages/$chatId")
+
+        chatMessagesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.value
+                value as HashMap<String, HashMap<String, Any>>
+                for ((msgId, content) in value) {
+                    if (messagesIDs.containsKey(msgId)) {
+                        continue
+                    }
+                    messagesIDs.set(msgId, true)
+                    conversationList.add(
+                        ChatMsg(
+                            content["message"] as String,
+                            (content["timestamp"] as Long).toInt(),
+                            content["from"] as String
+                        )
+                    )
+                    conversationList.sortBy { it.timestamp }
+                    binding.recyclerGchat.adapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("firebase", error.message)
+            }
         })
 
         return view
     }
 
     fun sendButtonOnClick() {
-        actual_data.add(ChatMsg("uwu more data", 0, "1"))
-        binding.recyclerGchat.adapter?.notifyItemInserted(actual_data.size - 1)
-        binding.recyclerGchat.scrollToPosition(actual_data.size-1)
+        conversationList.add(ChatMsg("uwu more data", 0, "1"))
+        binding.recyclerGchat.adapter?.notifyItemInserted(conversationList.size - 1)
+        binding.recyclerGchat.scrollToPosition(conversationList.size - 1)
     }
 
     companion object {

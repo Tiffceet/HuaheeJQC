@@ -12,9 +12,10 @@ import com.example.huaheejqc.data.ChatMsg
 import com.example.huaheejqc.databinding.ComponentMeMessageBinding
 import com.example.huaheejqc.databinding.ComponentOtherMessageBinding
 import com.example.huaheejqc.databinding.FragmentChatTargetBinding
+import java.text.SimpleDateFormat
 
 class ConversationRecyclerViewAdapter(
-    private val values: List<ChatMsg>
+    private val values: List<ChatMsg>, private val logonUserID: String
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ME_MESSAGE = 1
     private val OTHER_MESSAGE = 2
@@ -45,7 +46,7 @@ class ConversationRecyclerViewAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val item = values.get(position)
-        if (item.user == "1") {
+        if (item.user == logonUserID) {
             return ME_MESSAGE
         } else {
             return OTHER_MESSAGE
@@ -58,11 +59,13 @@ class ConversationRecyclerViewAdapter(
         val item = values[position]
         if (holder is SentMessageHolder) {
             holder.message.text = item.msg
-            holder.timestamp.text = item.timestamp.toString()
+            val simpleDate = SimpleDateFormat("MMM, dd hh:mm")
+            holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
         }
         if (holder is ReceivedMessageHolder) {
             holder.message.text = item.msg
-            holder.timestamp.text = item.timestamp.toString()
+            val simpleDate = SimpleDateFormat("MMM, dd hh:mm")
+            holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
         }
 
     }
