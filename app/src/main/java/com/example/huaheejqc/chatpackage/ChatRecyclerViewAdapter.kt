@@ -36,8 +36,12 @@ class ChatRecyclerViewAdapter(
         holder.chatId.text = item.id
         holder.chatTitle.text = item.id
         holder.lastMessage.text = item.lastMsg
-        val simpleDate = SimpleDateFormat("MMM, dd HH:mm")
-        holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
+        if (item.timestamp == 0) {
+            holder.timestamp.text = ""
+        } else {
+            val simpleDate = SimpleDateFormat("MMM, dd HH:mm")
+            holder.timestamp.text = simpleDate.format(item.timestamp * 1000)
+        }
 
     }
 
@@ -54,7 +58,10 @@ class ChatRecyclerViewAdapter(
             itemView.setOnClickListener {
                 Log.d("Debug", "Item clicked !")
                 val action =
-                    ChatFragmentDirections.actionChatFragmentToConversationFragment(chatId.text.toString(), "sup")
+                    ChatFragmentDirections.actionChatFragmentToConversationFragment(
+                        chatId.text.toString(),
+                        "sup"
+                    )
 //                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
                 it.findNavController().navigate(action)
             }

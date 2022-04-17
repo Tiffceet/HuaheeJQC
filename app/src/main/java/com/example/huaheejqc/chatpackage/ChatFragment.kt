@@ -94,7 +94,7 @@ class ChatFragment : Fragment() {
         // For Each chatID
         for ((chatId, chatMembers) in value) {
             // Skip if this chat dont belong to this user
-            if(!chatMembers.containsKey("logonUserID")) {
+            if(!chatMembers.containsKey(logonUserID)) {
                 continue
             }
             if (chatsIDs.containsKey(chatId)) {
@@ -112,6 +112,9 @@ class ChatFragment : Fragment() {
                     // whenever data at this location is updated.
                     val vval = dataSnapshot.value
                     if (vval == null) {
+                        chatsArr.add(0, Chat(chatId, "", 0))
+                        chatsArr.sortByDescending { it.timestamp }
+                        adapter?.notifyDataSetChanged()
                         return
                     }
                     vval as HashMap<String, Any>

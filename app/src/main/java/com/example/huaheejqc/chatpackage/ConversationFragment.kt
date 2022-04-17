@@ -67,7 +67,8 @@ class ConversationFragment : Fragment() {
         chatId = args.chatId
 
         binding.recyclerGchat.layoutManager = LinearLayoutManager(context)
-        binding.recyclerGchat.adapter = ConversationRecyclerViewAdapter(conversationList, logonUserID)
+        binding.recyclerGchat.adapter =
+            ConversationRecyclerViewAdapter(conversationList, logonUserID)
         binding.recyclerGchat.scrollToPosition(conversationList.size - 1)
         binding.buttonGchatSend.setOnClickListener(View.OnClickListener { view ->
             sendButtonOnClick()
@@ -78,7 +79,7 @@ class ConversationFragment : Fragment() {
         chatMessagesRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
-                if(value == null) {
+                if (value == null) {
                     return
                 }
                 value as HashMap<String, HashMap<String, Any>>
@@ -109,12 +110,18 @@ class ConversationFragment : Fragment() {
 
     private fun sendButtonOnClick() {
         val newMessage = binding.editGchatMessage.text.toString()
+        val timestamp = System.currentTimeMillis() / 1000L
         val newMsgObj = ChatMsg(
             newMessage,
-            System.currentTimeMillis() / 1000L,
+            timestamp,
             logonUserID
         )
         database.getReference("chat-messages/$chatId").push().setValue(newMsgObj)
+
+        val chatLastMsg: HashMap<String, Any> = HashMap()
+        chatLastMsg.set("lastMsg", newMessage)
+        chatLastMsg.set("timestamp", timestamp)
+        database.getReference("chats/$chatId").setValue(chatLastMsg)
         binding.editGchatMessage.setText("")
 //        conversationList.add(ChatMsg("uwu more data", 0, "1"))
 //        binding.recyclerGchat.adapter?.notifyItemInserted(conversationList.size - 1)
