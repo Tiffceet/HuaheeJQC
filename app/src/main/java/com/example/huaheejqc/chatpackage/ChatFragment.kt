@@ -65,6 +65,10 @@ class ChatFragment : Fragment() {
             }
         })
 
+        if (chatsArr.size != 0) {
+            binding.chatListLoadingPanel.visibility = View.GONE
+        }
+
         // Set the adapter
         externalAdapter = ChatRecyclerViewAdapter(chatsArr)
         binding.chatListRecycleView.adapter = externalAdapter
@@ -120,6 +124,7 @@ class ChatFragment : Fragment() {
                     }
                     chatsArr.sortByDescending { it.timestamp }
                     adapter?.notifyDataSetChanged()
+                    binding.chatListLoadingPanel.visibility = View.GONE
                 }
 
                 override fun onCancelled(error: DatabaseError) {
