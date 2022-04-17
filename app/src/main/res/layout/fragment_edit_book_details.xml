@@ -14,11 +14,6 @@
             android:layout_margin="@dimen/layoutPadding"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/headerTitle"
-                layout="@layout/component_back_header"
-                app:headerTitle='@{"Add Book"}'/>
-
             <ImageView
                 android:id="@+id/editbook_img"
                 android:layout_width="match_parent"
