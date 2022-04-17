@@ -7,12 +7,12 @@
     tools:context=".OrderStatus">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/orderStatust_tab_layout"
+        android:id="@+id/orderStatus_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/orderStatust_view_pager_2"
+        android:id="@+id/orderStatus_view_pager_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

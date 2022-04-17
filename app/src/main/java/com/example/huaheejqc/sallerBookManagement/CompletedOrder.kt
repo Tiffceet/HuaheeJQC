@@ -1,12 +1,13 @@
-package com.example.huaheejqc
+package com.example.huaheejqc.sallerBookManagement
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.huaheejqc.R
 
-class PendingOrder : Fragment() {
+class CompletedOrder : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +19,7 @@ class PendingOrder : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pending_order, container, false)
+        return inflater.inflate(R.layout.fragment_completed_order, container, false)
     }
 
 }

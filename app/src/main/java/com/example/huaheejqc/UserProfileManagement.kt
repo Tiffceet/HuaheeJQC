@@ -50,6 +50,14 @@ class UserProfileManagement : Fragment() {
             view.findNavController().navigate(R.id.action_userProfileManagement_to_userEdit)
         }
 
+        binding.goToBookManagement.setOnClickListener{view:View ->
+            view.findNavController().navigate(R.id.action_userProfileManagement_to_sellerBookManagement)
+        }
+
+        binding.buttonToOrderDetails.setOnClickListener{view:View->
+            view.findNavController().navigate(R.id.action_userProfileManagement_to_orderStatus2)
+        }
+
         return view
     }
 

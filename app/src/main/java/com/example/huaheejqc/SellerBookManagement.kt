@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
-import com.example.huaheejqc.adapter.ViewPagerAdapter
-import com.example.huaheejqc.databinding.FragmentLoginBinding
+import com.example.huaheejqc.sallerBookManagement.sallerBookManager_ViewPagerAdapter
 import com.example.huaheejqc.databinding.FragmentSellerBookManagementBinding
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,7 +49,7 @@ class SellerBookManagement : Fragment() {
         val tabLayout=binding.tabLayout
         val viewPager2=binding.viewPager2
 
-        val adapter= ViewPagerAdapter(parentFragmentManager,lifecycle)
+        val adapter= sallerBookManager_ViewPagerAdapter(parentFragmentManager,lifecycle)
 
         viewPager2.adapter=adapter
 
