@@ -78,7 +78,11 @@
     <fragment
         android:id="@+id/userEdit"
         android:name="com.example.huaheejqc.UserEdit"
-        android:label="UserEdit" />
+        android:label="UserEdit" >
+        <action
+            android:id="@+id/action_userEdit_to_userProfileManagement"
+            app:destination="@id/userProfileManagement" />
+    </fragment>
     <fragment
         android:id="@+id/sellerBookManagement"
         android:name="com.example.huaheejqc.SellerBookManagement"

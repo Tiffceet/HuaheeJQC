@@ -7,130 +7,205 @@
     tools:context=".ReloadInWallet">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/title_user_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="User Profile Modified"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RelativeLayout
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/get_new_profile_image"
-                android:layout_width="100dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="70dp"
-                android:layout_marginBottom="@dimen/layoutPadding"
-                android:src="@color/black" />
+                android:orientation="vertical">
 
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:text="Upload Image"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="30dp"
-                android:layout_toRightOf="@id/get_new_profile_image"/>
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/title_user_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="User Profile Modified"
+                    android:textColor="@color/black"
+                    android:textSize="25sp" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar_upload"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
-        <TextView
-            android:id="@+id/question_target_name"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:text="Enter Your New Name"
-            android:textSize="20sp" />
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/get_new_name"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="text"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="40dp"
-            android:id="@+id/question_get_new_contact"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:text="Enter Your New Contact (e.g. +60156788796)"
-            android:textSize="20sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/get_new_contact"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="number"/>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="@dimen/layoutPadding"
+                        android:src="@color/black" />
 
-        <TextView
-            android:layout_marginTop="40dp"
-            android:id="@+id/question_get_new_email"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:text="Enter Your New Email"
-            android:textSize="20sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/profile_image">
 
-        <EditText
-            android:id="@+id/get_new_email"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="text"/>
+                        <Button
+                            android:id="@+id/get_new_profile_image_from_gallery"
+                            android:layout_width="100dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Upload Image" />
 
-        <TextView
-            android:layout_marginTop="40dp"
-            android:id="@+id/question_get_new_password"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:text="Enter Your New Password"
-            android:textSize="20sp" />
+                        <Button
+                            android:id="@+id/get_new_profile_image_from_camera"
+                            android:layout_width="100dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Upload Image" />
 
-        <EditText
-            android:id="@+id/get_new_password"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:inputType="text"/>
+                    </LinearLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/start_edit_user_profile"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_vertical"
-            android:text="Confirm"
-            android:textSize="15sp"
-            android:layout_marginStart="140dp"
-            android:gravity="center_horizontal"/>
+                </RelativeLayout>
 
-    </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/progress_bar_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+                <EditText
+                    android:layout_marginTop="@dimen/layoutPadding"
+                    android:id="@+id/get_new_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Name"
+                    android:inputType="text"/>
+
+                <TextView
+                    android:id="@+id/getNameStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark" />
+
+                <EditText
+                    android:layout_marginTop="@dimen/layoutPadding"
+                    android:hint="IC (e.g. 023478986754)"
+                    android:id="@+id/get_new_ic"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:id="@+id/getICStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark" />
+
+                <EditText
+                    android:layout_marginTop="@dimen/layoutPadding"
+                    android:hint="Contact (e.g. 0178696753)"
+                    android:id="@+id/get_new_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:inputType="number"/>
+                <TextView
+                    android:id="@+id/getContactStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark" />
+
+                <EditText
+                    android:layout_marginTop="@dimen/layoutPadding"
+                    android:hint="Email"
+                    android:id="@+id/get_new_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:inputType="text"/>
+
+                <TextView
+                    android:id="@+id/getEmailStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark" />
+
+                <EditText
+                    android:hint="New Password"
+                    android:layout_marginTop="@dimen/layoutPadding"
+                    android:id="@+id/get_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:inputType="text"/>
+
+                <TextView
+                    android:id="@+id/getPasswordStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark" />
+
+                <EditText
+                    android:hint="Confirm New Password"
+                    android:layout_marginTop="@dimen/layoutPadding"
+                    android:id="@+id/confirm_new_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:inputType="text"/>
+
+                <TextView
+                    android:id="@+id/confirmPasswordStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark" />
+
+                <EditText
+                    android:hint="New Address"
+                    android:layout_marginTop="@dimen/layoutPadding"
+                    android:id="@+id/get_new_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:inputType="text"/>
+
+                <TextView
+                    android:id="@+id/getAddressStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_dark" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/start_edit_user_profile"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Confirm"
+                    android:textSize="20sp"
+                    android:layout_marginStart="140dp"
+                    android:gravity="center_horizontal"/>
+
+            </LinearLayout>
+        </TableLayout>
+    </ScrollView>
 
 </LinearLayout>
