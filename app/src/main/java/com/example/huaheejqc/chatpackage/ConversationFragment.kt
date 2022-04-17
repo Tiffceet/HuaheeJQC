@@ -29,6 +29,7 @@ class ConversationFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     val args: ConversationFragmentArgs by navArgs()
+    var actual_data: MutableList<ChatMsg> = ArrayList()
     private var _binding: FragmentConversationBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +47,28 @@ class ConversationFragment : Fragment() {
         _binding = FragmentConversationBinding.inflate(inflater, container, false)
         val view = binding.root
         val chatId = args.chatId
-        val actual_data: MutableList<ChatMsg> = ArrayList()
-        actual_data.add(ChatMsg("This is a very ultra long message, how will androdi handle it hmm. When can i finish this assignmen aaaaaaaaaaaaaaaaaaaaaaaa",0, "1"))
-        actual_data.add(ChatMsg("hi",0, "2"))
+        actual_data.add(
+            ChatMsg(
+                "This is a very ultra long message, how will androdi handle it hmm. When can i finish this assignmen aaaaaaaaaaaaaaaaaaaaaaaa",
+                0,
+                "1"
+            )
+        )
+        actual_data.add(ChatMsg("hi", 0, "2"))
         binding.recyclerGchat.layoutManager = LinearLayoutManager(context)
         binding.recyclerGchat.adapter = ConversationRecyclerViewAdapter(actual_data)
+        binding.recyclerGchat.scrollToPosition(actual_data.size-1)
+        binding.buttonGchatSend.setOnClickListener(View.OnClickListener { view ->
+            sendButtonOnClick()
+        })
+
         return view
+    }
+
+    fun sendButtonOnClick() {
+        actual_data.add(ChatMsg("uwu more data", 0, "1"))
+        binding.recyclerGchat.adapter?.notifyItemInserted(actual_data.size - 1)
+        binding.recyclerGchat.scrollToPosition(actual_data.size-1)
     }
 
     companion object {
