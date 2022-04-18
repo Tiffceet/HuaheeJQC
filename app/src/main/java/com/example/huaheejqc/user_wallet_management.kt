@@ -13,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [EWalletManagement.newInstance] factory method to
+ * Use the [user_wallet_management.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EWalletManagement : Fragment() {
+class user_wallet_management : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +34,7 @@ class EWalletManagement : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_e_wallet_management, container, false)
+        return inflater.inflate(R.layout.fragment_user_wallet_management, container, false)
     }
 
     companion object {
@@ -44,12 +44,12 @@ class EWalletManagement : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment EWalletManagement.
+         * @return A new instance of fragment user_wallet_management.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            EWalletManagement().apply {
+            user_wallet_management().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

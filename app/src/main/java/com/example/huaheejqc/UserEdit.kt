@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.example.huaheejqc.databinding.FragmentLoginBinding
 import com.example.huaheejqc.databinding.FragmentUserEditBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -47,8 +48,45 @@ class UserEdit : Fragment() {
         _binding = FragmentUserEditBinding.inflate(inflater, container, false)
         val view = binding.root
         val db = Firebase.firestore
+        val dbGet = FirebaseFirestore.getInstance()
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
+
+        val docRef = dbGet.collection("User").document(stringID)
+        docRef.get()
+            .addOnSuccessListener {document ->
+                if(document != null){
+                    Log.d("exist","DocumentSnapshot data: ${document.data}")
+
+                    if(document.getString("Name") != null){
+                        binding.currentName.text = document.getString("Name")
+                    }else{
+                        binding.currentName.text = "Your data is not currently in the database"
+                    }
+
+                    if(document.getString("Contact") != null){
+                        binding.currentContact.text = document.getString("Contact")
+                    }else{
+                        binding.currentContact.text = "Your data is not currently in the database"
+                    }
+
+                    if(document.getString("IC") != null){
+                        binding.currentIc.text = document.getString("IC")
+                    }else{
+                        binding.currentIc.text = "Your data is not currently in the database"
+                    }
+
+                    if(document.getString("Address") != null){
+                        binding.currentAddress.text = document.getString("Address")
+                    }else{
+                        binding.currentAddress.text = "Your data is not currently in the database"
+                    }
+
+                }else{
+                    Log.d("errordbGet","get failed")
+                }
+
+            }
 
         binding.startEditUserProfile.setOnClickListener{ view: View ->
             val newName = binding.getNewName.text.toString()

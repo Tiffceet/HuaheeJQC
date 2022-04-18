@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_userProfileManagement_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_userProfileManagement_to_user_wallet_management"
+            app:destination="@id/user_wallet_management" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -123,4 +126,9 @@
         android:label="EditBookDetails" >
         <argument android:name="editbook" />
     </fragment>
+    <fragment
+        android:id="@+id/user_wallet_management"
+        android:name="com.example.huaheejqc.user_wallet_management"
+        android:label="fragment_user_wallet_management"
+        tools:layout="@layout/fragment_user_wallet_management" />
 </navigation>

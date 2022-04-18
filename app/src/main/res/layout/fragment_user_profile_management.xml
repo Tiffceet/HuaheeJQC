@@ -43,11 +43,10 @@
             android:textSize="25dp" />
 
         <TextView
-            android:id="@+id/profile_"
+            android:id="@+id/profile_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile_email"
-            android:text="0195678987"
             android:textColor="@color/white"
             android:textSize="25dp" />
 
@@ -62,6 +61,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:stretchColumns="1">
+
+            <Button
+                android:id="@+id/btn_go_to_wallet"
+                android:layout_width="80dp"
+                android:layout_height="70dp"
+                android:text="Your Wallet"
+                android:layout_marginStart="10dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -273,10 +280,10 @@
                     android:id="@+id/btn_to_log_out"
                     android:layout_width="150dp"
                     android:layout_height="70dp"
-                    android:layout_marginTop="95dp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginTop="95dp"
                     android:text="Log Out"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
             </RelativeLayout>
         </TableLayout>
 
