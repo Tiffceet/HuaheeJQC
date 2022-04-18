@@ -20,6 +20,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.util.*
 
 
@@ -106,59 +108,65 @@ class ChatFragment : Fragment() {
             for ((memberUserID, _) in chatMembers) {
                 memberList.add(memberUserID)
             }
-            firestore.collection("User").whereIn(FieldPath.documentId(), memberList).get()
-                .addOnSuccessListener {
-                    var otherUserName = ""
-                    for (document in it) {
-                        if (document.id != logonUserID) {
-                            val otherUserObj = User.from(document.data)
-                            otherUserName = otherUserObj.name
-                        }
+            runBlocking {
+                val it =
+                    firestore.collection("User").whereIn(FieldPath.documentId(), memberList).get()
+                        .await()
+
+                var otherUserName = ""
+                var otherUserId = ""
+                for (document in it) {
+                    if (document.id != logonUserID) {
+                        val otherUserObj = User.from(document.data)
+                        otherUserName = otherUserObj.name
+                        otherUserId = document.id
                     }
-                    chatsIDs.set(chatId, true)
+                }
+                if (otherUserName == "") {
+                    otherUserName = "User#$otherUserId"
+                }
+                chatsIDs.set(chatId, true)
 
-                    // Get Chat Preview
-                    val chatsRef = database.getReference("chats/$chatId")
-                    chatsRef.addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Chat Preview
+                val chatsRef = database.getReference("chats/$chatId")
+                chatsRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
-                            val vval = dataSnapshot.value
-                            if (vval == null) {
-                                chatsArr.add(0, Chat(chatId, otherUserName, "", 0))
-                                chatsArr.sortByDescending { it.timestamp }
-                                adapter?.notifyDataSetChanged()
-                                return
-                            }
-                            vval as HashMap<String, Any>
-                            val inner_chatId = chatId
-                            val lastMsg = vval["lastMsg"] as String
-                            val timestamp = vval["timestamp"] as Long
-
-                            var changedIndex =
-                                chatsArr.indices.firstOrNull { i -> chatsArr[i].id == inner_chatId }
-                            if (changedIndex == null) {
-                                chatsArr.add(0, Chat(chatId, otherUserName, lastMsg, timestamp))
-                            } else {
-                                chatsArr[changedIndex].timestamp = timestamp
-                                chatsArr[changedIndex].lastMsg = lastMsg
-                            }
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        val vval = dataSnapshot.value
+                        if (vval == null) {
+                            chatsArr.add(0, Chat(chatId, otherUserName, "", 0))
                             chatsArr.sortByDescending { it.timestamp }
                             adapter?.notifyDataSetChanged()
-                            binding.chatListLoadingPanel.visibility = View.GONE
+                            return
                         }
+                        vval as HashMap<String, Any>
+                        val inner_chatId = chatId
+                        val lastMsg = vval["lastMsg"] as String
+                        val timestamp = vval["timestamp"] as Long
 
-                        override fun onCancelled(error: DatabaseError) {
-                            // Failed to read value
-                            Log.d("JQC", "Failed to read value")
+                        var changedIndex =
+                            chatsArr.indices.firstOrNull { i -> chatsArr[i].id == inner_chatId }
+                        if (changedIndex == null) {
+                            chatsArr.add(0, Chat(chatId, otherUserName, lastMsg, timestamp))
+                        } else {
+                            chatsArr[changedIndex].timestamp = timestamp
+                            chatsArr[changedIndex].lastMsg = lastMsg
                         }
-                    })
-                }
+                        chatsArr.sortByDescending { it.timestamp }
+                        adapter?.notifyDataSetChanged()
+                        binding.chatListLoadingPanel.visibility = View.GONE
+                    }
 
-
+                    override fun onCancelled(error: DatabaseError) {
+                        // Failed to read value
+                        Log.d("JQC", "Failed to read value")
+                    }
+                })
+                binding.chatListLoadingPanel.visibility = View.GONE
+            }
         }
-        binding.chatListLoadingPanel.visibility = View.GONE
     }
 
     companion object {
