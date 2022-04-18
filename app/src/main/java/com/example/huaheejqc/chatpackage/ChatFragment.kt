@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.huaheejqc.User
 import com.example.huaheejqc.data.Chat
 import com.example.huaheejqc.databinding.FragmentChatListBinding
 import com.google.firebase.auth.ktx.auth
@@ -16,6 +17,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
@@ -69,7 +72,7 @@ class ChatFragment : Fragment() {
         binding.chatListRecycleView.adapter = externalAdapter
         val externalLayoutManager = LinearLayoutManager(context)
         binding.chatListRecycleView.layoutManager = externalLayoutManager
-        
+
         // Set divider
         val dividerItemDecoration = DividerItemDecoration(
             binding.chatListRecycleView.getContext(),
@@ -83,6 +86,7 @@ class ChatFragment : Fragment() {
 
     // Fires when new chat member added
     fun chatMemberOnChange(value: Any?) {
+        val firestore = Firebase.firestore
         Log.d("chatMemberOnChange", "I was fired")
         var adapter = externalAdapter
         value as HashMap<String, HashMap<String, Boolean>>
@@ -97,45 +101,62 @@ class ChatFragment : Fragment() {
                 // Do not check further if chat already exist
                 continue
             }
-            chatsIDs.set(chatId, true)
 
-            // Get Chat Preview
-            val chatsRef = database.getReference("chats/$chatId")
-            chatsRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    val vval = dataSnapshot.value
-                    if (vval == null) {
-                        chatsArr.add(0, Chat(chatId, "", 0))
-                        chatsArr.sortByDescending { it.timestamp }
-                        adapter?.notifyDataSetChanged()
-                        return
+            val memberList: MutableList<String> = ArrayList()
+            for ((memberUserID, _) in chatMembers) {
+                memberList.add(memberUserID)
+            }
+            firestore.collection("User").whereIn(FieldPath.documentId(), memberList).get()
+                .addOnSuccessListener {
+                    var otherUserName = ""
+                    for (document in it) {
+                        if (document.id != logonUserID) {
+                            val otherUserObj = User.from(document.data)
+                            otherUserName = otherUserObj.Name
+                        }
                     }
-                    vval as HashMap<String, Any>
-                    val inner_chatId = chatId
-                    val lastMsg = vval["lastMsg"] as String
-                    val timestamp = vval["timestamp"] as Long
+                    chatsIDs.set(chatId, true)
 
-                    var changedIndex =
-                        chatsArr.indices.firstOrNull { i -> chatsArr[i].id == inner_chatId }
-                    if (changedIndex == null) {
-                        chatsArr.add(0, Chat(chatId, lastMsg, timestamp))
-                    } else {
-                        chatsArr[changedIndex].timestamp = timestamp
-                        chatsArr[changedIndex].lastMsg = lastMsg
-                    }
-                    chatsArr.sortByDescending { it.timestamp }
-                    adapter?.notifyDataSetChanged()
-                    binding.chatListLoadingPanel.visibility = View.GONE
+                    // Get Chat Preview
+                    val chatsRef = database.getReference("chats/$chatId")
+                    chatsRef.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            val vval = dataSnapshot.value
+                            if (vval == null) {
+                                chatsArr.add(0, Chat(otherUserName, "", 0))
+                                chatsArr.sortByDescending { it.timestamp }
+                                adapter?.notifyDataSetChanged()
+                                return
+                            }
+                            vval as HashMap<String, Any>
+                            val inner_chatId = chatId
+                            val lastMsg = vval["lastMsg"] as String
+                            val timestamp = vval["timestamp"] as Long
+
+                            var changedIndex =
+                                chatsArr.indices.firstOrNull { i -> chatsArr[i].id == inner_chatId }
+                            if (changedIndex == null) {
+                                chatsArr.add(0, Chat(otherUserName, lastMsg, timestamp))
+                            } else {
+                                chatsArr[changedIndex].timestamp = timestamp
+                                chatsArr[changedIndex].lastMsg = lastMsg
+                            }
+                            chatsArr.sortByDescending { it.timestamp }
+                            adapter?.notifyDataSetChanged()
+                            binding.chatListLoadingPanel.visibility = View.GONE
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            // Failed to read value
+                            Log.d("JQC", "Failed to read value")
+                        }
+                    })
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // Failed to read value
-                    Log.d("JQC", "Failed to read value")
-                }
-            })
+
         }
         binding.chatListLoadingPanel.visibility = View.GONE
     }

@@ -60,7 +60,7 @@ class ChatRecyclerViewAdapter(
                 val action =
                     ChatFragmentDirections.actionChatFragmentToConversationFragment(
                         chatId.text.toString(),
-                        "sup"
+                        chatTitle.text.toString()
                     )
 //                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
                 it.findNavController().navigate(action)
