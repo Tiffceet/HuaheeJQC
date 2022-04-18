@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_userProfileManagement_to_orderStatus2"
             app:destination="@id/orderStatus2" />
+        <action
+            android:id="@+id/action_userProfileManagement_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

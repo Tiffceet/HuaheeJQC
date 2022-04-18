@@ -1,6 +1,8 @@
 package com.example.huaheejqc
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import com.example.huaheejqc.databinding.FragmentLoginBinding
 import com.example.huaheejqc.databinding.FragmentUserProfileManagementBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,6 +50,11 @@ class UserProfileManagement : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentUserProfileManagementBinding.inflate(inflater, container, false)
         val view = binding.root
+        val db = Firebase.firestore
+        val userid = Firebase.auth.currentUser?.uid
+        val stringID = userid.toString()
+
+        val docRef = db.collection("User").document(stringID)
 
         binding.goToEditUser.setOnClickListener{view : View ->
             view.findNavController().navigate(R.id.action_userProfileManagement_to_userEdit)
@@ -56,6 +66,11 @@ class UserProfileManagement : Fragment() {
 
         binding.buttonToOrderDetails.setOnClickListener{view:View->
             view.findNavController().navigate(R.id.action_userProfileManagement_to_orderStatus2)
+        }
+
+        binding.btnToLogOut.setOnClickListener{view:View->
+            Firebase.auth.signOut()
+            view.findNavController().navigate(R.id.action_userProfileManagement_to_loginFragment)
         }
 
         return view

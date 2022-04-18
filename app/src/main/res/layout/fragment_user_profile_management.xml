@@ -31,8 +31,6 @@
             android:layout_below="@id/profile_image"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
-            android:layout_centerHorizontal="true"
-            android:text="Khaw Zhe Xue"
             android:textColor="@color/white"
             android:textSize="30dp" />
 
@@ -40,8 +38,8 @@
             android:id="@+id/profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="khawzx-pm19@gmail.com"
             android:layout_below="@id/profile_name"
+            android:text="khawzx-pm19@gmail.com"
             android:textColor="@color/white"
             android:textSize="25dp" />
 
@@ -264,14 +262,25 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/btn_to_chat"
                     android:layout_width="110dp"
                     android:layout_height="70dp"
                     android:layout_marginStart="@dimen/layoutPadding"
                     android:layout_marginTop="35dp"
                     android:text="Chat"
                     android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_to_log_out"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="95dp"
+                    android:layout_alignParentRight="true"
+                    android:text="Log Out"
+                    android:textSize="18sp"/>
             </RelativeLayout>
         </TableLayout>
+
 
     </ScrollView>
 
