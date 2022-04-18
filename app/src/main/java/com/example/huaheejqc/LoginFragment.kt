@@ -48,6 +48,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         auth = Firebase.auth
+        auth.signOut()
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val view = binding.root
 
