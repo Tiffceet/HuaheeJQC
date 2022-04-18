@@ -112,7 +112,7 @@ class ChatFragment : Fragment() {
                     for (document in it) {
                         if (document.id != logonUserID) {
                             val otherUserObj = User.from(document.data)
-                            otherUserName = otherUserObj.Name
+                            otherUserName = otherUserObj.name
                         }
                     }
                     chatsIDs.set(chatId, true)
@@ -126,7 +126,7 @@ class ChatFragment : Fragment() {
                             // whenever data at this location is updated.
                             val vval = dataSnapshot.value
                             if (vval == null) {
-                                chatsArr.add(0, Chat(otherUserName, "", 0))
+                                chatsArr.add(0, Chat(chatId, otherUserName, "", 0))
                                 chatsArr.sortByDescending { it.timestamp }
                                 adapter?.notifyDataSetChanged()
                                 return
@@ -139,7 +139,7 @@ class ChatFragment : Fragment() {
                             var changedIndex =
                                 chatsArr.indices.firstOrNull { i -> chatsArr[i].id == inner_chatId }
                             if (changedIndex == null) {
-                                chatsArr.add(0, Chat(otherUserName, lastMsg, timestamp))
+                                chatsArr.add(0, Chat(chatId, otherUserName, lastMsg, timestamp))
                             } else {
                                 chatsArr[changedIndex].timestamp = timestamp
                                 chatsArr[changedIndex].lastMsg = lastMsg

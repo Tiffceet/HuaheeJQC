@@ -34,7 +34,7 @@ class ChatRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.chatId.text = item.id
-        holder.chatTitle.text = item.id
+        holder.chatTitle.text = item.conversationTitle
         holder.lastMessage.text = item.lastMsg
         if (item.timestamp == 0L) {
             holder.timestamp.text = ""

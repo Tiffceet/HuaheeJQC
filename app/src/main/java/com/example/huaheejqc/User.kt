@@ -1,18 +1,18 @@
 package com.example.huaheejqc
 
 data class User(
-    var Address : String,
-    var Contact: String,
-    var IC: String,
-    var Name: String
+    var address : String,
+    var contact: String,
+    var ic: String,
+    var name: String
 ) {
     companion object {
         fun from(map: Map<String, Any>): User {
-            val Address = if (map.containsKey("Address")) map["Address"] as String else ""
-            val Contact = if (map.containsKey("Contact")) map["Contact"] as String else ""
-            val IC = if (map.containsKey("IC")) map["IC"] as String else ""
-            val Name = if (map.containsKey("Name")) map["Name"] as String else ""
-            return User(Address, Contact, IC, Name)
+            val address = if (map.containsKey("address")) map["address"] as String else ""
+            val contact = if (map.containsKey("contact")) map["contact"] as String else ""
+            val ic = if (map.containsKey("ic")) map["ic"] as String else ""
+            val name = if (map.containsKey("name")) map["name"] as String else ""
+            return User(address, contact, ic, name)
         }
     }
 }

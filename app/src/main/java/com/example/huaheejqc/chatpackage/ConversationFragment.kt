@@ -42,6 +42,7 @@ class ConversationFragment : Fragment() {
     var conversationList: MutableList<ChatMsg> = ArrayList()
     var messagesIDs: HashMap<String, Boolean> = HashMap()
     private lateinit var chatId: String
+    private lateinit var conversationTitle: String
     private lateinit var logonUserID: String
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -65,6 +66,7 @@ class ConversationFragment : Fragment() {
         _binding = FragmentConversationBinding.inflate(inflater, container, false)
         val view = binding.root
         chatId = args.chatId
+        conversationTitle = args.conversationTitle
 
         binding.recyclerGchat.layoutManager = LinearLayoutManager(context)
         binding.recyclerGchat.adapter =
