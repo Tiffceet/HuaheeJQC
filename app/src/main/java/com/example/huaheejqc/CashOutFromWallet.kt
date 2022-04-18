@@ -5,6 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.huaheejqc.databinding.FragmentCashOutFromWalletBinding
+import com.example.huaheejqc.databinding.FragmentUserEditBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +26,8 @@ class CashOutFromWallet : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentCashOutFromWalletBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +42,14 @@ class CashOutFromWallet : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cash_out_from_wallet, container, false)
+        _binding = FragmentCashOutFromWalletBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val db = Firebase.firestore
+        val dbGet = FirebaseFirestore.getInstance()
+        val userid = Firebase.auth.currentUser?.uid
+        val stringID = userid.toString()
+
+        return view
     }
 
     companion object {

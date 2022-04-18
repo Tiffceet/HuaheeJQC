@@ -5,6 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import com.example.huaheejqc.databinding.FragmentUserEditBinding
+import com.example.huaheejqc.databinding.FragmentUserWalletManagementBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +27,8 @@ class user_wallet_management : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentUserWalletManagementBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +43,26 @@ class user_wallet_management : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_wallet_management, container, false)
+        _binding = FragmentUserWalletManagementBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val db = Firebase.firestore
+        val dbGet = FirebaseFirestore.getInstance()
+        val userid = Firebase.auth.currentUser?.uid
+        val stringID = userid.toString()
+
+        binding.cardToCashOut.setOnClickListener{view:View ->
+            view.findNavController().navigate(R.id.action_user_wallet_management_to_cashOutFromWallet)
+        }
+
+        binding.cardToReload.setOnClickListener{view:View ->
+            view.findNavController().navigate(R.id.action_user_wallet_management_to_reloadInUserWallet)
+        }
+
+        binding.cardToTransfer.setOnClickListener{view:View ->
+            view.findNavController().navigate(R.id.action_user_wallet_management_to_transferUserInWallet)
+        }
+
+        return view
     }
 
     companion object {

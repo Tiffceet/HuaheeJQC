@@ -42,6 +42,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_to_reload"
             android:layout_width="0dp"
             android:layout_height="125dp"
             android:layout_weight="1"
@@ -86,6 +87,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_to_cash_out"
             android:layout_width="0dp"
             android:layout_height="125dp"
             android:layout_weight="1"
@@ -102,34 +104,35 @@
                     android:id="@+id/cash_out_image"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@color/purple_200"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:src="@color/purple_200" />
 
                 <TextView
                     android:id="@+id/cash_out_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cash Out"
-                    android:includeFontPadding="false"
                     android:layout_below="@id/cash_out_image"
-                    android:textSize="20sp"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:includeFontPadding="false"
+                    android:text="Cash Out"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/cash_out_title_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Get Cash Back"
-                    android:layout_centerHorizontal="true"
                     android:layout_below="@id/cash_out_title"
-                    android:textSize="14sp"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Get Cash Back"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_to_transfer"
             android:layout_width="0dp"
             android:layout_height="125dp"
             android:layout_weight="1"

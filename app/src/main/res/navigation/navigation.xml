@@ -130,5 +130,29 @@
         android:id="@+id/user_wallet_management"
         android:name="com.example.huaheejqc.user_wallet_management"
         android:label="fragment_user_wallet_management"
-        tools:layout="@layout/fragment_user_wallet_management" />
+        tools:layout="@layout/fragment_user_wallet_management" >
+        <action
+            android:id="@+id/action_user_wallet_management_to_cashOutFromWallet"
+            app:destination="@id/cashOutFromWallet" />
+        <action
+            android:id="@+id/action_user_wallet_management_to_reloadInUserWallet"
+            app:destination="@id/reloadInUserWallet" />
+        <action
+            android:id="@+id/action_user_wallet_management_to_transferUserInWallet"
+            app:destination="@id/transferUserInWallet" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashOutFromWallet"
+        android:name="com.example.huaheejqc.CashOutFromWallet"
+        android:label="CashOutFromWallet" />
+    <fragment
+        android:id="@+id/reloadInUserWallet"
+        android:name="com.example.huaheejqc.ReloadInUserWallet"
+        android:label="fragment_reload_in_user_wallet"
+        tools:layout="@layout/fragment_reload_in_user_wallet" />
+    <fragment
+        android:id="@+id/transferUserInWallet"
+        android:name="com.example.huaheejqc.TransferUserInWallet"
+        android:label="fragment_transfer_user_in_wallet"
+        tools:layout="@layout/fragment_transfer_user_in_wallet" />
 </navigation>
