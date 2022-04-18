@@ -1,4 +1,4 @@
-package com.example.huaheejqc.sallerBookManagement
+package com.example.huaheejqc.sellerBookManagement
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

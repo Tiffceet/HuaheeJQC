@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.findNavController
+import com.example.huaheejqc.data.Book
 import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -110,39 +111,26 @@ class AddBook : Fragment() {
                 binding.addbookCategoryEro.text = ""
             }
 
-            val book = hashMapOf(
-                "Title" to newTitle,
-                "Author" to newAuthor,
-                "Price" to newPrice,
-                "Description" to newDescription,
-                "Category" to newCategory,
-                "Status" to "Posted"
-            )
+//            val book = hashMapOf(
+//                "Title" to newTitle,
+//                "Author" to newAuthor,
+//                "Price" to newPrice,
+//                "Description" to newDescription,
+//                "Category" to newCategory,
+//                "Status" to "Posted"
+//            )
+           val book = Book(newTitle,newAuthor,newPrice,newDescription,newCategory,"Posted",stringID)
 
-            db.collection("Book")
+            db.collection("books")
                 .add(book)
                 .addOnSuccessListener { documentReference ->
                     Log.d("TAG", "DocumentSnapshot written with ID: ${documentReference.id}")
-                    val bookId = documentReference.id.toString()
+                    view.findNavController().navigateUp()
                 }
                 .addOnFailureListener { e ->
                     Log.w("TAG", "Error adding document", e)
                 }
 
-            val book_user = hashMapOf(
-                "books" to "testing",
-            )
-
-            db.collection("Book")
-                .add(book)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("TAG", "DocumentSnapshot written with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { e ->
-                    Log.w("TAG", "Error adding document", e)
-                }
-
-            view.findNavController().navigateUp()
         }
         return view
     }

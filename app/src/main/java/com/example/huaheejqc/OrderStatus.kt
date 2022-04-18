@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.huaheejqc.sallerBookManagement.sallerBookManager_ViewPagerAdapter
 import com.example.huaheejqc.databinding.FragmentOrderStatusBinding
 import com.example.huaheejqc.orderStatus.orderStatus_ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
