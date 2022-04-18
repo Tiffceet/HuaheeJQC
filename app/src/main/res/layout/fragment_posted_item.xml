@@ -23,8 +23,15 @@
             android:layout_margin="@dimen/layoutPadding"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/posteditem_add_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutPadding"
+                android:text="Add" />
+
             <LinearLayout
-                android:id="@+id/pendingorder_product"
+                android:id="@+id/posteditem_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/teal_200"
@@ -32,7 +39,7 @@
                 android:padding="@dimen/layoutPadding">
 
                 <ImageView
-                    android:id="@+id/pendingorder_book_img"
+                    android:id="@+id/posteditem_book_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
@@ -46,7 +53,7 @@
                     android:paddingLeft="@dimen/layoutPadding">
 
                     <TextView
-                        android:id="@+id/pendingorder_producttitle_txt"
+                        android:id="@+id/posteditem_producttitle_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Product Title"
@@ -55,13 +62,13 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/pendingorder_description_txt"
+                        android:id="@+id/posteditem_description_txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="TextView" />
 
                     <Button
-                        android:id="@+id/pendingorder_viewdetails_btn"
+                        android:id="@+id/posteditem_viewdetails_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="View Details" />

@@ -42,6 +42,12 @@
                 android:minHeight="48dp" />
 
             <TextView
+                android:id="@+id/addbook_title_ero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,6 +62,12 @@
                 android:minHeight="48dp" />
 
             <TextView
+                android:id="@+id/addbook_author_ero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,6 +80,12 @@
                 android:ems="10"
                 android:inputType="numberDecimal"
                 android:minHeight="48dp" />
+
+            <TextView
+                android:id="@+id/addbook_price_ero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -95,6 +113,12 @@
             </ScrollView>
 
             <TextView
+                android:id="@+id/addbook_description_ero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,10 +132,11 @@
                 android:minHeight="48dp"
                 android:padding="@dimen/layoutPadding" />
 
-            <RadioGroup
+            <TextView
+                android:id="@+id/addbook_category_ero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"/>
+                android:textColor="@android:color/holo_red_dark" />
 
             <Button
                 android:id="@+id/addbook_confirm_btn"

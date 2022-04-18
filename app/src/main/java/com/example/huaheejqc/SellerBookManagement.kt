@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.huaheejqc.sallerBookManagement.sallerBookManager_ViewPagerAdapter
 import com.example.huaheejqc.databinding.FragmentSellerBookManagementBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -66,6 +67,7 @@ class SellerBookManagement : Fragment() {
                 }
             }
         }.attach()
+
 
 
         return view
