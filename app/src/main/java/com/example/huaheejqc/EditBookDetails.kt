@@ -20,6 +20,7 @@ import java.util.HashMap
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private var dataArray:MutableList<Book> = ArrayList()
 
 /**
  * A simple [Fragment] subclass.
@@ -32,8 +33,8 @@ class EditBookDetails : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentEditBookDetailsBinding? = null
     private val binding get() = _binding!!
+
     val args: EditBookDetailsArgs by navArgs()
-    val bookid:String = args.editbook.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +48,26 @@ class EditBookDetails : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        dataArray=ArrayList()
         _binding = FragmentEditBookDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
-        val db = FirebaseFirestore.getInstance()
+        val db = Firebase.firestore
+        val bookid:String = args.editbook.toString()
 
         val docRef = db.collection("books").document(bookid)
             docRef.get().addOnSuccessListener {document ->
                 if (document != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    binding.editbookText.text = document.getString("title")
+                    val title:String = document.getString("title").toString()
+                    val author:String = document.getString("author").toString()
+                    val price:String = document.getString("price").toString()
+                    val description:String = document.getString("description").toString()
+                    val category:Int = document.getString("category").toString().toInt()
+                    binding.editbookTitleTxt.setText(title)
+                    binding.editbookAuthorTxt.setText(author)
+                    binding.editbookPriceTxt.setText(price)
+                    binding.editbookDescriptionTxt.setText(description)
+                    binding.editbookCategorySpin.setSelection(category)
                 } else {
                     Log.d("TAG", "No such document")
                 }
@@ -63,6 +75,7 @@ class EditBookDetails : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
+
         // Inflate the layout for this fragment
         return view
     }

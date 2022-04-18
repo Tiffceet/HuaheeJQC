@@ -73,7 +73,7 @@ class AddBook : Fragment() {
             val newAuthor = binding.addbookAuthorTxt.text.toString()
             val newPrice = binding.addbookPriceTxt.text.toString()
             val newDescription = binding.addbookDescriptionTxt.text.toString()
-            val newCategory = binding.addbookCategorySpin.selectedItem.toString()
+            val newCategory = binding.addbookCategorySpin.selectedItemPosition.toString()
             val userid = Firebase.auth.currentUser?.uid
             val stringID = userid.toString()
 //            val bookArray = db.collection("user-book").document(stringID)
