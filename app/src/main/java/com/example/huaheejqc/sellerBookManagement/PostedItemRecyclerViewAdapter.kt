@@ -38,7 +38,7 @@ class PostedItemRecyclerViewAdapter(private val values: List<Book>) :
             Log.d("chin",item.bookid)
 //            it.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)
             val action =
-                SellerBookManagementDirections.actionSellerBookManagementToBookDetails(
+                SellerBookManagementDirections.actionSellerBookManagementToEditBookDetails(
                     item.bookid
                 )
 //                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)

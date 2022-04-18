@@ -85,11 +85,11 @@
         android:label="fragment_seller_book_management"
         tools:layout="@layout/fragment_seller_book_management" >
         <action
-            android:id="@+id/action_sellerBookManagement_to_bookDetails"
-            app:destination="@id/bookDetails" />
-        <action
             android:id="@+id/action_sellerBookManagement_to_addBook"
             app:destination="@id/addBook" />
+        <action
+            android:id="@+id/action_sellerBookManagement_to_editBookDetails"
+            app:destination="@id/editBookDetails" />
     </fragment>
     <fragment
         android:id="@+id/orderStatus2"
@@ -114,4 +114,10 @@
         android:name="com.example.huaheejqc.AddBook"
         android:label="fragment_add_book"
         tools:layout="@layout/fragment_add_book" />
+    <fragment
+        android:id="@+id/editBookDetails"
+        android:name="com.example.huaheejqc.EditBookDetails"
+        android:label="EditBookDetails" >
+        <argument android:name="editbook" />
+    </fragment>
 </navigation>
