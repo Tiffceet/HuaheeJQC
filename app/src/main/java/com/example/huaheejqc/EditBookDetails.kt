@@ -1,11 +1,20 @@
 package com.example.huaheejqc
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.fragment.navArgs
+import com.example.huaheejqc.data.Book
+import com.example.huaheejqc.databinding.FragmentAddBookBinding
+import com.example.huaheejqc.databinding.FragmentEditBookDetailsBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.util.HashMap
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,7 +30,10 @@ class EditBookDetails : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    val args: BookDetailsArgs by navArgs()
+    private var _binding: FragmentEditBookDetailsBinding? = null
+    private val binding get() = _binding!!
+    val args: EditBookDetailsArgs by navArgs()
+    val bookid:String = args.editbook.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +47,24 @@ class EditBookDetails : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentEditBookDetailsBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val db = FirebaseFirestore.getInstance()
+
+        val docRef = db.collection("books").document(bookid)
+            docRef.get().addOnSuccessListener {document ->
+                if (document != null) {
+                    Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                    binding.editbookText.text = document.getString("title")
+                } else {
+                    Log.d("TAG", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents: ", exception)
+            }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_book_details, container, false)
+        return view
     }
 
     companion object {

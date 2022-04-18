@@ -85,7 +85,7 @@
     <fragment
         android:id="@+id/sellerBookManagement"
         android:name="com.example.huaheejqc.SellerBookManagement"
-        android:label="fragment_seller_book_management"
+        android:label="Seller Book Management"
         tools:layout="@layout/fragment_seller_book_management" >
         <action
             android:id="@+id/action_sellerBookManagement_to_addBook"
