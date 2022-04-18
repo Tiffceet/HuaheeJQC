@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,61 +12,72 @@
     <!--        android:text="Completed Order"-->
     <!--        android:textSize="35sp" />-->
 
-    <ScrollView
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout_editor_absoluteX="10dp">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/layoutPadding"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/completeorder_product"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/teal_200"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:padding="@dimen/layoutPadding">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/completeorder_book_img"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="0"-->
+<!--                    tools:src="@tools:sample/avatars" />-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:paddingLeft="@dimen/layoutPadding">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/completeorder_producttitle_txt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Product Title"-->
+<!--                        android:textColor="#004D40"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textStyle="bold" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/completeorder_description_txt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="TextView" />-->
+
+<!--                    <Button-->
+<!--                        android:id="@+id/completeorder_viewdetails_btn"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:text="View Details" />-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/completed_order_recycle_view"
+        android:name="com.example.huaheejqc.placeholder.ChatFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layoutPadding"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/completeorder_product"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/teal_200"
-                android:orientation="horizontal"
-                android:padding="@dimen/layoutPadding">
-
-                <ImageView
-                    android:id="@+id/completeorder_book_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    tools:src="@tools:sample/avatars" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/layoutPadding">
-
-                    <TextView
-                        android:id="@+id/completeorder_producttitle_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Product Title"
-                        android:textColor="#004D40"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/completeorder_description_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-
-                    <Button
-                        android:id="@+id/completeorder_viewdetails_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="View Details" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+        android:layout_margin="@dimen/layoutPadding"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".sellerBookManagement.CompleteOrder"
+        tools:listitem="@layout/posteditem_listitem"></androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

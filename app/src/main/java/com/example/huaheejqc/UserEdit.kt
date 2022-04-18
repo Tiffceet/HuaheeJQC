@@ -114,10 +114,12 @@ class UserEdit : Fragment() {
 
             db.collection("User").document(stringID)
                 .set(city)
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                .addOnSuccessListener {
+                    Log.d(TAG, "DocumentSnapshot successfully written!")
+                    view.findNavController().navigateUp()}
                 .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
 
-            view.findNavController().navigate(R.id.action_userEdit_to_userProfileManagement)
+
         }
 
         return view

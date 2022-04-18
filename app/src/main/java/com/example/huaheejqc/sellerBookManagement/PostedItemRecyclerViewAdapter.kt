@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.huaheejqc.R
+import com.example.huaheejqc.SellerBookManagementDirections
 import com.example.huaheejqc.chatpackage.ChatFragmentDirections
 import com.example.huaheejqc.chatpackage.ChatRecyclerViewAdapter
 import com.example.huaheejqc.data.Book
@@ -34,9 +35,14 @@ class PostedItemRecyclerViewAdapter(private val values: List<Book>) :
         holder.title.text=item.title
         holder.status.text=item.status
         holder.viewDetails.setOnClickListener{
-            Log.d("chin",item.title)
-            it.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)
-
+            Log.d("chin",item.bookid)
+//            it.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)
+            val action =
+                SellerBookManagementDirections.actionSellerBookManagementToBookDetails(
+                    item.bookid
+                )
+//                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
+            it.findNavController().navigate(action)
         }
     }
 

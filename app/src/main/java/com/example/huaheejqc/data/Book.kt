@@ -8,4 +8,5 @@ data class Book(var title: String,
                 var description: String,
                 var category: String,
                 var status: String,
-                var userid: String)
+                var userid: String,
+                var bookid: String = "")

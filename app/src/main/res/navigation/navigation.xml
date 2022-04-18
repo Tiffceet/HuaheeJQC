@@ -78,11 +78,7 @@
     <fragment
         android:id="@+id/userEdit"
         android:name="com.example.huaheejqc.UserEdit"
-        android:label="UserEdit" >
-        <action
-            android:id="@+id/action_userEdit_to_userProfileManagement"
-            app:destination="@id/userProfileManagement" />
-    </fragment>
+        android:label="UserEdit" />
     <fragment
         android:id="@+id/sellerBookManagement"
         android:name="com.example.huaheejqc.SellerBookManagement"
@@ -108,7 +104,11 @@
         android:id="@+id/bookDetails"
         android:name="com.example.huaheejqc.BookDetails"
         android:label="fragment_book_details"
-        tools:layout="@layout/fragment_book_details" />
+        tools:layout="@layout/fragment_book_details" >
+        <argument
+            android:name="Bookid"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/addBook"
         android:name="com.example.huaheejqc.AddBook"
