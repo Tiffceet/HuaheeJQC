@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
             Log.d("FirebaseAuth", "Current UserID: " + auth.currentUser?.uid.toString())
             val navView = binding.navView
             val nav_header: View = LayoutInflater.from(this).inflate(R.layout.nav_header, null)
-            (nav_header.findViewById(R.id.nav_header_content) as TextView).text = "dynamic content"
-            navView.addHeaderView(nav_header)
+            // (nav_header.findViewById(R.id.nav_header_content) as TextView).text = "dynamic content"
+            // navView.addHeaderView(nav_header)
         } else {
             navController.navigate(R.id.action_mainMenu_to_loginFragment)
         }

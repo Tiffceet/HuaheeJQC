@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.huaheejqc.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
@@ -55,17 +57,17 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if(email.isEmpty()) {
+            if (email.isEmpty()) {
                 binding.statusText.text = "Email cannot be empty";
                 return@setOnClickListener
             }
 
-            if(password.isEmpty()) {
+            if (password.isEmpty()) {
                 binding.statusText.text = "Password cannot be empty";
                 return@setOnClickListener
             }
 
-            if(password.length < 6) {
+            if (password.length < 6) {
                 binding.statusText.text = "Password length needs to be at least 6 character long";
                 return@setOnClickListener
             }
@@ -73,13 +75,17 @@ class RegisterFragment : Fragment() {
             Log.d("Debug", email)
             Log.d("Debug", password)
             Log.d("Debug", confirmPW)
+            val firestore = Firebase.firestore
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity as Activity) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         val user = auth.currentUser
+                        val uid = user?.uid.toString()
                         binding.statusText.setTextColor(Color.parseColor("#00FF00"))
                         binding.statusText.text = "Successfully Registered";
+                        firestore.collection("User").document(uid).set(User("", "", "", ""))
+                        view.findNavController().navigateUp()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.d("Debug", task.exception.toString())
