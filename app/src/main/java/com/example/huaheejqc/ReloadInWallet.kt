@@ -90,9 +90,9 @@ class ReloadInWallet : Fragment() {
                 return@setOnClickListener
             }
 
-            val user = User("zhexue",int_reload_amount)
+//            val user = User("zhexue",int_reload_amount)
 
-            db.collection("User").document("IeewpA3XXVfBjcVPUqpc").set(user)
+//            db.collection("User").document("IeewpA3XXVfBjcVPUqpc").set(user)
         }
         return view
     }
