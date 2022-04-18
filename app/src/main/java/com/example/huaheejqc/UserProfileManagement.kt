@@ -14,6 +14,7 @@ import com.example.huaheejqc.databinding.FragmentLoginBinding
 import com.example.huaheejqc.databinding.FragmentUserProfileManagementBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -50,11 +51,23 @@ class UserProfileManagement : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentUserProfileManagementBinding.inflate(inflater, container, false)
         val view = binding.root
-        val db = Firebase.firestore
+        val db = FirebaseFirestore.getInstance()
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
 
         val docRef = db.collection("User").document(stringID)
+        docRef.get()
+            .addOnSuccessListener {document ->
+                if(document != null){
+                    Log.d("exist","DocumentSnapshot data: ${document.data}")
+
+                    binding.profileName.text = document.getString("Name")
+                    binding.profileEmail.text = document.getString("Contact")
+                }else{
+                    Log.d("errordb","get failed with ")
+                }
+
+        }
 
         binding.goToEditUser.setOnClickListener{view : View ->
             view.findNavController().navigate(R.id.action_userProfileManagement_to_userEdit)

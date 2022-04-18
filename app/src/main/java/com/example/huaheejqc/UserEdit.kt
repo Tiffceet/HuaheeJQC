@@ -47,46 +47,34 @@ class UserEdit : Fragment() {
         _binding = FragmentUserEditBinding.inflate(inflater, container, false)
         val view = binding.root
         val db = Firebase.firestore
+        val userid = Firebase.auth.currentUser?.uid
+        val stringID = userid.toString()
 
         binding.startEditUserProfile.setOnClickListener{ view: View ->
-            val newEmail = binding.getNewEmail.text.toString()
-            val newPassword = binding.getNewPassword.text.toString()
-            val confirmPassword = binding.confirmNewPassword.text.toString()
             val newName = binding.getNewName.text.toString()
             val newAddress = binding.getNewAddress.text.toString()
             val newContact = binding.getNewContact.text.toString()
             val newIC = binding.getNewIc.text.toString()
-            val userid = Firebase.auth.currentUser?.uid
-            val stringID = userid.toString()
 
-            if(newEmail.isEmpty()){
-                binding.getEmailStatusText.text = "Email cannot be empty!"
-                return@setOnClickListener
-            }
-            if(newPassword.isEmpty()){
-                binding.getEmailStatusText.text = "Password cannot be empty!"
-                return@setOnClickListener
-            }
+
+
             if(newName.isEmpty()){
-                binding.getEmailStatusText.text = "Name cannot be empty!"
+                binding.getNameStatusText.text = "Name cannot be empty!"
                 return@setOnClickListener
             }
             if(newAddress.isEmpty()){
-                binding.getEmailStatusText.text = "Address cannot be empty!"
+                binding.getAddressStatusText.text = "Address cannot be empty!"
                 return@setOnClickListener
             }
             if(newContact.isEmpty()){
-                binding.getEmailStatusText.text = "Contact cannot be empty!"
+                binding.getContactStatusText.text = "Contact cannot be empty!"
                 return@setOnClickListener
             }
             if(newIC.isEmpty()){
-                binding.getEmailStatusText.text = "IC cannot be empty!"
+                binding.getICStatusText.text = "IC cannot be empty!"
                 return@setOnClickListener
             }
-            if(confirmPassword != newPassword){
-                binding.confirmPasswordStatusText.text = "Password and Confirm Password should be same!"
-                return@setOnClickListener
-            }
+
 /*
             val newUser = hashMapOf(
                 "Name" to newName,
@@ -105,8 +93,6 @@ class UserEdit : Fragment() {
 
             val city = hashMapOf(
                 "Name" to newName,
-                "Email" to newEmail,
-                "Password" to newPassword,
                 "Address" to newAddress,
                 "IC" to newIC,
                 "Contact" to newContact

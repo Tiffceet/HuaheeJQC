@@ -39,7 +39,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile_name"
-            android:text="khawzx-pm19@gmail.com"
             android:textColor="@color/white"
             android:textSize="25dp" />
 
