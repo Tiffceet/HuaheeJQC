@@ -48,7 +48,7 @@ class PostedItem : Fragment() {
 
                     val vval = document.data
                     vval as HashMap<String, Any>
-                    dataArray.add(Book(document.data["title"]as String,document.data["author"] as String, document.data["price"]as String,document.data["description"]as String,document.data["category"]as String,document.data["status"]as String,document.data["userid"]as String,document.id))
+                    dataArray.add(Book(document.data["title"]as String,document.data["author"] as String, document.data["price"]as Number,document.data["description"]as String,document.data["category"]as Number,document.data["status"]as String,document.data["userid"]as String,document.id))
                 }
                 postedItemAdapter?.notifyDataSetChanged()
             }

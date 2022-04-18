@@ -1,5 +1,6 @@
 package com.example.huaheejqc
 
+import android.app.Activity
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 import java.util.HashMap
 
 // TODO: Rename parameter arguments, choose names that match
@@ -61,16 +64,16 @@ class EditBookDetails : Fragment() {
             docRef.get().addOnSuccessListener {document ->
                 if (document != null) {
                     Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                    val title:String = document.getString("title").toString()
-                    val author:String = document.getString("author").toString()
-                    val price:String = document.getString("price").toString()
-                    val description:String = document.getString("description").toString()
-                    val category:Int = document.getString("category").toString().toInt()
+                    val title:String = document.get("title") as String
+                    val author:String = document.get("author") as String
+                    val price:Number = document.get("price") as Number
+                    val description:String = document.get("description") as String
+                    val category:Number = document.get("category") as Number
                     binding.editbookTitleTxt.setText(title)
                     binding.editbookAuthorTxt.setText(author)
-                    binding.editbookPriceTxt.setText(price)
+                    binding.editbookPriceTxt.setText(DecimalFormat("####.00").format(price))
                     binding.editbookDescriptionTxt.setText(description)
-                    binding.editbookCategorySpin.setSelection(category)
+                    binding.editbookCategorySpin.setSelection(category.toInt())
                 } else {
                     Log.d("TAG", "No such document")
                 }
@@ -80,11 +83,12 @@ class EditBookDetails : Fragment() {
             }
 
         binding.editbookConfirmBtn.setOnClickListener{view: View ->
+            var confirmPrice:Number = 0
             val newTitle = binding.editbookTitleTxt.text.toString()
             val newAuthor = binding.editbookAuthorTxt.text.toString()
-            val newPrice = binding.editbookPriceTxt.text.toString()
+            val newPrice:String = binding.editbookPriceTxt.text.toString()
             val newDescription = binding.editbookDescriptionTxt.text.toString()
-            val newCategory = binding.editbookCategorySpin.selectedItemPosition.toString()
+            val newCategory:Number = binding.editbookCategorySpin.selectedItemPosition.toString().toInt()
             val userid = Firebase.auth.currentUser?.uid
             val stringID = userid.toString()
 //            val bookArray = db.collection("user-book").document(stringID)
@@ -107,6 +111,7 @@ class EditBookDetails : Fragment() {
             binding.editbookPriceEro.text = "Price cannot be empty!"
             return@setOnClickListener
         }else{
+            confirmPrice = DecimalFormat("####.00").format(binding.editbookPriceTxt.text.toString().toDouble()).toDouble()
             binding.editbookPriceEro.text = ""
         }
         if (newDescription.isEmpty()) {
@@ -115,7 +120,7 @@ class EditBookDetails : Fragment() {
         }else{
             binding.editbookDescriptionEro.text = ""
         }
-        if (newCategory.isEmpty()) {
+        if (newCategory == null) {
             binding.editbookCategoryEro.text = "Description cannot be empty!"
             return@setOnClickListener
         }else{
@@ -130,7 +135,7 @@ class EditBookDetails : Fragment() {
 //                "Category" to newCategory,
 //                "Status" to "Posted"
 //            )
-        val book = Book(newTitle,newAuthor,newPrice,newDescription,newCategory,"Posted",stringID)
+        val book = Book(newTitle,newAuthor,confirmPrice,newDescription,newCategory,"Posted",stringID)
 
             db.collection("books").document(bookid)
                 .set(book)
@@ -141,6 +146,14 @@ class EditBookDetails : Fragment() {
 
     }
 
+        binding.editbookDeleteBtn.setOnClickListener { view: View ->
+            db.collection("books").document(bookid)
+                .delete()
+                .addOnSuccessListener {
+                    Log.d("TAG", "DocumentSnapshot successfully deleted!")
+                    view.findNavController().navigateUp()}
+                .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
+        }
         // Inflate the layout for this fragment
         return view
     }

@@ -16,6 +16,7 @@ import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,11 +70,12 @@ class AddBook : Fragment() {
 
 
         binding.addbookConfirmBtn.setOnClickListener { view: View ->
+            var confirmPrice:Number = 0;
             val newTitle = binding.addbookTitleTxt.text.toString()
             val newAuthor = binding.addbookAuthorTxt.text.toString()
-            val newPrice = binding.addbookPriceTxt.text.toString()
+            var newPrice = binding.addbookPriceTxt.text.toString()
             val newDescription = binding.addbookDescriptionTxt.text.toString()
-            val newCategory = binding.addbookCategorySpin.selectedItemPosition.toString()
+            val newCategory:Number = binding.addbookCategorySpin.selectedItemPosition.toString().toInt()
             val userid = Firebase.auth.currentUser?.uid
             val stringID = userid.toString()
 //            val bookArray = db.collection("user-book").document(stringID)
@@ -96,6 +98,7 @@ class AddBook : Fragment() {
                 binding.addbookPriceEro.text = "Price cannot be empty!"
                 return@setOnClickListener
             }else{
+                confirmPrice = DecimalFormat("####.00").format(binding.addbookPriceTxt.text.toString().toDouble()).toDouble()
                 binding.addbookPriceEro.text = ""
             }
             if (newDescription.isEmpty()) {
@@ -104,7 +107,7 @@ class AddBook : Fragment() {
             }else{
                 binding.addbookDescriptionEro.text = ""
             }
-            if (newCategory.isEmpty()) {
+            if (newCategory == null) {
                 binding.addbookCategoryEro.text = "Description cannot be empty!"
                 return@setOnClickListener
             }else{
@@ -119,7 +122,7 @@ class AddBook : Fragment() {
 //                "Category" to newCategory,
 //                "Status" to "Posted"
 //            )
-           val book = Book(newTitle,newAuthor,newPrice,newDescription,newCategory,"Posted",stringID)
+           val book = Book(newTitle,newAuthor,confirmPrice,newDescription,newCategory,"Posted",stringID)
 
             db.collection("books")
                 .add(book)
