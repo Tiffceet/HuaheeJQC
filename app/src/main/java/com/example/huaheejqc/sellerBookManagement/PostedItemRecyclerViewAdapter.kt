@@ -33,7 +33,7 @@ class PostedItemRecyclerViewAdapter(private val values: List<Book>) :
     override fun onBindViewHolder(holder: PostedItemRecyclerViewAdapter.ViewHolder, position: Int) {
         val item = values[position]
         holder.title.text=item.title
-        holder.status.text=item.status
+        holder.price.text="RM " + item.price
         holder.viewDetails.setOnClickListener{
             Log.d("chin",item.bookid)
 //            it.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)
@@ -51,7 +51,7 @@ class PostedItemRecyclerViewAdapter(private val values: List<Book>) :
     inner class ViewHolder(binding: PosteditemListitemBinding) :
         RecyclerView.ViewHolder(binding.root) {
             val title=binding.posteditemProducttitleTxt
-            val status=binding.posteditemStatusTxt
+            val price=binding.posteditemPriceTxt
             val viewDetails = binding.posteditemViewdetailsBtn
     }
 }

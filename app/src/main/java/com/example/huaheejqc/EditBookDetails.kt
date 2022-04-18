@@ -1,5 +1,6 @@
 package com.example.huaheejqc
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.huaheejqc.data.Book
 import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.example.huaheejqc.databinding.FragmentEditBookDetailsBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -75,6 +78,68 @@ class EditBookDetails : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
+
+        binding.editbookConfirmBtn.setOnClickListener{view: View ->
+            val newTitle = binding.editbookTitleTxt.text.toString()
+            val newAuthor = binding.editbookAuthorTxt.text.toString()
+            val newPrice = binding.editbookPriceTxt.text.toString()
+            val newDescription = binding.editbookDescriptionTxt.text.toString()
+            val newCategory = binding.editbookCategorySpin.selectedItemPosition.toString()
+            val userid = Firebase.auth.currentUser?.uid
+            val stringID = userid.toString()
+//            val bookArray = db.collection("user-book").document(stringID)
+//            val list: ArrayList<String> = ArrayList()
+
+
+        if (newTitle.isEmpty()) {
+            binding.editbookTitleEro.text = "Title cannot be empty!"
+            return@setOnClickListener
+        }else{
+            binding.editbookTitleEro.text = ""
+        }
+        if (newAuthor.isEmpty()) {
+            binding.editbookAuthorEro.text = "Author cannot be empty!"
+            return@setOnClickListener
+        }else{
+            binding.editbookAuthorEro.text = ""
+        }
+        if (newPrice.isEmpty()) {
+            binding.editbookPriceEro.text = "Price cannot be empty!"
+            return@setOnClickListener
+        }else{
+            binding.editbookPriceEro.text = ""
+        }
+        if (newDescription.isEmpty()) {
+            binding.editbookDescriptionEro.text = "Description cannot be empty!"
+            return@setOnClickListener
+        }else{
+            binding.editbookDescriptionEro.text = ""
+        }
+        if (newCategory.isEmpty()) {
+            binding.editbookCategoryEro.text = "Description cannot be empty!"
+            return@setOnClickListener
+        }else{
+            binding.editbookCategoryEro.text = ""
+        }
+
+//            val book = hashMapOf(
+//                "Title" to newTitle,
+//                "Author" to newAuthor,
+//                "Price" to newPrice,
+//                "Description" to newDescription,
+//                "Category" to newCategory,
+//                "Status" to "Posted"
+//            )
+        val book = Book(newTitle,newAuthor,newPrice,newDescription,newCategory,"Posted",stringID)
+
+            db.collection("books").document(bookid)
+                .set(book)
+                .addOnSuccessListener {
+                    Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
+                    view.findNavController().navigateUp()}
+                .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
+
+    }
 
         // Inflate the layout for this fragment
         return view
