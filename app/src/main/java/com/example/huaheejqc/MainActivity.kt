@@ -20,19 +20,20 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         drawerLayout = binding.drawerLayout
 
         val navController = this.findNavController(R.id.myNavHostFragment)
 
-        NavigationUI.setupActionBarWithNavController(this,navController, drawerLayout)
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
 
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-        if(auth.currentUser != null) {
+        if (auth.currentUser != null) {
             Log.d("FirebaseAuth", "Current UserID: " + auth.currentUser?.uid.toString())
             val navView = binding.navView
             val nav_header: View = LayoutInflater.from(this).inflate(R.layout.nav_header, null)
@@ -44,9 +45,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun setDrawerLayout(enabled: Boolean) {
+        binding.drawerLayout.setDrawerLockMode(
+            if (enabled) DrawerLayout.LOCK_MODE_UNLOCKED else
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+        )
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.myNavHostFragment)
-        if(navController.currentDestination?.id == R.id.loginFragment) {
+        if (navController.currentDestination?.id == R.id.loginFragment) {
             return true;
         }
         return NavigationUI.navigateUp(navController, drawerLayout)

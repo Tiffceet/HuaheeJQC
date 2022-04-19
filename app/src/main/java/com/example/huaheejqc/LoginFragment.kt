@@ -47,6 +47,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as MainActivity).setDrawerLayout(false)
         auth = Firebase.auth
         auth.signOut()
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -72,6 +73,7 @@ class LoginFragment : Fragment() {
                         binding.loginPageStatusText.setTextColor(Color.parseColor("#00FF00"))
                         binding.loginPageStatusText.text = "Login Successful"
                         view.hideKeyboard()
+                        (activity as MainActivity).setDrawerLayout(true)
                         view.findNavController().navigate(R.id.action_loginFragment_to_mainMenu)
                     } else {
                         // If sign in fails, display a message to the user.
