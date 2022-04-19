@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.example.huaheejqc.data.User
 import com.example.huaheejqc.databinding.FragmentLoginBinding
 import com.example.huaheejqc.databinding.FragmentUserEditBinding
 import com.google.firebase.auth.ktx.auth
@@ -94,8 +95,6 @@ class UserEdit : Fragment() {
             val newContact = binding.getNewContact.text.toString()
             val newIC = binding.getNewIc.text.toString()
 
-
-
             if(newName.isEmpty()){
                 binding.getNameStatusText.text = "Name cannot be empty!"
                 return@setOnClickListener
@@ -113,38 +112,28 @@ class UserEdit : Fragment() {
                 return@setOnClickListener
             }
 
-/*
-            val newUser = hashMapOf(
-                "Name" to newName,
-                "Email" to newEmail,
-                "Password" to newPassword,
-                "Address" to newAddress,
-                "IC" to newIC,
-                "Contact" to newContact
-            )
 
-            db.collection("User").document(stringID)
-                .set(newUser)
-                .addOnSuccessListener { }
-                .addOnFailureListener { }
-            */
+            val docRef = dbGet.collection("User").document(stringID)
+            docRef.get()
+                .addOnSuccessListener {document ->
+                    if(document!=null){
+                        var newAmount = document.get("amount") as Number
+                        var intamount:Double = newAmount.toDouble()
+                        var newEmail = document.getString("email")
 
-            val city = hashMapOf(
-                "name" to newName,
-                "address" to newAddress,
-                "ic" to newIC,
-                "contact" to newContact
-            )
-
-            db.collection("User").document(stringID)
-                .set(city)
-                .addOnSuccessListener {
-                    Log.d(TAG, "DocumentSnapshot successfully written!")
+                        db.collection("User").document(stringID).set(
+                            User(
+                                newName.toString(),
+                                newContact.toString(),
+                                newIC.toString(),
+                                newName.toString(),
+                                intamount,
+                                newEmail.toString()
+                            )
+                        )
+                    }
                     view.findNavController().navigateUp()}
-                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-
-
-        }
+                }
 
         return view
     }

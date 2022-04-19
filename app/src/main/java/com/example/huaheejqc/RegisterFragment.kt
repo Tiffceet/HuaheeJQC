@@ -84,7 +84,7 @@ class RegisterFragment : Fragment() {
                         val uid = user?.uid.toString()
                         binding.statusText.setTextColor(Color.parseColor("#00FF00"))
                         binding.statusText.text = "Successfully Registered";
-                        firestore.collection("User").document(uid).set(User("", "", "", "",0.00))
+                        firestore.collection("User").document(uid).set(User("", "", "", "",0.00,email))
                         view.findNavController().navigateUp()
                     } else {
                         // If sign in fails, display a message to the user.

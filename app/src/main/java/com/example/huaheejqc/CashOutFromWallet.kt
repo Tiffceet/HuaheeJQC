@@ -85,6 +85,7 @@ class CashOutFromWallet : Fragment() {
                         ).toDouble()
                         var intamount: Double = amount.toDouble()
                         var cashoutamount:Double = 0.0
+                        var email = document.getString("email")
 
                         if (addnewamount > intamount) {
                             binding.CashOutPageStatusText.text =
@@ -103,7 +104,8 @@ class CashOutFromWallet : Fragment() {
                                 contact.toString(),
                                 ic.toString(),
                                 name.toString(),
-                                cashoutamount
+                                cashoutamount,
+                                email.toString()
                             )
                         )
 

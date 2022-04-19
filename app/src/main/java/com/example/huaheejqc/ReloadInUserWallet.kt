@@ -147,6 +147,7 @@ class ReloadInUserWallet : Fragment() {
                         var amount = document.get("amount") as Number
                         var addnewamount:Double = DecimalFormat("####.00").format(binding.getReloadNumber.text.toString().toDouble()).toDouble()
                         var intamount:Double = amount.toDouble()
+                        var email = document.getString("email")
 
                         Log.d("testdouble",addnewamount.toString())
                         reload_amount = intamount + addnewamount
@@ -158,7 +159,8 @@ class ReloadInUserWallet : Fragment() {
                                 contact.toString(),
                                 ic.toString(),
                                 name.toString(),
-                                reload_amount
+                                reload_amount,
+                                email.toString()
                             )
                         )
 
