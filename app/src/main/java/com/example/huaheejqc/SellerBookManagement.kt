@@ -35,6 +35,12 @@ class SellerBookManagement : Fragment() {
         }
 
 
+
+
+    }
+
+    fun setPage(page:Int){
+        binding.viewPager2.setCurrentItem(page)
     }
 
     override fun onCreateView(
@@ -62,12 +68,13 @@ class SellerBookManagement : Fragment() {
                     tab.text="Pending Order"
                 }
                 2->{
+                    tab.text="In Transit"
+                }
+                3->{
                     tab.text="Completed Order"
                 }
             }
         }.attach()
-
-
 
         return view
     }

@@ -8,14 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.huaheejqc.data.Book
-import com.example.huaheejqc.databinding.FragmentPendingOrderBinding
+import com.example.huaheejqc.databinding.FragmentCompletedOrderBinding
+import com.example.huaheejqc.databinding.FragmentInTransitBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.HashMap
 
-class PendingOrder : Fragment() {
-    private var _binding: FragmentPendingOrderBinding? = null
+class InTransit : Fragment() {
+    private var _binding: FragmentInTransitBinding? = null
     private val binding get() = _binding!!
     val userid = Firebase.auth.currentUser?.uid
     val stringID = userid.toString()
@@ -25,16 +26,11 @@ class PendingOrder : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPendingOrderBinding.inflate(inflater, container, false)
+        _binding = FragmentInTransitBinding.inflate(inflater, container, false)
         val view = binding.root
         dataArray=ArrayList()
         val db = Firebase.firestore
@@ -42,7 +38,7 @@ class PendingOrder : Fragment() {
 
         db.collection("books")
             .whereEqualTo("userid", stringID)
-            .whereEqualTo("status", "PendingOrder")
+            .whereEqualTo("status", "InTransit")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -57,9 +53,8 @@ class PendingOrder : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
-        binding.pendingOrderRecycleView.layoutManager= LinearLayoutManager(context)
-        binding.pendingOrderRecycleView.adapter=postedItemAdapter
+        binding.inTransitRecycleView.layoutManager= LinearLayoutManager(context)
+        binding.inTransitRecycleView.adapter=postedItemAdapter
         return view
     }
-
 }

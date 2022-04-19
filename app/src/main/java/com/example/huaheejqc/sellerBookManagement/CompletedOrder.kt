@@ -30,14 +30,14 @@ class CompletedOrder : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCompletedOrderBinding.inflate(inflater, container, false)
-        dataArray=ArrayList()
         val view = binding.root
+        dataArray=ArrayList()
         val db = Firebase.firestore
         val postedItemAdapter=PostedItemRecyclerViewAdapter(dataArray)
 
         db.collection("books")
             .whereEqualTo("userid", stringID)
-            .whereEqualTo("status", "CompleteOrder")
+            .whereEqualTo("status", "CompletedOrder")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -54,8 +54,6 @@ class CompletedOrder : Fragment() {
             }
         binding.completedOrderRecycleView.layoutManager= LinearLayoutManager(context)
         binding.completedOrderRecycleView.adapter=postedItemAdapter
-
         return view
     }
-
 }

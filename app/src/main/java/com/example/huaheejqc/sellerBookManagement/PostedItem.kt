@@ -32,9 +32,9 @@ class PostedItem : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dataArray=ArrayList()
         _binding = FragmentPostedItemBinding.inflate(inflater, container, false)
         val view = binding.root
+        dataArray=ArrayList()
         val db = Firebase.firestore
         val postedItemAdapter=PostedItemRecyclerViewAdapter(dataArray)
 
@@ -57,12 +57,6 @@ class PostedItem : Fragment() {
             }
         binding.postedItemRecycleView.layoutManager=LinearLayoutManager(context)
         binding.postedItemRecycleView.adapter=postedItemAdapter
-
-
-//        externalAdapter = ChatRecyclerViewAdapter(chatsArr)
-//        binding.chatListRecycleView.adapter = externalAdapter
-//        val externalLayoutManager = LinearLayoutManager(context)
-//        binding.chatListRecycleView.layoutManager = externalLayoutManager
 
         binding.posteditemAddBtn.setOnClickListener{view:View->
             view.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)

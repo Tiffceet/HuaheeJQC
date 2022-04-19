@@ -80,9 +80,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textColor="@color/black"
                 android:inputType="numberDecimal"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/editbook_price_ero"
@@ -159,6 +159,22 @@
                 android:layout_margin="@dimen/layoutPadding"
                 android:backgroundTint="#FF0000"
                 android:text="Delete" />
+
+            <Button
+                android:id="@+id/editbook_shipping_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutPadding"
+                android:text="Shipping" />
+
+            <Button
+                android:id="@+id/editbook_cancel_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutPadding"
+                android:backgroundTint="#FF0000"
+                android:text="Cancel" />
+
         </LinearLayout>
     </ScrollView>
 </layout>

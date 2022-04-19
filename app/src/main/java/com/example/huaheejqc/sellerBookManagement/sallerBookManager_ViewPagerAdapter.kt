@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class sallerBookManager_ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
-        return 3
+        return 4
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -19,6 +19,9 @@ class sallerBookManager_ViewPagerAdapter(fragmentManager: FragmentManager, lifec
                 PendingOrder()
             }
             2->{
+                InTransit()
+            }
+            3->{
                 CompletedOrder()
             }
             else->{
