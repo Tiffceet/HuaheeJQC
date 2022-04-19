@@ -54,26 +54,26 @@ class BookDetails : Fragment() {
         _binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
         val db = Firebase.firestore
-        val bookid:String = args.viewbookid.toString()
+        val bookid: String = args.viewbookid.toString()
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
         var ownerid = ""
-        Log.d("chin",args.viewbookid)
+        Log.d("chin", args.viewbookid)
 
         val docRef = db.collection("books").document(bookid)
-        docRef.get().addOnSuccessListener {document ->
+        docRef.get().addOnSuccessListener { document ->
             if (document != null) {
                 Log.d("TAG", "DocumentSnapshot data: ${document.data}")
-                val title:String = document.get("title") as String
-                val author:String = document.get("author") as String
-                val price:Number = document.get("price") as Number
-                val description:String = document.get("description") as String
+                val title: String = document.get("title") as String
+                val author: String = document.get("author") as String
+                val price: Number = document.get("price") as Number
+                val description: String = document.get("description") as String
                 val priceString = "RM " + DecimalFormat("####.00").format(price).toString()
                 ownerid = document.get("userid").toString()
 
                 db.collection("User").document(ownerid)
                     .get().addOnSuccessListener { document ->
-                        if(document!=null){
+                        if (document != null) {
                             var ownerEmail = document.get("email") as String
                             binding.bookdetailsOwnerTxt.setText(ownerEmail)
                         }
@@ -96,29 +96,39 @@ class BookDetails : Fragment() {
                 val currentUserId = Firebase.auth.currentUser?.uid.toString()
                 val bookDoc = db.collection("books").document(bookid).get().await()
                 val uid = bookDoc.get("userid") as String
-                val userDoc = db.collection("User").document(uid).get().await().data as HashMap<String, Any>
+                val userDoc =
+                    db.collection("User").document(uid).get().await().data as HashMap<String, Any>
                 val bookAuthorName = userDoc["name"] as String
                 val innerView = it
                 realtimeDb.reference.child("chat-members").get().addOnSuccessListener {
                     val chatDoc = it.value
-                    chatDoc as HashMap<String, Any>
-                    for ((chatId, memberList) in chatDoc) {
-                        memberList as HashMap<String, Any>
-                        if(memberList.containsKey(uid) && memberList.containsKey(currentUserId)) {
-                            val action = BookDetailsDirections.actionBookDetailsToConversationFragment(chatId, bookAuthorName)
-                            innerView.findNavController().navigate(action)
-                            return@addOnSuccessListener
+                    if (chatDoc != null) {
+                        chatDoc as HashMap<String, Any>
+                        for ((chatId, memberList) in chatDoc) {
+                            memberList as HashMap<String, Any>
+                            if (memberList.containsKey(uid) && memberList.containsKey(currentUserId)) {
+                                val action =
+                                    BookDetailsDirections.actionBookDetailsToConversationFragment(
+                                        chatId,
+                                        bookAuthorName
+                                    )
+                                innerView.findNavController().navigate(action)
+                                return@addOnSuccessListener
+                            }
                         }
                     }
-                    val newConvo:HashMap<String, Any> = HashMap()
+                    val newConvo: HashMap<String, Any> = HashMap()
                     newConvo.put(uid, true)
                     newConvo.put(currentUserId, true)
                     val something = realtimeDb.getReference("chat-members").push()
                     val newChatId = something.key.toString()
                     something.setValue(newConvo)
-                    val action = BookDetailsDirections.actionBookDetailsToConversationFragment(newChatId, bookAuthorName)
+                    val action = BookDetailsDirections.actionBookDetailsToConversationFragment(
+                        newChatId,
+                        bookAuthorName
+                    )
                     innerView.findNavController().navigate(action)
-                }.addOnFailureListener{
+                }.addOnFailureListener {
                     Log.e("firebase", "Error getting data", it)
                 }
 
