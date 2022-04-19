@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.navigation.findNavController
 import com.example.huaheejqc.data.Feedback
 import com.example.huaheejqc.databinding.FragmentFeedbackBinding
 import com.example.huaheejqc.databinding.FragmentLoginBinding
@@ -91,11 +92,13 @@ class FeedbackFragment : Fragment() {
                     db.collection("feedbacks").add(feedbackObj)
                     Log.d("FirebaseStorage", "Success")
                     binding.root.hideKeyboard()
+                    it.findNavController().navigate(R.id.action_feedbackFragment_to_feedbackSuccessulFragment)
                 }
             } else {
                 val feedbackObj = Feedback(issue, contactEmail, uid, "")
                 db.collection("feedbacks").add(feedbackObj)
                 binding.root.hideKeyboard()
+                it.findNavController().navigate(R.id.action_feedbackFragment_to_feedbackSuccessulFragment)
             }
 
         }

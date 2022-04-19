@@ -182,5 +182,18 @@
         android:id="@+id/feedbackFragment"
         android:name="com.example.huaheejqc.FeedbackFragment"
         android:label="Feedback"
-        tools:layout="@layout/fragment_feedback" />
+        tools:layout="@layout/fragment_feedback" >
+        <action
+            android:id="@+id/action_feedbackFragment_to_feedbackSuccessulFragment"
+            app:destination="@id/feedbackSuccessulFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedbackSuccessulFragment"
+        android:name="com.example.huaheejqc.FeedbackSuccessulFragment"
+        android:label="Feedback"
+        tools:layout="@layout/fragment_feedback_successul" >
+        <action
+            android:id="@+id/action_feedbackSuccessulFragment_to_mainMenu"
+            app:destination="@id/mainMenu" />
+    </fragment>
 </navigation>
