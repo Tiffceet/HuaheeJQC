@@ -91,6 +91,10 @@ class ChatFragment : Fragment() {
         val firestore = Firebase.firestore
         Log.d("chatMemberOnChange", "I was fired")
         var adapter = externalAdapter
+        if(value == null) {
+            binding.chatListLoadingPanel.visibility = View.GONE
+            return
+        }
         value as HashMap<String, HashMap<String, Boolean>>
 
         // For Each chatID
