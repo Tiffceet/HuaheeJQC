@@ -5,13 +5,25 @@
     <string name="total_price">Total Price</string>
 
     <string-array name="category">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Action and Adventure</item>
+        <item>Classics</item>
+        <item>Comic Book or Graphic Novel</item>
+        <item>Detective and Mystery</item>
+        <item>Fantasy</item>
+        <item>Historical Fiction</item>
+        <item>Horror</item>
+        <item>Literary Fiction</item>
+        <item>Romance</item>
+        <item>Short Stories</item>
+        <item>Suspense and Thrillers</item>
+        <item>Biographies and Autobiographies</item>
+        <item>Cookbooks</item>
+        <item>Essays</item>
+        <item>History</item>
+        <item>Memoir</item>
+        <item>Poetry</item>
+        <item>Self-Help</item>
+        <item>True Crime</item>
+        <item>Science Fiction (Sci-Fi)</item>
     </string-array>
 </resources>
