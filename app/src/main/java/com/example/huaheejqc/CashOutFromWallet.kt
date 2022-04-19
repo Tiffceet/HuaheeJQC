@@ -55,12 +55,12 @@ class CashOutFromWallet : Fragment() {
         val stringID = userid.toString()
         var check_on_click = 0
 
-        binding.buttonToBank.setOnClickListener{view:View ->
+        binding.buttonToBank.setOnClickListener { view: View ->
             binding.methodStatusText.text = "Method has been selected"
             check_on_click = 1;
         }
 
-        binding.buttonToOther.setOnClickListener{view:View ->
+        binding.buttonToOther.setOnClickListener { view: View ->
             binding.methodStatusText.text = "Method has been selected"
             check_on_click = 1;
         }
@@ -84,9 +84,9 @@ class CashOutFromWallet : Fragment() {
                             binding.getReloadNumber.text.toString().toDouble()
                         ).toDouble()
                         var intamount: Double = amount.toDouble()
-                        var cashoutamount:Double = 0.0
+                        var cashoutamount: Double = 0.0
                         var email = document.getString("email")
-
+                        var test = binding.getReloadNumber.text.toString().toDouble()
                         if (binding.getReloadNumber.text.toString().toDouble() > intamount) {
                             binding.CashOutPageStatusText.text =
                                 "Preferred Amount must be less than your wallet amount"
@@ -108,10 +108,11 @@ class CashOutFromWallet : Fragment() {
                                 email.toString()
                             )
                         )
+                        view.findNavController().navigateUp()
 
                     }
                 }
-            view.findNavController().navigateUp()
+
         }
 
         return view

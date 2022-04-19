@@ -54,6 +54,12 @@ class TransferUserInWallet : Fragment() {
         val stringID = userid.toString()
 
         binding.transferStart.setOnClickListener { view: View ->
+            if (binding.getTransferName.text.toString() == "" || binding.getTransferAmount.text.toString() == "") {
+                binding.statusTransfer.text =
+                    "All form should not be empty. Please try fill all the form data again."
+                return@setOnClickListener
+            }
+
             var get_target_email = binding.getTransferName.text.toString()
             var reload_amount: Double = 0.0
             var get_transfer_amount: Double = DecimalFormat("####.00").format(
@@ -75,8 +81,14 @@ class TransferUserInWallet : Fragment() {
 
                         Log.d("test_addnewamount", get_transfer_amount.toString())
                         Log.d("test_intamount", intOutamount.toString())
-                        cashoutamount = intOutamount - get_transfer_amount
 
+                        if (binding.getTransferAmount.text.toString().toDouble() > intOutamount) {
+                            binding.statusTransfer.text =
+                                "Preferred Amount must be less than your wallet amount"
+                            return@addOnSuccessListener
+                        }
+
+                        cashoutamount = intOutamount - get_transfer_amount
 
                         db.collection("User").document(stringID).set(
                             User(
@@ -101,14 +113,20 @@ class TransferUserInWallet : Fragment() {
             var targetId = ""
 
             db.collection("User")
-                .whereEqualTo("email", get_target_email)
+                .whereEqualTo("email", "ahdgjf")
                 .get()
+
                 .addOnSuccessListener { documents ->
+                    if(documents.isEmpty()) {
+                        binding.statusTransfer.text =
+                            "Target Email's User is not exist. Please try again."
+                        return@addOnSuccessListener
+                    }
                     for (document in documents) {
                         targetId = document.id
                         var name = document.get("name") as String
                         var address = document.get("address") as String
-                        var ic = document.get("ic")as String
+                        var ic = document.get("ic") as String
                         var contact = document.get("contact") as String
                         var amount = document.get("amount") as Number
                         var intamount: Double = amount.toDouble()
@@ -127,14 +145,20 @@ class TransferUserInWallet : Fragment() {
                                 name.toString(),
                                 reload_amount,
                                 email.toString()
-                                        )
-                                    )
-                                }
-                            }
-                                view.findNavController().navigateUp()
-                            }
-                    return view
+                            )
+                        ).addOnSuccessListener {
+                            view.findNavController().navigateUp()
+                        }
+                    }
                 }
+                .addOnFailureListener { exception ->
+                    binding.statusTransfer.text =
+                        "Target Email's User is not exist. Please try again."
+                    return@addOnFailureListener
+                }
+        }
+        return view
+    }
 
     companion object {
         /**
@@ -155,4 +179,5 @@ class TransferUserInWallet : Fragment() {
                 }
             }
     }
+    //return view
 }

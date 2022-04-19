@@ -33,7 +33,7 @@
             android:id="@+id/question_target_name"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Enter Target's Name"
+            android:text="Enter Target's Email"
             android:textSize="20sp" />
 
         <EditText
@@ -55,6 +55,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"/>
+
+        <TextView
+            android:id="@+id/status_transfer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 

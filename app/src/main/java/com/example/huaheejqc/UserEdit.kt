@@ -63,6 +63,7 @@ class UserEdit : Fragment() {
 
                     if(document.getString("name") != null){
                         binding.currentName.text = document.getString("name")
+                        binding.getNewName.setText(document.getString("name"))
                     }else{
                         binding.currentName.text = "Your data is not currently in the database"
                     }
