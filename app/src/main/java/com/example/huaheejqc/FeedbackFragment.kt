@@ -1,12 +1,17 @@
 package com.example.huaheejqc
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.huaheejqc.databinding.FragmentFeedbackBinding
 import com.example.huaheejqc.databinding.FragmentLoginBinding
+import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,6 +29,7 @@ class FeedbackFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentFeedbackBinding? = null
     private val binding get() = _binding!!
+    private val PICK_IMAGE_REQUEST = 71
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +45,33 @@ class FeedbackFragment : Fragment() {
     ): View? {
         _binding = FragmentFeedbackBinding.inflate(inflater, container, false)
         val view = binding.root
+        binding.uploadImageButton.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(
+                Intent.createChooser(intent, "Select Picture"),
+                PICK_IMAGE_REQUEST
+            )
+        }
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            if (data == null || data.data == null) {
+                return
+            }
+
+            val filePath = data.data
+            try {
+                val bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, filePath)
+                binding.uploadedImageView.setImageBitmap(bitmap)
+                binding.uploadedImageView.visibility = View.VISIBLE
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
     companion object {
