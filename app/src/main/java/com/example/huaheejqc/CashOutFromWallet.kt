@@ -48,6 +48,19 @@ class CashOutFromWallet : Fragment() {
         val dbGet = FirebaseFirestore.getInstance()
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
+        var check_on_click = 0;
+
+        binding.buttonToBank.setOnClickListener{view:View ->
+            check_on_click = 1;
+        }
+
+        binding.buttonToOther.setOnClickListener{view:View ->
+            check_on_click = 1;
+        }
+
+        binding.getReloadNumber.setOnClickListener{view:View->
+            
+        }
 
         return view
     }

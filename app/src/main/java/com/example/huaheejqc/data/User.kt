@@ -13,7 +13,7 @@ data class User(
             val contact = if (map.containsKey("contact")) map["contact"] as String else ""
             val ic = if (map.containsKey("ic")) map["ic"] as String else ""
             val name = if (map.containsKey("name")) map["name"] as String else ""
-            val amount = if (map.containsKey("amount")) map["amount"] as Number else ""
+            val amount = if (map.containsKey("amount")) map["amount"] as Number else 0
             return User(address, contact, ic, name, amount as Number)
         }
     }

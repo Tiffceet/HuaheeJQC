@@ -1,6 +1,7 @@
 package com.example.huaheejqc
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,84 +52,88 @@ class ReloadInUserWallet : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
 
-        var reload_amount = 0
+        var string_reload_amount = binding.getReloadNumber.text.toString()
+
+        var reload_amount:Double = 0.0
+
         var checkOtherButton = 0
 
         binding.reloadRm50.setOnClickListener{ view:View ->
-            if(reload_amount != null){
+            if(string_reload_amount != null){
                 binding.ReloadPageStatusText.text = "Reload amount RM 50 selected unsuccessfully because above amount has been filled in."
                 return@setOnClickListener
             }else{
-                reload_amount = 50;
+                reload_amount = 50.00;
                 binding.ReloadPageStatusText.text = "Reload amount RM 50 selected successfully."
                 checkOtherButton = 1;
             }
         }
 
         binding.reloadRm100.setOnClickListener{ view:View ->
-            if(binding.getReloadNumber.text != null){
+            if(string_reload_amount != null){
                 binding.ReloadPageStatusText.text = "Reload amount RM 100 selected unsuccessfully because above amount has been filled in."
                 return@setOnClickListener
             }else{
-                reload_amount = 100;
+                reload_amount = 100.00;
                 checkOtherButton = 1;
                 binding.ReloadPageStatusText.text = "Reload amount RM 100 selected successfully."
             }
         }
 
         binding.reloadRm150.setOnClickListener{ view:View ->
-            if(binding.getReloadNumber.text != null){
+            if(string_reload_amount != null){
                 binding.ReloadPageStatusText.text = "Reload amount RM 150 selected unsuccessfully because above amount has been filled in."
                 return@setOnClickListener
             }else{
-                reload_amount = 150;
+                reload_amount = 150.00;
                 checkOtherButton = 1;
                 binding.ReloadPageStatusText.text = "Reload amount RM 150 selected successfully."
             }
         }
 
         binding.reloadRm200.setOnClickListener{ view:View ->
-            if(binding.getReloadNumber.text != null){
+            if(string_reload_amount != null){
                 binding.ReloadPageStatusText.text = "Reload amount RM 200 selected unsuccessfully because above amount has been filled in."
                 return@setOnClickListener
             }else{
-                reload_amount = 200;
+                reload_amount = 200.00;
                 checkOtherButton = 1;
                 binding.ReloadPageStatusText.text = "Reload amount RM 200 selected successfully."
             }
         }
 
         binding.reloadRm250.setOnClickListener{ view:View ->
-            if(binding.getReloadNumber.text != null){
+            if(string_reload_amount != null){
                 binding.ReloadPageStatusText.text = "Reload amount RM 250 selected unsuccessfully because above amount has been filled in."
                 return@setOnClickListener
             }else{
-                reload_amount = 250;
+                reload_amount = 250.00;
                 checkOtherButton = 1;
                 binding.ReloadPageStatusText.text = "Reload amount RM 250 selected successfully."
             }
         }
 
         binding.reloadRm300.setOnClickListener{ view:View ->
-            if(binding.getReloadNumber.text != null){
+            if(string_reload_amount != null){
                 binding.ReloadPageStatusText.text = "Reload amount RM 300 selected unsuccessfully because above amount has been filled in."
                 return@setOnClickListener
             }else{
-                reload_amount = 300;
+                reload_amount = 300.00;
                 checkOtherButton = 1;
                 binding.ReloadPageStatusText.text = "Reload amount RM 300 selected successfully."
             }
         }
 
         binding.buttonStartReload.setOnClickListener { view: View ->
-
-            var new_reload_amount = binding.getReloadNumber.text.toString()
-            var int_reload_amount = new_reload_amount.toInt()
-            var nummString = ""
-
-            if (reload_amount == null) {
+            string_reload_amount = binding.getReloadNumber.text.toString()
+            Log.d("test001",string_reload_amount.toString())
+            if(string_reload_amount.isEmpty() && checkOtherButton == 0){
                 binding.ReloadPageStatusText.text = "Reload Amount should not be empty!"
                 return@setOnClickListener
+
+            }else{
+
+                var addnewamount = string_reload_amount.toDouble()
             }
 
             val docRef = dbGet.collection("User").document(stringID)
@@ -138,7 +144,13 @@ class ReloadInUserWallet : Fragment() {
                         var address = document.getString("address")
                         var ic = document.getString("ic")
                         var contact = document.getString("contact")
-                        var amount = reload_amount
+                        var amount = document.get("amount") as Number
+                        var addnewamount:Double = DecimalFormat("####.00").format(binding.getReloadNumber.text.toString().toDouble()).toDouble()
+                        var intamount:Double = amount.toDouble()
+
+                        Log.d("testdouble",addnewamount.toString())
+                        reload_amount = intamount + addnewamount
+
 
                         db.collection("User").document(stringID).set(
                             User(
@@ -146,7 +158,7 @@ class ReloadInUserWallet : Fragment() {
                                 contact.toString(),
                                 ic.toString(),
                                 name.toString(),
-                                amount
+                                reload_amount
                             )
                         )
 
