@@ -93,7 +93,7 @@
     <fragment
         android:id="@+id/userEdit"
         android:name="com.example.huaheejqc.UserEdit"
-        android:label="UserEdit" />
+        android:label="User Edit" />
     <fragment
         android:id="@+id/sellerBookManagement"
         android:name="com.example.huaheejqc.SellerBookManagement"
@@ -138,7 +138,7 @@
     <fragment
         android:id="@+id/user_wallet_management"
         android:name="com.example.huaheejqc.user_wallet_management"
-        android:label="fragment_user_wallet_management"
+        android:label="Your Wallet"
         tools:layout="@layout/fragment_user_wallet_management">
         <action
             android:id="@+id/action_user_wallet_management_to_cashOutFromWallet"
@@ -153,11 +153,11 @@
     <fragment
         android:id="@+id/cashOutFromWallet"
         android:name="com.example.huaheejqc.CashOutFromWallet"
-        android:label="CashOutFromWallet" />
+        android:label="Cash Out From Wallet" />
     <fragment
         android:id="@+id/reloadInUserWallet"
         android:name="com.example.huaheejqc.ReloadInUserWallet"
-        android:label="fragment_reload_in_user_wallet"
+        android:label="Reload in Wallet"
         tools:layout="@layout/fragment_reload_in_user_wallet">
         <action
             android:id="@+id/action_reloadInUserWallet_to_user_wallet_management"
@@ -166,7 +166,7 @@
     <fragment
         android:id="@+id/transferUserInWallet"
         android:name="com.example.huaheejqc.TransferUserInWallet"
-        android:label="fragment_transfer_user_in_wallet"
+        android:label="Transfer to Other"
         tools:layout="@layout/fragment_transfer_user_in_wallet" />
     <fragment
         android:id="@+id/resetPasswordFragment"
