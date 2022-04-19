@@ -66,47 +66,6 @@ class TransferUserInWallet : Fragment() {
                 binding.getTransferAmount.text.toString().toDouble()
             ).toDouble()
 
-            val docRef = dbGet.collection("User").document(stringID)
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        var name = document.getString("name")
-                        var address = document.getString("address")
-                        var ic = document.getString("ic")
-                        var contact = document.getString("contact")
-                        var cashOutAmount = document.get("amount") as Number
-                        var intOutamount: Double = cashOutAmount.toDouble()
-                        var cashoutamount: Double = 0.0
-                        var email = document.getString("email")
-                        var imageUrl = document.getString("imageUrl")
-
-                        Log.d("test_addnewamount", get_transfer_amount.toString())
-                        Log.d("test_intamount", intOutamount.toString())
-
-                        if (binding.getTransferAmount.text.toString().toDouble() > intOutamount) {
-                            binding.statusTransfer.text =
-                                "Preferred Amount must be less than your wallet amount"
-                            return@addOnSuccessListener
-                        }
-
-                        cashoutamount = intOutamount - get_transfer_amount
-
-                        db.collection("User").document(stringID).set(
-                            User(
-                                address.toString(),
-                                contact.toString(),
-                                ic.toString(),
-                                name.toString(),
-                                cashoutamount,
-                                email.toString(),
-                                imageUrl.toString()
-                            )
-                        )
-                    }
-                }
-
-            Log.d("checkEmail", get_target_email.toString())
-
             // Create a reference to the cities collection
             val citiesRef = db.collection("User")
 
@@ -115,13 +74,54 @@ class TransferUserInWallet : Fragment() {
             var targetId = ""
 
             db.collection("User")
-                .whereEqualTo("email", "ahdgjf")
+                .whereEqualTo("email", get_target_email)
                 .get()
-
                 .addOnSuccessListener { documents ->
-                    if(documents.isEmpty()) {
-                        binding.statusTransfer.text = "Target Email's User is not exist. Please try again."
+                    if (documents.isEmpty()) {
+                        binding.statusTransfer.text =
+                            "Target Email's User is not exist. Please try again."
                         return@addOnSuccessListener
+                    } else {
+                        val docRef = dbGet.collection("User").document(stringID)
+                        docRef.get()
+                            .addOnSuccessListener { document ->
+                                if (document != null) {
+                                    var name = document.getString("name")
+                                    var address = document.getString("address")
+                                    var ic = document.getString("ic")
+                                    var contact = document.getString("contact")
+                                    var cashOutAmount = document.get("amount") as Number
+                                    var intOutamount: Double = cashOutAmount.toDouble()
+                                    var cashoutamount: Double = 0.0
+                                    var email = document.getString("email")
+                                    var imageUrl = document.getString("imageUrl")
+
+                                    Log.d("test_addnewamount", get_transfer_amount.toString())
+                                    Log.d("test_intamount", intOutamount.toString())
+
+                                    if (binding.getTransferAmount.text.toString()
+                                            .toDouble() > intOutamount
+                                    ) {
+                                        binding.statusTransfer.text =
+                                            "Preferred Amount must be less than your wallet amount"
+                                        return@addOnSuccessListener
+                                    }
+
+                                    cashoutamount = intOutamount - get_transfer_amount
+
+                                    db.collection("User").document(stringID).set(
+                                        User(
+                                            address.toString(),
+                                            contact.toString(),
+                                            ic.toString(),
+                                            name.toString(),
+                                            cashoutamount,
+                                            email.toString(),
+                                            imageUrl.toString()
+                                        )
+                                    )
+                                }
+                            }
                     }
                     for (document in documents) {
                         targetId = document.id
@@ -158,29 +158,31 @@ class TransferUserInWallet : Fragment() {
                     binding.statusTransfer.text =
                         "Target Email's User is not exist. Please try again."
                     return@addOnFailureListener
-                }
         }
-        return view
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TransferUserInWallet.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TransferUserInWallet().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+return view
+}
+
+companion object {
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment TransferUserInWallet.
+     */
+    // TODO: Rename and change types and number of parameters
+    @JvmStatic
+    fun newInstance(param1: String, param2: String) =
+        TransferUserInWallet().apply {
+            arguments = Bundle().apply {
+                putString(ARG_PARAM1, param1)
+                putString(ARG_PARAM2, param2)
             }
-    }
-    //return view
+        }
+}
+//return view
 }
