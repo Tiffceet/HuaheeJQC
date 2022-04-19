@@ -26,11 +26,11 @@ class SearchAdapter(
         val item = values[position]
         holder.tagText.text = item.display
         holder.tagText.setOnClickListener {
-            if (item.conditionType != null) {
+            if (item.category != null) {
                 if (item.value != null) {
-                    searchClass.selectedTags[item.conditionType!!] = item
+                    searchClass.selectedTags[item.category!!] = item
                 } else {
-                    searchClass.selectedTags[item.conditionType!!] = null
+                    searchClass.selectedTags[item.category!!] = null
                 }
 
                 searchClass.clickSearch()

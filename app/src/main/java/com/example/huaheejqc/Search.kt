@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.huaheejqc.data.Book
+import com.example.huaheejqc.data.SearchItem
 import com.example.huaheejqc.data.SearchVal
 import com.example.huaheejqc.databinding.FragmentSearchBinding
 import com.example.huaheejqc.search.SearchAdapter
+import com.example.huaheejqc.search.SearchResultAdapter
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -32,6 +35,7 @@ class Search : Fragment() {
 
     private lateinit var pageAmountAdapter: SearchAdapter
     private lateinit var classifyAdapter: SearchAdapter
+    private lateinit var resultAdapter: SearchResultAdapter
 
     var selectedTags = HashMap<String, SearchVal?>()
 
@@ -46,8 +50,8 @@ class Search : Fragment() {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val db = Firebase.firestore
 
-        pageAmountSearchVals.add(SearchVal("page_amount", "equals", "Default", null))
-        classifySearchVals.add(SearchVal("classification", "equals", "Default", null))
+        pageAmountSearchVals.add(SearchVal("page_amount", "equals", "All", null))
+        classifySearchVals.add(SearchVal("classification", "equals", "All", null))
 
         db.collection("searches")
             .whereEqualTo("category", "page_amount")
@@ -99,15 +103,11 @@ class Search : Fragment() {
         val classifyLayout = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.classificationList.layoutManager = classifyLayout
 
-        binding.searchButton.setOnClickListener({
+        binding.searchButton.setOnClickListener {
             clickSearch()
-        })
+        }
 
         return binding.root
-    }
-
-    private fun performSearch(query: String? = "") {
-
     }
 
     fun clickSearch() {
@@ -116,36 +116,59 @@ class Search : Fragment() {
         val classify = selectedTags["classification"]
         val searchText = binding.searchInput.text.toString()
 
-        var dbQuery: Query = db.collection("books")
+        val searchItems = ArrayList<SearchItem>()
 
-        if (searchText.isNotEmpty()) {
-            val query = searchText.trim()
-
-            dbQuery = dbQuery.whereGreaterThanOrEqualTo("title", query)
-                .whereLessThanOrEqualTo("title", query + "\\uf8ff")
-        }
-
-        Log.d("ShoppingCart", selectedTags["equals"].toString())
-
-        if (pageAmount != null) {
-            if (pageAmount.conditionType == "more_than") {
-                dbQuery = pageAmount.value?.let { dbQuery.whereGreaterThan("page_amount", it) }!!
-            } else if (pageAmount.conditionType == "less_than") {
-                dbQuery = pageAmount.value?.let { dbQuery.whereLessThan("page_amount", it) }!!
-            } else {
-                dbQuery = pageAmount.value?.let { dbQuery.whereEqualTo("page_amount", it) }!!
-            }
-        }
-
-        if (classify != null) {
-            dbQuery = dbQuery.whereEqualTo("category", classify.value)
-        }
-
-        dbQuery.get().addOnSuccessListener { documents ->
+        db.collection("books").get().addOnSuccessListener {
+            documents ->
             for (document in documents) {
-                Log.d("ShoppingCart", document.data.toString())
+                val searchItem = SearchItem(
+                    document.id,
+                    document.get("title") as String,
+                    document.get("description") as String,
+                    document.get("imageUrl") as String,
+                    document.get("page_amount") as Number,
+                    document.get("category") as Number
+                )
+
+                if (searchText.isNotEmpty()) {
+                    if (!searchItem.title.contains(searchText.trim())) {
+                        continue
+                    }
+                }
+
+                if (pageAmount != null) {
+                    if (pageAmount.conditionType == "more_than") {
+                        if (searchItem.pageAmount.toInt() <= (pageAmount.value as Number).toInt()) {
+                            continue
+                        }
+                    }
+                    else if (pageAmount.conditionType == "less_than") {
+                        if (searchItem.pageAmount.toInt() >= (pageAmount.value as Number).toInt()) {
+                            continue
+                        }
+                    }
+                    else {
+                        if (searchItem.pageAmount.toInt() != (pageAmount.value as Number).toInt()) {
+                            continue
+                        }
+                    }
+                }
+
+                if (classify != null) {
+                    if (searchItem.category.toInt() != (classify.value as Number).toInt()) {
+                        continue
+                    }
+                }
+
+                searchItems.add(searchItem)
+                resultAdapter.notifyDataSetChanged()
             }
         }
+
+        resultAdapter = SearchResultAdapter(searchItems)
+        binding.resultList.adapter = resultAdapter
+        val resultLayout = LinearLayoutManager(context)
+        binding.resultList.layoutManager = resultLayout
     }
 
     companion object {
