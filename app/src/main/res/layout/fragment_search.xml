@@ -20,29 +20,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="10dp">
 
-            <ImageButton
-                android:id="@+id/menuDrawer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/menu_back" />
-
-            <View
-                android:layout_width="@dimen/layoutPadding"
-                android:layout_height="0dp"
-                android:layout_weight="0" />
-
-            <TextView
+            <EditText
                 android:id="@+id/searchInput"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center|left"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                tools:text="Search..." />
+                android:ems="10"
+                android:hint="@string/searchHint"
+                android:inputType="textPersonName" />
 
             <View
                 android:layout_width="@dimen/layoutPadding"
@@ -50,7 +35,7 @@
                 android:layout_weight="0" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/searchButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
@@ -76,29 +61,12 @@
                 android:text="Page Amount:"
                 android:textSize="16sp" />
 
-            <com.google.android.flexbox.FlexboxLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pageAmountList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:paddingTop="@dimen/layoutPadding"
-                android:paddingBottom="@dimen/layoutPadding"
-                app:dividerDrawable="@drawable/flex_divider"
-                app:flexWrap="wrap"
-                app:layout_constraintTop_toBottomOf="@+id/pageAmount"
-                app:showDivider="middle">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/design_default_color_surface"
-                    android:minWidth="80dp"
-                    android:minHeight="44dp"
-                    android:text="Test 1"
-                    android:textSize="10sp"
-                    app:cornerRadius="40dp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </com.google.android.flexbox.FlexboxLayout>
+                android:paddingBottom="@dimen/layoutPadding" />
 
         </LinearLayout>
 
@@ -120,29 +88,12 @@
                 android:text="Classification:"
                 android:textSize="16sp" />
 
-            <com.google.android.flexbox.FlexboxLayout
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/classificationList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:paddingTop="@dimen/layoutPadding"
-                android:paddingBottom="@dimen/layoutPadding"
-                app:dividerDrawable="@drawable/flex_divider"
-                app:flexWrap="wrap"
-                app:layout_constraintTop_toBottomOf="@+id/pageAmount"
-                app:showDivider="middle">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/design_default_color_surface"
-                    android:minWidth="80dp"
-                    android:minHeight="44dp"
-                    android:text="Test 1"
-                    android:textSize="10sp"
-                    app:cornerRadius="40dp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </com.google.android.flexbox.FlexboxLayout>
+                android:paddingBottom="@dimen/layoutPadding" />
 
         </LinearLayout>
 

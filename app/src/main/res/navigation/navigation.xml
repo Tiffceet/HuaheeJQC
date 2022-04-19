@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_mainMenu_to_feedbackFragment"
             app:destination="@id/feedbackFragment" />
+        <action
+            android:id="@+id/action_mainMenu_to_search"
+            app:destination="@id/search" />
     </fragment>
     <fragment
         android:id="@+id/userProfileManagement"
@@ -176,7 +179,7 @@
     <fragment
         android:id="@+id/shoppingCart"
         android:name="com.example.huaheejqc.ShoppingCart"
-        android:label="fragment_shopping_cart"
+        android:label="Shopping Cart"
         tools:layout="@layout/fragment_shopping_cart" />
     <fragment
         android:id="@+id/feedbackFragment"
@@ -196,4 +199,9 @@
             android:id="@+id/action_feedbackSuccessulFragment_to_mainMenu"
             app:destination="@id/mainMenu" />
     </fragment>
+    <fragment
+        android:id="@+id/search"
+        android:name="com.example.huaheejqc.Search"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

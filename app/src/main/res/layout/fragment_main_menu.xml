@@ -10,55 +10,18 @@
         android:padding="@dimen/layoutPadding">
 
         <LinearLayout
-            android:id="@+id/searchPanel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="10dp">
-
-            <View
-                android:layout_width="@dimen/layoutPadding"
-                android:layout_height="0dp"
-                android:layout_weight="0" />
-
-            <TextView
-                android:id="@+id/searchInput"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                tools:text="Search..." />
-
-            <View
-                android:layout_width="@dimen/layoutPadding"
-                android:layout_height="0dp"
-                android:layout_weight="0" />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/menu_search" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/showcasePanel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/searchPanel"
-            tools:layout_editor_absoluteX="1dp">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="10dp">
+
             <androidx.fragment.app.FragmentContainerView
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 android:id="@+id/loginFragment"
                 android:name="com.example.huaheejqc.menu_showcase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:label="menu_showcase"
                 tools:layout="@layout/fragment_menu_showcase">
 
