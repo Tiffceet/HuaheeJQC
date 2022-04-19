@@ -58,8 +58,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@color/purple_200"
-                    tools:srcCompat="@drawable/ic_baseline_add_24" />
+                    app:srcCompat="@drawable/ic_baseline_add_24" />
 
                 <TextView
                     android:id="@+id/reload_title"
@@ -104,8 +103,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@color/purple_200"
-                    tools:srcCompat="@drawable/ic_baseline_exit_to_app_24" />
+                    app:srcCompat="@drawable/ic_baseline_exit_to_app_24" />
 
                 <TextView
                     android:id="@+id/cash_out_title"
@@ -150,8 +148,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@color/purple_200"
-                    tools:srcCompat="@drawable/ic_baseline_people_24" />
+                    app:srcCompat="@drawable/ic_baseline_people_24" />
 
                 <TextView
                     android:id="@+id/transfer_title"
