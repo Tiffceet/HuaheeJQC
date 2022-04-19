@@ -1,5 +1,6 @@
 package com.example.huaheejqc
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -45,6 +46,7 @@ class ResetPasswordFragment : Fragment() {
         binding.sendResetPasswordEmailBtn.setOnClickListener { view: View ->
             val email = binding.resetEmailText.text.toString()
             auth.sendPasswordResetEmail(email).addOnSuccessListener {
+                binding.resetPasswordStatusText.setTextColor(Color.parseColor("#00FF00"))
                 binding.resetPasswordStatusText.text = "Reset password email have sent. Please check your email."
             }.addOnFailureListener {
                 Log.d("FirebaseAuth", it?.message.toString())
