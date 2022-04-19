@@ -87,7 +87,7 @@ class CashOutFromWallet : Fragment() {
                         var cashoutamount:Double = 0.0
                         var email = document.getString("email")
 
-                        if (addnewamount > intamount) {
+                        if (binding.getReloadNumber.text.toString().toDouble() > intamount) {
                             binding.CashOutPageStatusText.text =
                                 "Preferred Amount must be less than your wallet amount"
                             return@addOnSuccessListener
