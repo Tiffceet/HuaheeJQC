@@ -118,8 +118,7 @@ class TransferUserInWallet : Fragment() {
 
                 .addOnSuccessListener { documents ->
                     if(documents.isEmpty()) {
-                        binding.statusTransfer.text =
-                            "Target Email's User is not exist. Please try again."
+                        binding.statusTransfer.text = "Target Email's User is not exist. Please try again."
                         return@addOnSuccessListener
                     }
                     for (document in documents) {

@@ -70,17 +70,20 @@ class UserEdit : Fragment() {
 
                     if(document.getString("contact") != null){
                         binding.currentContact.text = document.getString("contact")
+                        binding.getNewContact.setText(document.getString("contact"))
                     }else{
                         binding.currentContact.text = "Your data is not currently in the database"
                     }
 
                     if(document.getString("ic") != null){
                         binding.currentIc.text = document.getString("ic")
+                        binding.getNewIc.setText(document.getString("ic"))
                     }else{
                         binding.currentIc.text = "Your data is not currently in the database"
                     }
 
                     if(document.getString("address") != null){
+                        binding.getNewAddress.setText(document.getString("address"))
                         binding.currentAddress.text = document.getString("address")
                     }else{
                         binding.currentAddress.text = "Your data is not currently in the database"
