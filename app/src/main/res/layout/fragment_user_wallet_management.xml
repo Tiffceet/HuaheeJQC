@@ -164,11 +164,10 @@
                     android:id="@+id/transfer_title_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Transfer Amount"
-                    android:layout_centerHorizontal="true"
                     android:layout_below="@id/transfer_title"
-                    android:textSize="14sp"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:text="Transfer User"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>
