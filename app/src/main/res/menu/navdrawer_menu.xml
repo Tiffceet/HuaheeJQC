@@ -15,6 +15,10 @@
         android:id="@+id/chatFragment"
         android:title="Chat History" />
     <item
+        android:id="@+id/feedbackFragment"
+        android:icon="@drawable/ic_baseline_feedback_24"
+        android:title="Feedback" />
+    <item
         android:id="@+id/loginFragment"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
         android:title="Log Out" />
