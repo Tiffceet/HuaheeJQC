@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.example.huaheejqc.data.Book
 import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.example.huaheejqc.databinding.FragmentBookDetailsBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
+import java.util.HashMap
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +52,7 @@ class BookDetails : Fragment() {
         val bookid:String = args.viewbookid.toString()
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
+        var ownerid = ""
         Log.d("chin",args.viewbookid)
 
         val docRef = db.collection("books").document(bookid)
@@ -61,7 +64,21 @@ class BookDetails : Fragment() {
                 val price:Number = document.get("price") as Number
                 val description:String = document.get("description") as String
                 val priceString = "RM " + DecimalFormat("####.00").format(price).toString()
+                ownerid = document.get("userid").toString()
 
+                db.collection("User").document(ownerid)
+                    .get().addOnSuccessListener { document ->
+                        if(document!=null){
+                            var ownerName = document.get("name") as String
+
+                            if (ownerName.isEmpty()){
+                                ownerName = "User#" + ownerid.take(5)
+                            }
+
+                            binding.bookdetailsOwnerTxt.setText(ownerName)
+                        }
+
+                    }
                 binding.bookdetailsBooknameTxt.setText(title)
                 binding.bookdetailsAuthorTxt.setText(author)
                 binding.bookdetailsPriceTxt.setText(priceString)
@@ -73,7 +90,6 @@ class BookDetails : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
-
         // Inflate the layout for this fragment
         return view
     }
