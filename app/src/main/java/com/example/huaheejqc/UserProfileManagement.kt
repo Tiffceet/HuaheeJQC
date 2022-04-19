@@ -1,6 +1,7 @@
 package com.example.huaheejqc
 
 import android.content.ContentValues.TAG
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +18,8 @@ import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,10 +63,24 @@ class UserProfileManagement : Fragment() {
             .addOnSuccessListener {document ->
                 if(document != null){
                     Log.d("exist","DocumentSnapshot data: ${document.data}")
-
+                    val imageUrl = document.get("imageUrl") as String
                     binding.profileName.text = document.getString("name")
                     binding.profileEmail.text = document.getString("contact")
                     binding.profileAddress.text = document.getString("email")
+
+                    val storage = Firebase.storage
+                    var storageRef = storage.reference
+                    var imageRef = storageRef.child("images/${imageUrl}")
+                    val localFile = File.createTempFile("images", "jpg")
+
+                    Log.d("asdasdasd","asdasdasd")
+                    imageRef.getFile(localFile).addOnSuccessListener {
+                        val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
+                        binding.profileImage.setImageBitmap(myBitmap)
+                        Log.d("BookdetailImage", "succ")
+                    }.addOnFailureListener {
+                        Log.d("noob", "noob")
+                    }
                 }else{
                     Log.d("errordb","get failed with ")
                 }
