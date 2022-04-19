@@ -54,29 +54,56 @@ class ReloadInUserWallet : Fragment() {
             var checkOtherButton = 0;
 
             if (binding.reloadRm50.hasOnClickListeners()) {
-                int_reload_amount = 50;
-                binding.ReloadPageStatusText.text = "Reload amount RM 50 selected successfully."
-                checkOtherButton = 1;
+                if(binding.getReloadNumber != null){
+                    binding.ReloadPageStatusText.text = "Reload amount RM 50 selected unsuccessfully because above amount has been filled in."
+                }else{
+                    int_reload_amount = 50;
+                    binding.ReloadPageStatusText.text = "Reload amount RM 50 selected successfully."
+                    checkOtherButton = 1;
+                }
             } else if (binding.reloadRm100.hasOnClickListeners()) {
-                int_reload_amount = 100;
-                checkOtherButton = 1;
-                binding.ReloadPageStatusText.text = "Reload amount RM 100 selected successfully."
+                if(binding.getReloadNumber != null){
+                    binding.ReloadPageStatusText.text = "Reload amount RM 100 selected unsuccessfully because above amount has been filled in."
+                }else{
+                    int_reload_amount = 100;
+                    checkOtherButton = 1;
+                    binding.ReloadPageStatusText.text = "Reload amount RM 100 selected successfully."
+                }
             } else if (binding.reloadRm150.hasOnClickListeners()) {
-                int_reload_amount = 150;
-                checkOtherButton = 1;
-                binding.ReloadPageStatusText.text = "Reload amount RM 150 selected successfully."
+                if(binding.getReloadNumber != null){
+                    binding.ReloadPageStatusText.text = "Reload amount RM 150 selected unsuccessfully because above amount has been filled in."
+                }else{
+                    int_reload_amount = 150;
+                    checkOtherButton = 1;
+                    binding.ReloadPageStatusText.text = "Reload amount RM 150 selected successfully."
+                }
+
             } else if (binding.reloadRm200.hasOnClickListeners()) {
-                int_reload_amount = 200;
-                checkOtherButton = 1;
-                binding.ReloadPageStatusText.text = "Reload amount RM 200 selected successfully."
+                if(binding.getReloadNumber != null){
+                    binding.ReloadPageStatusText.text = "Reload amount RM 200 selected unsuccessfully because above amount has been filled in."
+                }else{
+                    int_reload_amount = 200;
+                    checkOtherButton = 1;
+                    binding.ReloadPageStatusText.text = "Reload amount RM 200 selected successfully."
+                }
+
             } else if (binding.reloadRm250.hasOnClickListeners()) {
-                int_reload_amount = 250;
-                checkOtherButton = 1;
-                binding.ReloadPageStatusText.text = "Reload amount RM 250 selected successfully."
+                if(binding.getReloadNumber != null){
+                    binding.ReloadPageStatusText.text = "Reload amount RM 250 selected unsuccessfully because above amount has been filled in."
+                }else{
+                    int_reload_amount = 250;
+                    checkOtherButton = 1;
+                    binding.ReloadPageStatusText.text = "Reload amount RM 250 selected successfully."
+                }
+
             } else if (binding.reloadRm300.hasOnClickListeners()) {
-                int_reload_amount = 300;
-                checkOtherButton = 1;
-                binding.ReloadPageStatusText.text = "Reload amount RM 300 selected successfully."
+                if(binding.getReloadNumber != null){
+                    binding.ReloadPageStatusText.text = "Reload amount RM 300 selected unsuccessfully because above amount has been filled in."
+                }else{
+                    int_reload_amount = 300;
+                    checkOtherButton = 1;
+                    binding.ReloadPageStatusText.text = "Reload amount RM 300 selected successfully."
+                }
             }
 
             if (reload_amount.isEmpty() && checkOtherButton == 0) {
