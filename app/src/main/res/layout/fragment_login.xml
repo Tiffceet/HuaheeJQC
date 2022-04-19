@@ -52,6 +52,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New User ?" />
+        <Button
+            android:id="@+id/forgetPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I forgot my password" />
 
         <TextView
             android:id="@+id/loginPageStatusText"

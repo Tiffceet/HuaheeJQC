@@ -17,6 +17,9 @@
             app:destination="@id/mainMenu"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -159,4 +162,9 @@
         android:name="com.example.huaheejqc.TransferUserInWallet"
         android:label="fragment_transfer_user_in_wallet"
         tools:layout="@layout/fragment_transfer_user_in_wallet" />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.example.huaheejqc.ResetPasswordFragment"
+        android:label="Reset Password"
+        tools:layout="@layout/fragment_reset_password" />
 </navigation>

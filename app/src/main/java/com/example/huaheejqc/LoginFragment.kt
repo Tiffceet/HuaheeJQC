@@ -86,6 +86,10 @@ class LoginFragment : Fragment() {
             view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
+        binding.forgetPassword.setOnClickListener {view: View ->
+            view.findNavController().navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+        }
+
         return view
     }
 
