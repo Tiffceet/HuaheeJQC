@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ReloadInWallet">
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -29,19 +28,25 @@
 
         <Button
             android:id="@+id/button_to_bank"
-            android:layout_marginStart="@dimen/layoutPadding"
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:text="Bank Account"/>
+            android:layout_marginStart="@dimen/layoutPadding"
+            android:text="Bank Account" />
 
         <Button
             android:id="@+id/button_to_other"
-            android:layout_toRightOf="@id/button_to_bank"
-            android:layout_marginStart="@dimen/layoutPadding"
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:text="Bank Account"/>
+            android:layout_marginStart="@dimen/layoutPadding"
+            android:layout_toRightOf="@id/button_to_bank"
+            android:text="Others" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/methodStatusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,7 +63,7 @@
             android:id="@+id/get_reload_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,11 +71,17 @@
             android:orientation="vertical"
             android:padding="@dimen/layoutPadding">
 
-            <CheckBox
+            <TextView
+                android:id="@+id/checkboxresponse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="I have read, and agree to Principal's Terms &amp; Condition, the Prospections, the Product Highlight Sheet, and the Unit Trush Loan Financing Risk Disclosure Statement"/>
 
+            <TextView
+                android:id="@+id/CashOutPageStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark" />
         </LinearLayout>
 
     </LinearLayout>
@@ -81,11 +92,12 @@
         android:orientation="vertical">
 
         <Button
-            android:layout_width="130dp"
+            android:id="@+id/start_cash_out"
+            android:layout_width="170dp"
             android:layout_height="60dp"
             android:padding="@dimen/layoutPadding"
             android:layout_gravity="center_vertical"
-            android:text="Reload"
+            android:text="Cash Out"
             android:textSize="20sp"
             android:layout_marginStart="140dp"
             android:gravity="center_horizontal"/>

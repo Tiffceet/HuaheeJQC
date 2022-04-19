@@ -1,16 +1,21 @@
 package com.example.huaheejqc
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import com.example.huaheejqc.data.User
 import com.example.huaheejqc.databinding.FragmentCashOutFromWalletBinding
-import com.example.huaheejqc.databinding.FragmentUserEditBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,18 +53,63 @@ class CashOutFromWallet : Fragment() {
         val dbGet = FirebaseFirestore.getInstance()
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
-        var check_on_click = 0;
+        var check_on_click = 0
 
         binding.buttonToBank.setOnClickListener{view:View ->
+            binding.methodStatusText.text = "Method has been selected"
             check_on_click = 1;
         }
 
         binding.buttonToOther.setOnClickListener{view:View ->
+            binding.methodStatusText.text = "Method has been selected"
             check_on_click = 1;
         }
 
-        binding.getReloadNumber.setOnClickListener{view:View->
-            
+        binding.startCashOut.setOnClickListener { view: View ->
+            if (check_on_click == 0) {
+                binding.CashOutPageStatusText.text = "Please select a consumption method!"
+                return@setOnClickListener
+            }
+
+            val docRef = dbGet.collection("User").document(stringID)
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        var name = document.getString("name")
+                        var address = document.getString("address")
+                        var ic = document.getString("ic")
+                        var contact = document.getString("contact")
+                        var amount = document.get("amount") as Number
+                        var addnewamount: Double = DecimalFormat("####.00").format(
+                            binding.getReloadNumber.text.toString().toDouble()
+                        ).toDouble()
+                        var intamount: Double = amount.toDouble()
+                        var cashoutamount:Double = 0.0
+
+                        if (addnewamount > intamount) {
+                            binding.CashOutPageStatusText.text =
+                                "Preferred Amount must be less than your wallet amount"
+                            return@addOnSuccessListener
+                        }
+
+                        Log.d("test_addnewamount", addnewamount.toString())
+                        Log.d("test_intamount", intamount.toString())
+                        cashoutamount = intamount - addnewamount
+
+
+                        db.collection("User").document(stringID).set(
+                            User(
+                                address.toString(),
+                                contact.toString(),
+                                ic.toString(),
+                                name.toString(),
+                                cashoutamount
+                            )
+                        )
+
+                    }
+                }
+            view.findNavController().navigateUp()
         }
 
         return view
