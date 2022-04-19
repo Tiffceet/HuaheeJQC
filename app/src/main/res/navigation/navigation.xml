@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_mainMenu_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_mainMenu_to_shoppingCart"
+            app:destination="@id/shoppingCart" />
     </fragment>
     <fragment
         android:id="@+id/userProfileManagement"
@@ -167,4 +170,9 @@
         android:name="com.example.huaheejqc.ResetPasswordFragment"
         android:label="Reset Password"
         tools:layout="@layout/fragment_reset_password" />
+    <fragment    
+        android:id="@+id/shoppingCart"
+        android:name="com.example.huaheejqc.ShoppingCart"
+        android:label="fragment_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" />
 </navigation>

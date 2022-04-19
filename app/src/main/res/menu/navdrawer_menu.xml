@@ -9,6 +9,9 @@
         android:id="@+id/userProfileManagement"
         android:title="My Profile" />
     <item
+        android:id="@+id/shoppingCart"
+        android:title="Shopping Cart" />
+    <item
         android:id="@+id/chatFragment"
         android:title="Chat History" />
     <item
