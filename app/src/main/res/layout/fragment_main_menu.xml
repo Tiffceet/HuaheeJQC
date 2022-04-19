@@ -5,36 +5,48 @@
     tools:context=".MainMenu">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/layoutPadding">
+        android:padding="@dimen/layoutPadding"
+      >
 
-        <LinearLayout
-            android:id="@+id/showcasePanel"
+        <TextView
+            android:id="@+id/welcomeMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="Welcome to HuaheeJQC"
+            android:textColor="@color/purple_700"
+            android:textSize="34sp"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="10dp">
+            tools:layout_editor_absoluteX="10dp" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/loginFragment"
-                android:name="com.example.huaheejqc.menu_showcase"
+        <LinearLayout
+            android:id="@+id/newReleasePanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/design_default_color_surface"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcomeMessage">
+
+            <TextView
+                android:id="@+id/newRelease"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:label="menu_showcase"
-                tools:layout="@layout/fragment_menu_showcase">
+                android:text="New Release"
+                android:textColor="@color/purple_200"
+                android:textSize="20sp" />
 
-            </androidx.fragment.app.FragmentContainerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newReleaseList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
-
-        <Button
-            android:id="@+id/poopshibuton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            tools:layout_editor_absoluteX="70dp"
-            tools:layout_editor_absoluteY="337dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

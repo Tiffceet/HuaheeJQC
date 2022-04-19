@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_mainMenu_to_search"
             app:destination="@id/search" />
+        <action
+            android:id="@+id/action_mainMenu_to_bookDetails"
+            app:destination="@id/bookDetails" />
     </fragment>
     <fragment
         android:id="@+id/userProfileManagement"

@@ -6,8 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.huaheejqc.data.Book
+import com.example.huaheejqc.data.SearchVal
 import com.example.huaheejqc.databinding.FragmentMainMenuBinding
 import com.example.huaheejqc.databinding.FragmentSearchBinding
+import com.example.huaheejqc.mainMenu.MenuShowcasesAdapter
+import com.example.huaheejqc.search.SearchAdapter
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +29,10 @@ private const val ARG_PARAM2 = "param2"
 class MainMenu : Fragment() {
     private var _binding: FragmentMainMenuBinding? = null
     private val binding get() = _binding!!
+    private var allBooks:ArrayList<Book> = ArrayList()
+    private var allBooks2:ArrayList<Book> = ArrayList()
+    private lateinit var externalAdapter: MenuShowcasesAdapter
+    private lateinit var alsoLikeAdapter: MenuShowcasesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +44,34 @@ class MainMenu : Fragment() {
     ): View? {
         _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        val db = Firebase.firestore
+        db.collection("books").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                val book = Book(
+                    document.get("title") as String,
+                    document.get("author") as String,
+                    document.get("price") as Number,
+                    document.get("description") as String,
+                    document.get("page_amount") as Number,
+                    document.get("category") as Number,
+                    document.get("status") as String,
+                    document.get("userid") as String,
+                    document.id,
+                    document.get("imageUrl") as String,
+                )
+
+                if (book.status.toString() == "Posted") {
+                    allBooks.add(book)
+                    externalAdapter.notifyItemInserted(allBooks.size - 1)
+                }
+            }
+        }
+
+        externalAdapter = MenuShowcasesAdapter(allBooks)
+        binding.newReleaseList.adapter = externalAdapter
+        val pageAmountLayout = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.newReleaseList.layoutManager = pageAmountLayout
 
         return view
     }
