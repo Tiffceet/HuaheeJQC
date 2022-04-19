@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.huaheejqc.data.Book
+import com.example.huaheejqc.data.CartItem
 import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.example.huaheejqc.databinding.FragmentBookDetailsBinding
 import com.google.firebase.auth.ktx.auth
@@ -40,6 +41,7 @@ class BookDetails : Fragment() {
     private var _binding: FragmentBookDetailsBinding? = null
     private val binding get() = _binding!!
     val args: BookDetailsArgs by navArgs()
+    private var dataArray:MutableList<Book> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,7 @@ class BookDetails : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
         var ownerid = ""
+        dataArray=ArrayList()
 
         Log.d("chin", args.viewbookid)
 
@@ -74,7 +77,20 @@ class BookDetails : Fragment() {
                 val description: String = document.get("description") as String
                 val priceString = "RM " + DecimalFormat("####.00").format(price).toString()
                 val imageUrl = document.get("imageUrl") as String
+                val status = document.get("status") as String
                 ownerid = document.get("userid").toString()
+
+                if (status != "Posted"){
+                    binding.bookdetailsPlaceorderBtn.visibility = View.INVISIBLE
+                }else{
+                    binding.bookdetailsPlaceorderBtn.visibility = View.VISIBLE
+                }
+
+                if(stringID == ownerid){
+                    binding.bookdetailsPlaceorderBtn.visibility = View.INVISIBLE
+                }else{
+                    binding.bookdetailsPlaceorderBtn.visibility = View.VISIBLE
+                }
 
                 db.collection("User").document(ownerid)
                     .get().addOnSuccessListener { document ->
@@ -108,6 +124,18 @@ class BookDetails : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
+
+        binding.bookdetailsPlaceorderBtn.setOnClickListener{
+            db.collection("carts").document(stringID).get()
+                .addOnSuccessListener { documents ->
+                    if(documents != null){
+//                        dataArray=documents.get(CartItem())
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("TAG", "Error getting documents: ", exception)
+                }
+        }
 
         binding.bookDetailsChatBtn.setOnClickListener {
             runBlocking {
