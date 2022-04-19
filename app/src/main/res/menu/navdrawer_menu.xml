@@ -7,12 +7,15 @@
         android:title="Home" />
     <item
         android:id="@+id/userProfileManagement"
+        android:icon="@drawable/ic_baseline_people_24"
         android:title="My Profile" />
     <item
         android:id="@+id/shoppingCart"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="Shopping Cart" />
     <item
         android:id="@+id/chatFragment"
+        android:icon="@drawable/ic_baseline_chat_24"
         android:title="Chat History" />
     <item
         android:id="@+id/feedbackFragment"
