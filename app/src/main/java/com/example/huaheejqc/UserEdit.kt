@@ -53,6 +53,8 @@ class UserEdit : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
 
+
+
         val docRef = dbGet.collection("User").document(stringID)
         docRef.get()
             .addOnSuccessListener {document ->

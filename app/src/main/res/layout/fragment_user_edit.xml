@@ -59,7 +59,7 @@
                         android:layout_toRightOf="@id/profile_image">
 
                         <Button
-                            android:id="@+id/get_new_profile_image_from_gallery"
+                            android:id="@+id/gallery_image"
                             android:layout_width="100dp"
                             android:layout_height="60dp"
                             android:layout_marginStart="20dp"
@@ -67,12 +67,12 @@
                             android:text="Upload Image" />
 
                         <Button
-                            android:id="@+id/get_new_profile_image_from_camera"
+                            android:id="@+id/capture_image"
                             android:layout_width="100dp"
                             android:layout_height="60dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
-                            android:text="Upload Image" />
+                            android:text="Capture Image" />
 
                     </LinearLayout>
 

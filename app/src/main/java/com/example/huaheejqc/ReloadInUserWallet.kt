@@ -165,8 +165,7 @@ class ReloadInUserWallet : Fragment() {
                         )
 
                     }
-                    view.findNavController()
-                        .navigate(R.id.action_reloadInUserWallet_to_user_wallet_management)
+                    view.findNavController().navigateUp()
                 }
         }
 
