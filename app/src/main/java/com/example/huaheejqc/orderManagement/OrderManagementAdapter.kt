@@ -34,35 +34,35 @@ class OrderManagementAdapter(
 
     override fun onBindViewHolder(holder: OrderManagementAdapter.ViewHolder, position: Int) {
 
-        val item = values[position]
-
-        holder.prodTitle.text = item.book
-
-        val storage = Firebase.storage
-        var storageRef = storage.reference
-        val timestamp = System.currentTimeMillis() / 1000L
-        var imageRef = storageRef.child("images/${item.imageUrl}")
-        val localFile = File.createTempFile("images", "jpg")
-
-        imageRef.getFile(localFile).addOnSuccessListener {
-            val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
-            holder.imageholder.setImageBitmap(myBitmap)
-            Log.d("Succ", "succ")
-        }.addOnFailureListener {
-            Log.d("noob", "noob")
-        }
-
-        holder.price.text="RM " + DecimalFormat("####.00").format(item.price)
-        holder.viewDetails.setOnClickListener{
-            Log.d("chin",item.bookid)
-//            it.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)
-            val action =
-                SellerBookManagementDirections.actionSellerBookManagementToEditBookDetails(
-                    item.bookid
-                )
-//                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
-            it.findNavController().navigate(action)
-        }
+//        val item = values[position]
+//
+//        holder.prodTitle.text = item.book
+//
+//        val storage = Firebase.storage
+//        var storageRef = storage.reference
+//        val timestamp = System.currentTimeMillis() / 1000L
+//        var imageRef = storageRef.child("images/${item.imageUrl}")
+//        val localFile = File.createTempFile("images", "jpg")
+//
+//        imageRef.getFile(localFile).addOnSuccessListener {
+//            val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
+//            holder.imageholder.setImageBitmap(myBitmap)
+//            Log.d("Succ", "succ")
+//        }.addOnFailureListener {
+//            Log.d("noob", "noob")
+//        }
+//
+//        holder.price.text="RM " + DecimalFormat("####.00").format(item.price)
+//        holder.viewDetails.setOnClickListener{
+//            Log.d("chin",item.bookid)
+////            it.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)
+//            val action =
+//                SellerBookManagementDirections.actionSellerBookManagementToEditBookDetails(
+//                    item.bookid
+//                )
+////                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
+//            it.findNavController().navigate(action)
+//        }
     }
 
     override fun getItemCount(): Int = values.size
