@@ -1,6 +1,8 @@
 package com.example.huaheejqc
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -21,6 +23,9 @@ import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
 import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
@@ -39,6 +44,10 @@ class AddBook : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentAddBookBinding? = null
     private val binding get() = _binding!!
+    val REQUEST_IMAGE_CAPTURE = 1
+    private lateinit var storage:FirebaseStorage
+    var userUploadedImg = false
+    var uploadedImageBitmap:Bitmap? = null
 
     private lateinit var button:Button
     private lateinit var inmageView: ImageView
@@ -65,6 +74,8 @@ class AddBook : Fragment() {
         _binding = FragmentAddBookBinding.inflate(inflater, container, false)
         val view = binding.root
         val db = Firebase.firestore
+        userUploadedImg = false
+        storage=Firebase.storage
 
         // Inflate the layout for this fragment
 
@@ -91,6 +102,7 @@ class AddBook : Fragment() {
             val newCategory:Number = binding.addbookCategorySpin.selectedItemPosition.toString().toInt()
             val userid = Firebase.auth.currentUser?.uid
             val stringID = userid.toString()
+
 //            val bookArray = db.collection("user-book").document(stringID)
 //            val list: ArrayList<String> = ArrayList()
 
@@ -133,6 +145,12 @@ class AddBook : Fragment() {
             }else{
                 binding.addbookCategoryEro.text = ""
             }
+            if (userUploadedImg == false) {
+                binding.addbookImgEro.text = "Must Upload Book Image"
+                return@setOnClickListener
+            }else{
+                binding.addbookImgEro.text = ""
+            }
 
 //            val book = hashMapOf(
 //                "Title" to newTitle,
@@ -142,33 +160,59 @@ class AddBook : Fragment() {
 //                "Category" to newCategory,
 //                "Status" to "Posted"
 //            )
-           val book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID)
 
-            db.collection("books")
-                .add(book)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("TAG", "DocumentSnapshot written with ID: ${documentReference.id}")
-                    view.hideKeyboard()
-                    view.findNavController().navigateUp()
-                }
-                .addOnFailureListener { e ->
-                    Log.w("TAG", "Error adding document", e)
-                }
+            val baos = ByteArrayOutputStream()
+            uploadedImageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
 
+            val storage = Firebase.storage
+            var storageRef = storage.reference
+            val timestamp = System.currentTimeMillis() / 1000L
+            var imageRef = storageRef.child("images/${timestamp.toString()}")
+            var uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnFailureListener {
+                Log.d("Succ", "noob")
+            }.addOnSuccessListener { taskSnapshot ->
+                Log.d("Succ", "yay")
 
+                val book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID, imageUrl = timestamp.toString())
 
-            binding.addbookAddimgBtn.setOnClickListener{ view: View ->
-                capturePhoto()
+                db.collection("books")
+                    .add(book)
+                    .addOnSuccessListener { documentReference ->
+                        Log.d("TAG", "DocumentSnapshot written with ID: ${documentReference.id}")
+                        view.hideKeyboard()
+                        view.findNavController().navigateUp()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("TAG", "Error adding document", e)
+                    }
             }
+        }
 
+        binding.addbookAddimgBtn.setOnClickListener{ view: View ->
+            Log.d("test","askjd")
+            dispatchTakePictureIntent()
         }
         return view
     }
 
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
+            // display error state to the user
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null){
-            binding.addbookImg.setImageBitmap(data.extras?.get("data") as Bitmap)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            uploadedImageBitmap = imageBitmap
+            userUploadedImg = true
+            binding.addbookImg.setImageBitmap(imageBitmap)
         }
     }
 

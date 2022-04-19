@@ -10,4 +10,5 @@ data class Book(var title: String,
                 var category: Number,
                 var status: String,
                 var userid: String,
-                var bookid: String = "")
+                var bookid: String = "",
+                var imageUrl: String = "")
