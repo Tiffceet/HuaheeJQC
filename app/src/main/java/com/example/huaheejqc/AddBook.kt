@@ -1,6 +1,7 @@
 package com.example.huaheejqc
 
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import androidx.navigation.findNavController
@@ -53,6 +55,7 @@ class AddBook : Fragment() {
         _binding = FragmentAddBookBinding.inflate(inflater, container, false)
         val view = binding.root
         val db = Firebase.firestore
+
         // Inflate the layout for this fragment
 
         db.collection("books")
@@ -66,8 +69,6 @@ class AddBook : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
-
-
 
         binding.addbookConfirmBtn.setOnClickListener { view: View ->
             var confirmPrice:Number = 0;
@@ -128,6 +129,7 @@ class AddBook : Fragment() {
                 .add(book)
                 .addOnSuccessListener { documentReference ->
                     Log.d("TAG", "DocumentSnapshot written with ID: ${documentReference.id}")
+                    view.hideKeyboard()
                     view.findNavController().navigateUp()
                 }
                 .addOnFailureListener { e ->
@@ -136,6 +138,11 @@ class AddBook : Fragment() {
 
         }
         return view
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     companion object {

@@ -2,6 +2,7 @@ package com.example.huaheejqc
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -69,11 +70,30 @@ class EditBookDetails : Fragment() {
                     val price:Number = document.get("price") as Number
                     val description:String = document.get("description") as String
                     val category:Number = document.get("category") as Number
+                    val status:String = document.get("status") as String
                     binding.editbookTitleTxt.setText(title)
                     binding.editbookAuthorTxt.setText(author)
                     binding.editbookPriceTxt.setText(DecimalFormat("####.00").format(price))
                     binding.editbookDescriptionTxt.setText(description)
                     binding.editbookCategorySpin.setSelection(category.toInt())
+
+                    if (status != "Posted"){
+                        binding.editbookConfirmBtn.visibility = View.INVISIBLE
+                        binding.editbookDeleteBtn.visibility = View.INVISIBLE
+                        binding.editbookTitleTxt.isEnabled = false
+                        binding.editbookAuthorTxt.isEnabled = false
+                        binding.editbookPriceTxt.isEnabled = false
+                        binding.editbookDescriptionTxt.isEnabled = false
+                        binding.editbookCategorySpin.isEnabled = false
+                    }else{
+                        binding.editbookConfirmBtn.visibility = View.VISIBLE
+                        binding.editbookDeleteBtn.visibility = View.VISIBLE
+                        binding.editbookTitleTxt.isEnabled = true
+                        binding.editbookAuthorTxt.isEnabled = true
+                        binding.editbookPriceTxt.isEnabled = true
+                        binding.editbookDescriptionTxt.isEnabled = true
+                        binding.editbookCategorySpin.isEnabled = true
+                    }
                 } else {
                     Log.d("TAG", "No such document")
                 }
@@ -81,6 +101,8 @@ class EditBookDetails : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
+
+
 
         binding.editbookConfirmBtn.setOnClickListener{view: View ->
             var confirmPrice:Number = 0
@@ -141,6 +163,7 @@ class EditBookDetails : Fragment() {
                 .set(book)
                 .addOnSuccessListener {
                     Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
+                    view.hideKeyboard()
                     view.findNavController().navigateUp()}
                 .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
@@ -156,6 +179,10 @@ class EditBookDetails : Fragment() {
         }
         // Inflate the layout for this fragment
         return view
+    }
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     companion object {

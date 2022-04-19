@@ -125,6 +125,8 @@
                 android:text="Category" />
 
             <Spinner
+
+                android:theme="@style/mySpinnerItemStyle"
                 android:id="@+id/addbook_category_spin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

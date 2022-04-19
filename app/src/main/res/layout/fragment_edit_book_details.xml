@@ -38,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:textColor="@color/black"
                 android:inputType="textPersonName"
                 android:minHeight="48dp" />
 
@@ -58,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:textColor="@color/black"
                 android:inputType="textPersonName"
                 android:minHeight="48dp" />
 
@@ -78,6 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:textColor="@color/black"
                 android:inputType="numberDecimal"
                 android:minHeight="48dp" />
 
@@ -107,6 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:textColor="@color/black"
                         android:gravity="start|top"
                         android:inputType="textMultiLine" />
                 </LinearLayout>
@@ -125,11 +129,13 @@
                 android:text="Category" />
 
             <Spinner
+                android:theme="@style/mySpinnerItemStyle"
                 android:id="@+id/editbook_category_spin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/category"
                 android:minHeight="48dp"
+
                 android:padding="@dimen/layoutPadding" />
 
             <TextView
