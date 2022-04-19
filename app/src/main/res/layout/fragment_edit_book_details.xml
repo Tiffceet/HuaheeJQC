@@ -157,6 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layoutPadding"
+                android:backgroundTint="#FF0000"
                 android:text="Delete" />
         </LinearLayout>
     </ScrollView>
