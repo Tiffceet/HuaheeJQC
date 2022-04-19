@@ -63,7 +63,7 @@ class UserProfileManagement : Fragment() {
 
                     binding.profileName.text = document.getString("name")
                     binding.profileEmail.text = document.getString("contact")
-                    binding.profileAddress.text = document.getString("address")
+                    binding.profileAddress.text = document.getString("email")
                 }else{
                     Log.d("errordb","get failed with ")
                 }
@@ -80,11 +80,6 @@ class UserProfileManagement : Fragment() {
 
         binding.buttonToOrderDetails.setOnClickListener{view:View->
             view.findNavController().navigate(R.id.action_userProfileManagement_to_orderStatus2)
-        }
-
-        binding.btnToLogOut.setOnClickListener{view:View ->
-            Firebase.auth.signOut()
-            view.findNavController().navigate(R.id.action_userProfileManagement_to_loginFragment)
         }
 
         binding.btnGoToWallet.setOnClickListener{view:View ->
