@@ -3,14 +3,21 @@ package com.example.huaheejqc
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.huaheejqc.data.Feedback
 import com.example.huaheejqc.databinding.FragmentFeedbackBinding
 import com.example.huaheejqc.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,6 +37,9 @@ class FeedbackFragment : Fragment() {
     private var _binding: FragmentFeedbackBinding? = null
     private val binding get() = _binding!!
     private val PICK_IMAGE_REQUEST = 71
+    private lateinit var uploadedImageUri: Uri
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +53,8 @@ class FeedbackFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        db = Firebase.firestore
+        auth = Firebase.auth
         _binding = FragmentFeedbackBinding.inflate(inflater, container, false)
         val view = binding.root
         binding.uploadImageButton.setOnClickListener {
@@ -53,6 +65,17 @@ class FeedbackFragment : Fragment() {
                 Intent.createChooser(intent, "Select Picture"),
                 PICK_IMAGE_REQUEST
             )
+        }
+
+        binding.submitFeedbackBtn.setOnClickListener {
+            val issue = binding.issueTextView.text.toString()
+            val contactEmail = binding.contactEmailEditText.text.toString()
+            if (this::uploadedImageUri.isInitialized) {
+                // If user uploaded image
+            }
+            val uid = auth.currentUser?.uid.toString()
+            val feedbackObj = Feedback(issue, contactEmail, uid)
+            db.collection("feedbacks").add(feedbackObj)
         }
         return view
     }
@@ -68,6 +91,7 @@ class FeedbackFragment : Fragment() {
                 val bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, filePath)
                 binding.uploadedImageView.setImageBitmap(bitmap)
                 binding.uploadedImageView.visibility = View.VISIBLE
+                uploadedImageUri = filePath!!
             } catch (e: IOException) {
                 e.printStackTrace()
             }
