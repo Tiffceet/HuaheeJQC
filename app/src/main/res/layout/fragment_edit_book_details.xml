@@ -91,6 +91,26 @@
                 android:textColor="@android:color/holo_red_dark" />
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Page Amount" />
+
+            <EditText
+                android:id="@+id/editbook_pageamount_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/editbook_pageamount_ero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -82,9 +82,11 @@ class AddBook : Fragment() {
 
         binding.addbookConfirmBtn.setOnClickListener { view: View ->
             var confirmPrice:Number = 0;
+            var confirmPageAmount = 0;
             val newTitle = binding.addbookTitleTxt.text.toString()
             val newAuthor = binding.addbookAuthorTxt.text.toString()
             var newPrice = binding.addbookPriceTxt.text.toString()
+            var newPageAmount = binding.addbookPageamountTxt.text.toString()
             val newDescription = binding.addbookDescriptionTxt.text.toString()
             val newCategory:Number = binding.addbookCategorySpin.selectedItemPosition.toString().toInt()
             val userid = Firebase.auth.currentUser?.uid
@@ -112,6 +114,13 @@ class AddBook : Fragment() {
                 confirmPrice = DecimalFormat("####.00").format(binding.addbookPriceTxt.text.toString().toDouble()).toDouble()
                 binding.addbookPriceEro.text = ""
             }
+            if (newPageAmount.isEmpty()) {
+                binding.addbookPriceEro.text = "Price cannot be empty!"
+                return@setOnClickListener
+            }else{
+                confirmPageAmount = binding.addbookPageamountTxt.text.toString().toInt()
+                binding.addbookPageamountEro.text = ""
+            }
             if (newDescription.isEmpty()) {
                 binding.addbookDescriptionEro.text = "Description cannot be empty!"
                 return@setOnClickListener
@@ -133,7 +142,7 @@ class AddBook : Fragment() {
 //                "Category" to newCategory,
 //                "Status" to "Posted"
 //            )
-           val book = Book(newTitle,newAuthor,confirmPrice,newDescription,newCategory,"Posted",stringID)
+           val book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID)
 
             db.collection("books")
                 .add(book)

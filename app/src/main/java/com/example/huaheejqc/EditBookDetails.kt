@@ -69,11 +69,13 @@ class EditBookDetails : Fragment() {
                 val author: String = document.get("author") as String
                 val price: Number = document.get("price") as Number
                 val description: String = document.get("description") as String
+                val page_amount:Number = document.get("page_amount") as Number
                 val category: Number = document.get("category") as Number
                 val status: String = document.get("status") as String
                 binding.editbookTitleTxt.setText(title)
                 binding.editbookAuthorTxt.setText(author)
                 binding.editbookPriceTxt.setText(DecimalFormat("####.00").format(price))
+                binding.editbookPageamountTxt.setText(page_amount.toString())
                 binding.editbookDescriptionTxt.setText(description)
                 binding.editbookCategorySpin.setSelection(category.toInt())
 
@@ -84,6 +86,7 @@ class EditBookDetails : Fragment() {
                     binding.editbookAuthorTxt.isEnabled = false
                     binding.editbookPriceTxt.isEnabled = false
                     binding.editbookDescriptionTxt.isEnabled = false
+                    binding.editbookPageamountTxt.isEnabled = false
                     binding.editbookCategorySpin.isEnabled = false
                     binding.editbookShippingBtn.visibility = View.VISIBLE
                     binding.editbookCancelBtn.visibility = View.VISIBLE
@@ -94,6 +97,7 @@ class EditBookDetails : Fragment() {
                     binding.editbookAuthorTxt.isEnabled = true
                     binding.editbookPriceTxt.isEnabled = true
                     binding.editbookDescriptionTxt.isEnabled = true
+                    binding.editbookPageamountTxt.isEnabled = true
                     binding.editbookCategorySpin.isEnabled = true
                     binding.editbookShippingBtn.visibility = View.GONE
                     binding.editbookCancelBtn.visibility = View.GONE
@@ -104,6 +108,7 @@ class EditBookDetails : Fragment() {
                     binding.editbookAuthorTxt.isEnabled = false
                     binding.editbookPriceTxt.isEnabled = false
                     binding.editbookDescriptionTxt.isEnabled = false
+                    binding.editbookPageamountTxt.isEnabled = false
                     binding.editbookCategorySpin.isEnabled = false
                     binding.editbookShippingBtn.visibility = View.GONE
                     binding.editbookCancelBtn.visibility = View.GONE
@@ -120,10 +125,12 @@ class EditBookDetails : Fragment() {
 
         binding.editbookConfirmBtn.setOnClickListener { view: View ->
             var confirmPrice: Number = 0
+            var confirmPageAmount:Number = 0
             val newTitle = binding.editbookTitleTxt.text.toString()
             val newAuthor = binding.editbookAuthorTxt.text.toString()
             val newPrice: String = binding.editbookPriceTxt.text.toString()
             val newDescription = binding.editbookDescriptionTxt.text.toString()
+            val newPageAmount = binding.editbookPageamountTxt.text.toString()
             val newCategory: Number =
                 binding.editbookCategorySpin.selectedItemPosition.toString().toInt()
             val userid = Firebase.auth.currentUser?.uid
@@ -153,6 +160,13 @@ class EditBookDetails : Fragment() {
                 ).toDouble()
                 binding.editbookPriceEro.text = ""
             }
+            if (newPageAmount.isEmpty()) {
+                binding.editbookPageamountEro.text = "Page amount cannot be empty!"
+                return@setOnClickListener
+            } else {
+                confirmPageAmount = binding.editbookPageamountTxt.text.toString().toInt()
+                binding.editbookPriceEro.text = ""
+            }
             if (newDescription.isEmpty()) {
                 binding.editbookDescriptionEro.text = "Description cannot be empty!"
                 return@setOnClickListener
@@ -180,6 +194,7 @@ class EditBookDetails : Fragment() {
                 confirmPrice,
                 newDescription,
                 newCategory,
+                confirmPageAmount,
                 "Posted",
                 stringID
             )
