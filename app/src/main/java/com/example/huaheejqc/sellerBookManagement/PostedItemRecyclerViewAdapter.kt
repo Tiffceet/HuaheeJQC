@@ -14,6 +14,7 @@ import com.example.huaheejqc.data.Book
 import com.example.huaheejqc.data.Chat
 import com.example.huaheejqc.databinding.FragmentChatTargetBinding
 import com.example.huaheejqc.databinding.PosteditemListitemBinding
+import java.text.DecimalFormat
 
 class PostedItemRecyclerViewAdapter(private val values: List<Book>) :
     RecyclerView.Adapter<PostedItemRecyclerViewAdapter.ViewHolder>() {
@@ -33,7 +34,7 @@ class PostedItemRecyclerViewAdapter(private val values: List<Book>) :
     override fun onBindViewHolder(holder: PostedItemRecyclerViewAdapter.ViewHolder, position: Int) {
         val item = values[position]
         holder.title.text=item.title
-        holder.price.text="RM " + item.price
+        holder.price.text="RM " + DecimalFormat("####.00").format(item.price)
         holder.viewDetails.setOnClickListener{
             Log.d("chin",item.bookid)
 //            it.findNavController().navigate(R.id.action_sellerBookManagement_to_addBook)

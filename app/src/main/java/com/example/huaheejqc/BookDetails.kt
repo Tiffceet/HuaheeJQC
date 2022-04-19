@@ -7,6 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.example.huaheejqc.databinding.FragmentAddBookBinding
+import com.example.huaheejqc.databinding.FragmentBookDetailsBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +28,8 @@ class BookDetails : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentBookDetailsBinding? = null
+    private val binding get() = _binding!!
     val args: BookDetailsArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +44,38 @@ class BookDetails : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("chin",args.bookid)
+        _binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
+        val view = binding.root
+        val db = Firebase.firestore
+        val bookid:String = args.viewbookid.toString()
+        val userid = Firebase.auth.currentUser?.uid
+        val stringID = userid.toString()
+        Log.d("chin",args.viewbookid)
+
+        val docRef = db.collection("books").document(bookid)
+        docRef.get().addOnSuccessListener {document ->
+            if (document != null) {
+                Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                val title:String = document.get("title") as String
+                val author:String = document.get("author") as String
+                val price:Number = document.get("price") as Number
+                val description:String = document.get("description") as String
+                val priceString = "RM " + DecimalFormat("####.00").format(price).toString()
+
+                binding.bookdetailsBooknameTxt.setText(title)
+                binding.bookdetailsAuthorTxt.setText(author)
+                binding.bookdetailsPriceTxt.setText(priceString)
+                binding.bookdetailsDescriptionTxt.setText(description)
+            } else {
+                Log.d("TAG", "No such document")
+            }
+        }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents: ", exception)
+            }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_details, container, false)
+        return view
     }
 
     companion object {

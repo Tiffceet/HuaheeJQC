@@ -24,13 +24,14 @@
                 android:id="@+id/bookdetails_bookname_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Huahee Khaw Zhe Xue" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/bookdetails_price_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RM 999.00"
+                android:textColor="@color/black"
                 android:textSize="24sp" />
 
             <Button
@@ -60,7 +61,6 @@
                     android:layout_margin="@dimen/layoutPadding"
                     android:layout_weight="4"
                     android:gravity="center"
-                    android:text="Khaw Zhe Xue"
                     android:textSize="20sp" />
 
                 <ImageButton
@@ -76,12 +76,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layoutPadding"
-                android:text="Description"
+                android:text="Author"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/bookdetails_author_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutPadding"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layoutPadding"
+                android:text="Description"
+                android:textSize="20sp" />
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -93,7 +108,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/layoutPadding"
-                        android:text="zhexue love his best friends" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
                 </LinearLayout>
             </ScrollView>
 

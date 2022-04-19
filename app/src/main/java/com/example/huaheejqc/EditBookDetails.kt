@@ -40,7 +40,6 @@ class EditBookDetails : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentEditBookDetailsBinding? = null
     private val binding get() = _binding!!
-
     val args: EditBookDetailsArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -177,9 +176,21 @@ class EditBookDetails : Fragment() {
                     view.findNavController().navigateUp()}
                 .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
         }
+
+        binding.editbookChangeimgBtn.setOnClickListener{ view: View ->
+            val action =
+                EditBookDetailsDirections.actionEditBookDetailsToBookDetails(
+                    bookid
+                )
+//                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
+            view.findNavController().navigate(action)
+        }
         // Inflate the layout for this fragment
         return view
     }
+
+
+
     private fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
