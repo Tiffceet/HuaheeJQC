@@ -228,20 +228,99 @@ class EditBookDetails : Fragment() {
                     }
                     db.collection("orders").document(orderid)
                         .update("status", "in_transit")
-                        .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully updated!")
+                        .addOnSuccessListener {
+                            Log.d("TAG", "DocumentSnapshot successfully updated!")
                             db.collection("books").document(bookid)
-                                .update("status","InTransit")
-                                .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully updated!")
+                                .update("status", "InTransit")
+                                .addOnSuccessListener {
+                                    Log.d("TAG", "DocumentSnapshot successfully updated!")
                                     view.findNavController().navigateUp()
                                 }
-                                .addOnFailureListener { e -> Log.w("TAG", "Error updating document", e) }
+                                .addOnFailureListener { e ->
+                                    Log.w(
+                                        "TAG",
+                                        "Error updating document",
+                                        e
+                                    )
+                                }
                         }
                         .addOnFailureListener { e -> Log.w("TAG", "Error updating document", e) }
                 }
                 .addOnFailureListener { exception ->
                     Log.w("TAG", "Error getting documents: ", exception)
                 }
-           }
+        }
+
+        var bookprice = 0.00
+        var amount:Number = 0
+        var confirmAmount = 0.00
+        binding.editbookCancelBtn.setOnClickListener { view: View ->
+            db.collection("orders")
+                .whereEqualTo("book", bookid)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        Log.d("TAG", "${document.id} => ${document.data}")
+                        orderid = document.id
+                        buyerid = document.get("buyer") as String
+                    }
+
+                    db.collection("books").document(bookid)
+                        .get()
+                        .addOnSuccessListener { document ->
+                            if(document!=null){
+                                bookprice = document.get("price") as Double
+                            }
+
+                            db.collection("orders").document(orderid)
+                                .update("status", "cancelled")
+                                .addOnSuccessListener {
+                                    Log.d("TAG", "DocumentSnapshot successfully updated!")
+
+                                    db.collection("books").document(bookid)
+                                        .update("status", "Posted")
+                                        .addOnSuccessListener {
+                                            Log.d("TAG", "DocumentSnapshot successfully updated!")
+
+                                            db.collection("User").document(buyerid)
+                                                .get()
+                                                .addOnSuccessListener {document ->
+                                                    if(document!=null){
+                                                        amount = document.get("amount") as Number
+                                                        confirmAmount = amount.toDouble()
+
+                                                        db.collection("User").document(buyerid)
+                                                            .update("amount",DecimalFormat("####.00").format(confirmAmount+bookprice))
+                                                            .addOnSuccessListener {
+                                                                Log.d("TAG", "DocumentSnapshot successfully updated!")
+                                                            view.findNavController().navigateUp()
+                                                            }
+                                                            .addOnFailureListener { exception ->
+                                                                Log.w("TAG", "Error getting documents: ", exception)
+                                                            }
+                                                    }
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    Log.w("TAG", "Error getting documents: ", exception)
+                                                }
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Log.w("TAG", "Error getting documents: ", exception)
+                                        }
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.w("TAG", "Error getting documents: ", exception)
+                                }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.w("TAG", "Error getting documents: ", exception)
+                        }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("TAG", "Error getting documents: ", exception)
+                }
+
+        }
         // Inflate the layout for this fragment
         return view
     }
