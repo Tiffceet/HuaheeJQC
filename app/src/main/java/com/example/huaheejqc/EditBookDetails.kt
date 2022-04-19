@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -193,8 +194,8 @@ class EditBookDetails : Fragment() {
                 newAuthor,
                 confirmPrice,
                 newDescription,
-                newCategory,
                 confirmPageAmount,
+                newCategory,
                 "Posted",
                 stringID
             )

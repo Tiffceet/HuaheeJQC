@@ -114,7 +114,7 @@
     <fragment
         android:id="@+id/bookDetails"
         android:name="com.example.huaheejqc.BookDetails"
-        android:label="fragment_book_details"
+        android:label="Book Details"
         tools:layout="@layout/fragment_book_details">
         <argument android:name="viewbookid" />
         <action
@@ -124,12 +124,12 @@
     <fragment
         android:id="@+id/addBook"
         android:name="com.example.huaheejqc.AddBook"
-        android:label="fragment_add_book"
+        android:label="Add Book"
         tools:layout="@layout/fragment_add_book" />
     <fragment
         android:id="@+id/editBookDetails"
         android:name="com.example.huaheejqc.EditBookDetails"
-        android:label="EditBookDetails">
+        android:label="Book Details">
         <argument android:name="editbook" />
         <action
             android:id="@+id/action_editBookDetails_to_bookDetails"
