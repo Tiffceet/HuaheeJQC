@@ -70,7 +70,6 @@ class UserEdit : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
 
-
         val docRef = dbGet.collection("User").document(stringID)
         docRef.get()
             .addOnSuccessListener { document ->
@@ -172,18 +171,35 @@ class UserEdit : Fragment() {
                             var newAmount = document.get("amount") as Number
                             var intamount: Double = newAmount.toDouble()
                             var newEmail = document.getString("email")
+                            var oldimageUrl = document.getString("imageUrl")
 
-                            db.collection("User").document(stringID).set(
-                                User(
-                                    newName.toString(),
-                                    newContact.toString(),
-                                    newIC.toString(),
-                                    newName.toString(),
-                                    intamount,
-                                    newEmail.toString(),
-                                    imageUrl = timestamp.toString()
+                            if(userUploadedImg==true){
+                                db.collection("User").document(stringID).set(
+                                    User(
+                                        newName.toString(),
+                                        newContact.toString(),
+                                        newIC.toString(),
+                                        newName.toString(),
+                                        intamount,
+                                        newEmail.toString(),
+                                        imageUrl = timestamp.toString()
+                                    )
                                 )
-                            )
+                            }else{
+                                db.collection("User").document(stringID).set(
+                                    User(
+                                        newName.toString(),
+                                        newContact.toString(),
+                                        newIC.toString(),
+                                        newName.toString(),
+                                        intamount,
+                                        newEmail.toString(),
+                                        oldimageUrl.toString()
+                                    )
+                                )
+                            }
+
+
                             view.findNavController().navigateUp()
                         }
                     }
