@@ -86,7 +86,7 @@ class EditBookDetails : Fragment() {
                 val author: String = document.get("author") as String
                 val price: Number = document.get("price") as Number
                 val description: String = document.get("description") as String
-                val page_amount:Number = document.get("page_amount") as Number
+                val page_amount: Number = document.get("page_amount") as Number
                 val category: Number = document.get("category") as Number
                 val status: String = document.get("status") as String
                 oldimageUrl = document.get("imageUrl") as String
@@ -101,7 +101,7 @@ class EditBookDetails : Fragment() {
                 var imageRef = storageRef.child("images/${oldimageUrl}")
                 val localFile = File.createTempFile("images", "jpg")
 
-                Log.d("asdasdasd","asdasdasd")
+                Log.d("asdasdasd", "asdasdasd")
                 imageRef.getFile(localFile).addOnSuccessListener {
                     val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
                     binding.editbookImg.setImageBitmap(myBitmap)
@@ -159,13 +159,14 @@ class EditBookDetails : Fragment() {
 
         binding.editbookConfirmBtn.setOnClickListener { view: View ->
             var confirmPrice: Number = 0
-            var confirmPageAmount:Number = 0
+            var confirmPageAmount: Number = 0
             val newTitle = binding.editbookTitleTxt.text.toString()
             val newAuthor = binding.editbookAuthorTxt.text.toString()
             val newPrice: String = binding.editbookPriceTxt.text.toString()
             val newDescription = binding.editbookDescriptionTxt.text.toString()
             val newPageAmount = binding.editbookPageamountTxt.text.toString()
-            val newCategory: Number = binding.editbookCategorySpin.selectedItemPosition.toString().toInt()
+            val newCategory: Number =
+                binding.editbookCategorySpin.selectedItemPosition.toString().toInt()
             val userid = Firebase.auth.currentUser?.uid
             val stringID = userid.toString()
 //            val bookArray = db.collection("user-book").document(stringID)
@@ -212,6 +213,11 @@ class EditBookDetails : Fragment() {
             } else {
                 binding.editbookCategoryEro.text = ""
             }
+            if (userUploadedImg == false) {
+
+            } else {
+                binding.editbookImageEro.text = ""
+            }
 
 //            val book = hashMapOf(
 //                "Title" to newTitle,
@@ -226,7 +232,7 @@ class EditBookDetails : Fragment() {
             val baos = ByteArrayOutputStream()
             uploadedImageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
-            var book = Book("","",0,"",0,0,"","","")
+            var book = Book("", "", 0, "", 0, 0, "", "", "")
             val storage = Firebase.storage
             var storageRef = storage.reference
             val timestamp = System.currentTimeMillis() / 1000L
@@ -236,10 +242,30 @@ class EditBookDetails : Fragment() {
                 Log.d("Succ", "noob")
             }.addOnSuccessListener { taskSnapshot ->
                 Log.d("Succ", "yay")
-                if(userUploadedImg == true){
-                    book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID,imageUrl = timestamp.toString())
-                }else{
-                    book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID,oldimageUrl)
+                if (userUploadedImg == true) {
+                    book = Book(
+                        newTitle,
+                        newAuthor,
+                        confirmPrice,
+                        newDescription,
+                        confirmPageAmount,
+                        newCategory,
+                        "Posted",
+                        stringID,
+                        imageUrl = timestamp.toString()
+                    )
+                } else {
+                    book = Book(
+                        newTitle,
+                        newAuthor,
+                        confirmPrice,
+                        newDescription,
+                        confirmPageAmount,
+                        newCategory,
+                        "Posted",
+                        stringID,
+                        oldimageUrl
+                    )
                 }
 
                 db.collection("books").document(bookid)
@@ -249,7 +275,13 @@ class EditBookDetails : Fragment() {
                         view.hideKeyboard()
                         view.findNavController().navigateUp()
                     }
-                    .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
+                    .addOnFailureListener { e ->
+                        Log.w(
+                            ContentValues.TAG,
+                            "Error writing document",
+                            e
+                        )
+                    }
             }
         }
 
@@ -263,8 +295,8 @@ class EditBookDetails : Fragment() {
                 .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
         }
 
-        binding.editbookChangeimgBtn.setOnClickListener{ view: View ->
-            Log.d("test","askjd")
+        binding.editbookChangeimgBtn.setOnClickListener { view: View ->
+            Log.d("test", "askjd")
             dispatchTakePictureIntent()
         }
 
@@ -306,7 +338,7 @@ class EditBookDetails : Fragment() {
         }
 
         var bookprice = 0.00
-        var amount:Number = 0
+        var amount: Number = 0
         var confirmAmount = 0.00
         binding.editbookCancelBtn.setOnClickListener { view: View ->
             db.collection("orders")
@@ -322,7 +354,7 @@ class EditBookDetails : Fragment() {
                     db.collection("books").document(bookid)
                         .get()
                         .addOnSuccessListener { document ->
-                            if(document!=null){
+                            if (document != null) {
                                 bookprice = document.get("price") as Double
                             }
 
@@ -338,24 +370,41 @@ class EditBookDetails : Fragment() {
 
                                             db.collection("User").document(buyerid)
                                                 .get()
-                                                .addOnSuccessListener {document ->
-                                                    if(document!=null){
+                                                .addOnSuccessListener { document ->
+                                                    if (document != null) {
                                                         amount = document.get("amount") as Number
                                                         confirmAmount = amount.toDouble()
 
                                                         db.collection("User").document(buyerid)
-                                                            .update("amount",DecimalFormat("####.00").format(confirmAmount+bookprice))
+                                                            .update(
+                                                                "amount",
+                                                                DecimalFormat("####.00").format(
+                                                                    confirmAmount + bookprice
+                                                                )
+                                                            )
                                                             .addOnSuccessListener {
-                                                                Log.d("TAG", "DocumentSnapshot successfully updated!")
-                                                            view.findNavController().navigateUp()
+                                                                Log.d(
+                                                                    "TAG",
+                                                                    "DocumentSnapshot successfully updated!"
+                                                                )
+                                                                view.findNavController()
+                                                                    .navigateUp()
                                                             }
                                                             .addOnFailureListener { exception ->
-                                                                Log.w("TAG", "Error getting documents: ", exception)
+                                                                Log.w(
+                                                                    "TAG",
+                                                                    "Error getting documents: ",
+                                                                    exception
+                                                                )
                                                             }
                                                     }
                                                 }
                                                 .addOnFailureListener { exception ->
-                                                    Log.w("TAG", "Error getting documents: ", exception)
+                                                    Log.w(
+                                                        "TAG",
+                                                        "Error getting documents: ",
+                                                        exception
+                                                    )
                                                 }
                                         }
                                         .addOnFailureListener { exception ->
