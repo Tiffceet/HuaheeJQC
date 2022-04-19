@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.huaheejqc.data.User
 import com.example.huaheejqc.databinding.FragmentLoginBinding
@@ -135,20 +136,48 @@ class UserEdit : Fragment() {
             if (newName.isEmpty()) {
                 binding.getNameStatusText.text = "Name cannot be empty!"
                 return@setOnClickListener
+            }else
+            {
+                binding.getNameStatusText.text = ""
             }
+
             if (newAddress.isEmpty()) {
                 binding.getAddressStatusText.text = "Address cannot be empty!"
                 return@setOnClickListener
+            }else{
+                binding.getAddressStatusText.text = ""
             }
+
             if (newContact.isEmpty()) {
                 binding.getContactStatusText.text = "Contact cannot be empty!"
                 return@setOnClickListener
+            }else{
+                binding.getContactStatusText.text=""
             }
+
             if (newIC.isEmpty()) {
                 binding.getICStatusText.text = "IC cannot be empty!"
                 return@setOnClickListener
+            }else{
+                binding.getICStatusText.text = ""
             }
 
+            if(binding.getNewIc.text.toString().length != 12 ) {
+                binding.getICStatusText.text = "IC should be correct format which is 12 digit"
+                return@setOnClickListener
+            }else{
+                binding.getICStatusText.text = ""
+            }
+
+            if(binding.getNewContact.text.toString().length == 10 || binding.getNewContact.text.toString().length == 11){
+                if(newContact.substring(0, 1) != "0" && newContact.substring(1,2)!="1"){
+                    binding.getContactStatusText.text = "Contact format should be 01XXXXXXXX"
+                    return@setOnClickListener
+                }
+            }else{
+                binding.getContactStatusText.text = "Contact length should be 10 until 11 digits only"
+                return@setOnClickListener
+            }
 
             val baos = ByteArrayOutputStream()
             uploadedImageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
