@@ -1,6 +1,7 @@
 package com.example.huaheejqc
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,22 @@ class user_wallet_management : Fragment() {
         val dbGet = FirebaseFirestore.getInstance()
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
+
+        val docRef = db.collection("User").document(stringID)
+        docRef.get()
+            .addOnSuccessListener {document ->
+                if(document != null){
+                    Log.d("exist","DocumentSnapshot data: ${document.data}")
+
+                    var amount = document.get("amount") as Number
+                    var getamount = amount.toString()
+                    binding.profileAmount.text = "RM " + getamount
+
+                }else{
+                    Log.d("errordb","get failed with ")
+                }
+
+            }
 
         binding.cardToCashOut.setOnClickListener{view:View ->
             view.findNavController().navigate(R.id.action_user_wallet_management_to_cashOutFromWallet)
