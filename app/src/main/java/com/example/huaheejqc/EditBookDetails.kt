@@ -76,6 +76,7 @@ class EditBookDetails : Fragment() {
         val view = binding.root
         val db = Firebase.firestore
         val bookid: String = args.editbook.toString()
+        var oldimageUrl = ""
 
         val docRef = db.collection("books").document(bookid)
         docRef.get().addOnSuccessListener { document ->
@@ -88,7 +89,7 @@ class EditBookDetails : Fragment() {
                 val page_amount:Number = document.get("page_amount") as Number
                 val category: Number = document.get("category") as Number
                 val status: String = document.get("status") as String
-                val imageUrl = document.get("imageUrl") as String
+                oldimageUrl = document.get("imageUrl") as String
                 binding.editbookTitleTxt.setText(title)
                 binding.editbookAuthorTxt.setText(author)
                 binding.editbookPriceTxt.setText(DecimalFormat("####.00").format(price))
@@ -97,7 +98,7 @@ class EditBookDetails : Fragment() {
                 binding.editbookCategorySpin.setSelection(category.toInt())
                 val storage = Firebase.storage
                 var storageRef = storage.reference
-                var imageRef = storageRef.child("images/${imageUrl}")
+                var imageRef = storageRef.child("images/${oldimageUrl}")
                 val localFile = File.createTempFile("images", "jpg")
 
                 Log.d("asdasdasd","asdasdasd")
@@ -211,12 +212,6 @@ class EditBookDetails : Fragment() {
             } else {
                 binding.editbookCategoryEro.text = ""
             }
-            if (userUploadedImg == false) {
-                binding.editbookImageEro.text = "Must Upload Book Image"
-                return@setOnClickListener
-            }else{
-                binding.editbookImageEro.text = ""
-            }
 
 //            val book = hashMapOf(
 //                "Title" to newTitle,
@@ -231,7 +226,7 @@ class EditBookDetails : Fragment() {
             val baos = ByteArrayOutputStream()
             uploadedImageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
-
+            var book = Book("","",0,"",0,0,"","","")
             val storage = Firebase.storage
             var storageRef = storage.reference
             val timestamp = System.currentTimeMillis() / 1000L
@@ -241,8 +236,11 @@ class EditBookDetails : Fragment() {
                 Log.d("Succ", "noob")
             }.addOnSuccessListener { taskSnapshot ->
                 Log.d("Succ", "yay")
-
-                val book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID,imageUrl = timestamp.toString())
+                if(userUploadedImg == true){
+                    book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID,imageUrl = timestamp.toString())
+                }else{
+                    book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID,oldimageUrl)
+                }
 
                 db.collection("books").document(bookid)
                     .set(book)

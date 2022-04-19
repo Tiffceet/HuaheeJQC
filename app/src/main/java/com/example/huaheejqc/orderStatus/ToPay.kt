@@ -24,9 +24,9 @@ class ToPay : Fragment() {
         _binding = FragmentToPayBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        binding.topayViewdetailsBtn.setOnClickListener{view:View->
+//        binding.topayViewdetailsBtn.setOnClickListener{view:View->
 //            view.findNavController().navigate(R.id.action_orderStatus2_to_bookDetails)
-        }
+//        }
         return view
     }
 }
