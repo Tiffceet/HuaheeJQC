@@ -28,7 +28,7 @@ class CartItemViewAdapter(
         val item = values[position]
         holder.prodTitle.text = item.title
         holder.prodDesc.text = item.description
-        holder.prodPrice.text = item.price.toString()
+        holder.prodPrice.text = String.format("RM %.2f", item.price)
     }
 
     override fun getItemCount(): Int = values.size

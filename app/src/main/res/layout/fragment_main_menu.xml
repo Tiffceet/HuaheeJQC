@@ -17,15 +17,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="10dp">
 
-            <ImageButton
-                android:id="@+id/menuDrawer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/menu_drawer" />
-
             <View
                 android:layout_width="@dimen/layoutPadding"
                 android:layout_height="0dp"
@@ -63,7 +54,7 @@
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/searchPanel"
             tools:layout_editor_absoluteX="1dp">
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:id="@+id/loginFragment"
@@ -71,7 +62,7 @@
                 android:label="menu_showcase"
                 tools:layout="@layout/fragment_menu_showcase">
 
-            </fragment>
+            </androidx.fragment.app.FragmentContainerView>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

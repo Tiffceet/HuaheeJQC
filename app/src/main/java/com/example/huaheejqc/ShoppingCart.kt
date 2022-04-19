@@ -31,6 +31,7 @@ class ShoppingCart : Fragment() {
     private val binding get() = _binding!!
     private var cartItemRefs:ArrayList<String> = ArrayList()
     private var cartItems:ArrayList<CartItem> = ArrayList()
+    private var totalPrice = 0.00;
     val userId = Firebase.auth.currentUser?.uid
 
     private lateinit var externalAdapter: CartItemViewAdapter
@@ -51,7 +52,7 @@ class ShoppingCart : Fragment() {
             .document(userId.toString())
             .get()
             .addOnSuccessListener { document ->
-                if (document != null) {
+                if (document?.data != null) {
                     // get cart items references
                     cartItemRefs.addAll(document.data?.get("books") as ArrayList<String>)
 
@@ -69,7 +70,9 @@ class ShoppingCart : Fragment() {
                                         )
                                         cartItems.add(cartItem)
 
-                                        externalAdapter.notifyDataSetChanged()
+                                        externalAdapter.notifyItemInserted(cartItems.size - 1)
+                                        totalPrice += cartItem.price?.toDouble() ?: 0.00
+                                        binding.totalPriceAmount.text = String.format("RM %.2f", totalPrice)
                                     } else {
                                         Log.d("ShoppingCart", "No such document")
                                     }
