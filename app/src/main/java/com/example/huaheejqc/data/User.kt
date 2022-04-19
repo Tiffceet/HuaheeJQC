@@ -1,10 +1,11 @@
-package com.example.huaheejqc
+package com.example.huaheejqc.data
 
 data class User(
     var address : String,
     var contact: String,
     var ic: String,
-    var name: String
+    var name: String,
+    var amount: Number
 ) {
     companion object {
         fun from(map: Map<String, Any>): User {
@@ -12,7 +13,8 @@ data class User(
             val contact = if (map.containsKey("contact")) map["contact"] as String else ""
             val ic = if (map.containsKey("ic")) map["ic"] as String else ""
             val name = if (map.containsKey("name")) map["name"] as String else ""
-            return User(address, contact, ic, name)
+            val amount = if (map.containsKey("amount")) map["amount"] as Number else ""
+            return User(address, contact, ic, name, amount as Number)
         }
     }
 }

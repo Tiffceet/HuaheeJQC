@@ -61,9 +61,9 @@ class UserProfileManagement : Fragment() {
                 if(document != null){
                     Log.d("exist","DocumentSnapshot data: ${document.data}")
 
-                    binding.profileName.text = document.getString("Name")
-                    binding.profileEmail.text = document.getString("Contact")
-                    binding.profileAddress.text = document.getString("Address")
+                    binding.profileName.text = document.getString("name")
+                    binding.profileEmail.text = document.getString("contact")
+                    binding.profileAddress.text = document.getString("address")
                 }else{
                     Log.d("errordb","get failed with ")
                 }

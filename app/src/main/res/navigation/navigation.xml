@@ -149,7 +149,11 @@
         android:id="@+id/reloadInUserWallet"
         android:name="com.example.huaheejqc.ReloadInUserWallet"
         android:label="fragment_reload_in_user_wallet"
-        tools:layout="@layout/fragment_reload_in_user_wallet" />
+        tools:layout="@layout/fragment_reload_in_user_wallet" >
+        <action
+            android:id="@+id/action_reloadInUserWallet_to_user_wallet_management"
+            app:destination="@id/user_wallet_management" />
+    </fragment>
     <fragment
         android:id="@+id/transferUserInWallet"
         android:name="com.example.huaheejqc.TransferUserInWallet"

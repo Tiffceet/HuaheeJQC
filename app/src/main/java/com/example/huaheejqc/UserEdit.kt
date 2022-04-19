@@ -58,26 +58,26 @@ class UserEdit : Fragment() {
                 if(document != null){
                     Log.d("exist","DocumentSnapshot data: ${document.data}")
 
-                    if(document.getString("Name") != null){
-                        binding.currentName.text = document.getString("Name")
+                    if(document.getString("name") != null){
+                        binding.currentName.text = document.getString("name")
                     }else{
                         binding.currentName.text = "Your data is not currently in the database"
                     }
 
-                    if(document.getString("Contact") != null){
-                        binding.currentContact.text = document.getString("Contact")
+                    if(document.getString("contact") != null){
+                        binding.currentContact.text = document.getString("contact")
                     }else{
                         binding.currentContact.text = "Your data is not currently in the database"
                     }
 
-                    if(document.getString("IC") != null){
-                        binding.currentIc.text = document.getString("IC")
+                    if(document.getString("ic") != null){
+                        binding.currentIc.text = document.getString("ic")
                     }else{
                         binding.currentIc.text = "Your data is not currently in the database"
                     }
 
-                    if(document.getString("Address") != null){
-                        binding.currentAddress.text = document.getString("Address")
+                    if(document.getString("address") != null){
+                        binding.currentAddress.text = document.getString("address")
                     }else{
                         binding.currentAddress.text = "Your data is not currently in the database"
                     }
@@ -130,10 +130,10 @@ class UserEdit : Fragment() {
             */
 
             val city = hashMapOf(
-                "Name" to newName,
-                "Address" to newAddress,
-                "IC" to newIC,
-                "Contact" to newContact
+                "name" to newName,
+                "address" to newAddress,
+                "ic" to newIC,
+                "contact" to newContact
             )
 
             db.collection("User").document(stringID)

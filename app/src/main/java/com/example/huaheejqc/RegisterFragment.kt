@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.example.huaheejqc.data.User
 import com.example.huaheejqc.databinding.FragmentRegisterBinding
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -84,7 +84,7 @@ class RegisterFragment : Fragment() {
                         val uid = user?.uid.toString()
                         binding.statusText.setTextColor(Color.parseColor("#00FF00"))
                         binding.statusText.text = "Successfully Registered";
-                        firestore.collection("User").document(uid).set(User("", "", "", ""))
+                        firestore.collection("User").document(uid).set(User("", "", "", "",0.00))
                         view.findNavController().navigateUp()
                     } else {
                         // If sign in fails, display a message to the user.

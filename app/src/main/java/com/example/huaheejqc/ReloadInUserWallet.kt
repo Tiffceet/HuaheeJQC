@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import com.example.huaheejqc.data.User
 import com.example.huaheejqc.databinding.FragmentReloadInUserWalletBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -48,68 +50,110 @@ class ReloadInUserWallet : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
 
-        binding.buttonStartReload.setOnClickListener {
-            val reload_amount = binding.getReloadNumber.toString()
-            var int_reload_amount = reload_amount.toInt()
-            var checkOtherButton = 0;
+        var reload_amount = 0
+        var checkOtherButton = 0
 
-            if (binding.reloadRm50.hasOnClickListeners()) {
-                if(binding.getReloadNumber != null){
-                    binding.ReloadPageStatusText.text = "Reload amount RM 50 selected unsuccessfully because above amount has been filled in."
-                }else{
-                    int_reload_amount = 50;
-                    binding.ReloadPageStatusText.text = "Reload amount RM 50 selected successfully."
-                    checkOtherButton = 1;
-                }
-            } else if (binding.reloadRm100.hasOnClickListeners()) {
-                if(binding.getReloadNumber != null){
-                    binding.ReloadPageStatusText.text = "Reload amount RM 100 selected unsuccessfully because above amount has been filled in."
-                }else{
-                    int_reload_amount = 100;
-                    checkOtherButton = 1;
-                    binding.ReloadPageStatusText.text = "Reload amount RM 100 selected successfully."
-                }
-            } else if (binding.reloadRm150.hasOnClickListeners()) {
-                if(binding.getReloadNumber != null){
-                    binding.ReloadPageStatusText.text = "Reload amount RM 150 selected unsuccessfully because above amount has been filled in."
-                }else{
-                    int_reload_amount = 150;
-                    checkOtherButton = 1;
-                    binding.ReloadPageStatusText.text = "Reload amount RM 150 selected successfully."
-                }
-
-            } else if (binding.reloadRm200.hasOnClickListeners()) {
-                if(binding.getReloadNumber != null){
-                    binding.ReloadPageStatusText.text = "Reload amount RM 200 selected unsuccessfully because above amount has been filled in."
-                }else{
-                    int_reload_amount = 200;
-                    checkOtherButton = 1;
-                    binding.ReloadPageStatusText.text = "Reload amount RM 200 selected successfully."
-                }
-
-            } else if (binding.reloadRm250.hasOnClickListeners()) {
-                if(binding.getReloadNumber != null){
-                    binding.ReloadPageStatusText.text = "Reload amount RM 250 selected unsuccessfully because above amount has been filled in."
-                }else{
-                    int_reload_amount = 250;
-                    checkOtherButton = 1;
-                    binding.ReloadPageStatusText.text = "Reload amount RM 250 selected successfully."
-                }
-
-            } else if (binding.reloadRm300.hasOnClickListeners()) {
-                if(binding.getReloadNumber != null){
-                    binding.ReloadPageStatusText.text = "Reload amount RM 300 selected unsuccessfully because above amount has been filled in."
-                }else{
-                    int_reload_amount = 300;
-                    checkOtherButton = 1;
-                    binding.ReloadPageStatusText.text = "Reload amount RM 300 selected successfully."
-                }
+        binding.reloadRm50.setOnClickListener{ view:View ->
+            if(reload_amount != null){
+                binding.ReloadPageStatusText.text = "Reload amount RM 50 selected unsuccessfully because above amount has been filled in."
+                return@setOnClickListener
+            }else{
+                reload_amount = 50;
+                binding.ReloadPageStatusText.text = "Reload amount RM 50 selected successfully."
+                checkOtherButton = 1;
             }
+        }
 
-            if (reload_amount.isEmpty() && checkOtherButton == 0) {
+        binding.reloadRm100.setOnClickListener{ view:View ->
+            if(binding.getReloadNumber.text != null){
+                binding.ReloadPageStatusText.text = "Reload amount RM 100 selected unsuccessfully because above amount has been filled in."
+                return@setOnClickListener
+            }else{
+                reload_amount = 100;
+                checkOtherButton = 1;
+                binding.ReloadPageStatusText.text = "Reload amount RM 100 selected successfully."
+            }
+        }
+
+        binding.reloadRm150.setOnClickListener{ view:View ->
+            if(binding.getReloadNumber.text != null){
+                binding.ReloadPageStatusText.text = "Reload amount RM 150 selected unsuccessfully because above amount has been filled in."
+                return@setOnClickListener
+            }else{
+                reload_amount = 150;
+                checkOtherButton = 1;
+                binding.ReloadPageStatusText.text = "Reload amount RM 150 selected successfully."
+            }
+        }
+
+        binding.reloadRm200.setOnClickListener{ view:View ->
+            if(binding.getReloadNumber.text != null){
+                binding.ReloadPageStatusText.text = "Reload amount RM 200 selected unsuccessfully because above amount has been filled in."
+                return@setOnClickListener
+            }else{
+                reload_amount = 200;
+                checkOtherButton = 1;
+                binding.ReloadPageStatusText.text = "Reload amount RM 200 selected successfully."
+            }
+        }
+
+        binding.reloadRm250.setOnClickListener{ view:View ->
+            if(binding.getReloadNumber.text != null){
+                binding.ReloadPageStatusText.text = "Reload amount RM 250 selected unsuccessfully because above amount has been filled in."
+                return@setOnClickListener
+            }else{
+                reload_amount = 250;
+                checkOtherButton = 1;
+                binding.ReloadPageStatusText.text = "Reload amount RM 250 selected successfully."
+            }
+        }
+
+        binding.reloadRm300.setOnClickListener{ view:View ->
+            if(binding.getReloadNumber.text != null){
+                binding.ReloadPageStatusText.text = "Reload amount RM 300 selected unsuccessfully because above amount has been filled in."
+                return@setOnClickListener
+            }else{
+                reload_amount = 300;
+                checkOtherButton = 1;
+                binding.ReloadPageStatusText.text = "Reload amount RM 300 selected successfully."
+            }
+        }
+
+        binding.buttonStartReload.setOnClickListener { view: View ->
+
+            var new_reload_amount = binding.getReloadNumber.text.toString()
+            var int_reload_amount = new_reload_amount.toInt()
+            var nummString = ""
+
+            if (reload_amount == null) {
                 binding.ReloadPageStatusText.text = "Reload Amount should not be empty!"
                 return@setOnClickListener
             }
+
+            val docRef = dbGet.collection("User").document(stringID)
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        var name = document.getString("name")
+                        var address = document.getString("address")
+                        var ic = document.getString("ic")
+                        var contact = document.getString("contact")
+                        var amount = reload_amount
+
+                        db.collection("User").document(stringID).set(
+                            User(
+                                address.toString(),
+                                contact.toString(),
+                                ic.toString(),
+                                name.toString(),
+                                amount
+                            )
+                        )
+
+                    }
+                    view.findNavController()
+                        .navigate(R.id.action_reloadInUserWallet_to_user_wallet_management)
+                }
         }
 
         return  view
