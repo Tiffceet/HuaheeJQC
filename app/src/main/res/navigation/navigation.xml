@@ -110,19 +110,13 @@
         android:id="@+id/orderStatus2"
         android:name="com.example.huaheejqc.OrderStatus"
         android:label="Order Status"
-        tools:layout="@layout/fragment_order_status">
-        <action
-            android:id="@+id/action_orderStatus2_to_bookDetails"
-            app:destination="@id/bookDetails" />
-    </fragment>
+        tools:layout="@layout/fragment_order_status" />
     <fragment
         android:id="@+id/bookDetails"
         android:name="com.example.huaheejqc.BookDetails"
         android:label="fragment_book_details"
         tools:layout="@layout/fragment_book_details">
-        <argument
-            android:name="Bookid"
-            app:argType="string" />
+        <argument android:name="viewbookid" />
     </fragment>
     <fragment
         android:id="@+id/addBook"
