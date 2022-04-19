@@ -117,6 +117,9 @@
         android:label="fragment_book_details"
         tools:layout="@layout/fragment_book_details">
         <argument android:name="viewbookid" />
+        <action
+            android:id="@+id/action_bookDetails_to_conversationFragment"
+            app:destination="@id/conversationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addBook"

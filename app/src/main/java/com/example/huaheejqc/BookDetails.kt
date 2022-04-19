@@ -6,13 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.huaheejqc.data.Book
 import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.example.huaheejqc.databinding.FragmentBookDetailsBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.text.DecimalFormat
 import java.util.HashMap
 
@@ -46,6 +50,7 @@ class BookDetails : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val realtimeDb = Firebase.database
         _binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
         val view = binding.root
         val db = Firebase.firestore
@@ -90,6 +95,40 @@ class BookDetails : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents: ", exception)
             }
+
+        binding.bookDetailsChatBtn.setOnClickListener {
+            runBlocking {
+                val currentUserId = Firebase.auth.currentUser?.uid.toString()
+                val bookDoc = db.collection("books").document(bookid).get().await()
+                val uid = bookDoc.get("userid") as String
+                val userDoc = db.collection("User").document(uid).get().await().data as HashMap<String, Any>
+                val bookAuthorName = userDoc["name"] as String
+                val innerView = it
+                realtimeDb.reference.child("chat-members").get().addOnSuccessListener {
+                    val chatDoc = it.value
+                    chatDoc as HashMap<String, Any>
+                    for ((chatId, memberList) in chatDoc) {
+                        memberList as HashMap<String, Any>
+                        if(memberList.containsKey(uid) && memberList.containsKey(currentUserId)) {
+                            val action = BookDetailsDirections.actionBookDetailsToConversationFragment(chatId, bookAuthorName)
+                            innerView.findNavController().navigate(action)
+                            return@addOnSuccessListener
+                        }
+                    }
+                    val newConvo:HashMap<String, Any> = HashMap()
+                    newConvo.put(uid, true)
+                    newConvo.put(currentUserId, true)
+                    val something = realtimeDb.getReference("chat-members").push()
+                    val newChatId = something.key.toString()
+                    something.setValue(newConvo)
+                    val action = BookDetailsDirections.actionBookDetailsToConversationFragment(newChatId, bookAuthorName)
+                    innerView.findNavController().navigate(action)
+                }.addOnFailureListener{
+                    Log.e("firebase", "Error getting data", it)
+                }
+
+            }
+        }
         // Inflate the layout for this fragment
         return view
     }
