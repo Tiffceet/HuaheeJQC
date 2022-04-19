@@ -81,27 +81,26 @@ class BookDetails : Fragment() {
                         if (document != null) {
                             var ownerEmail = document.get("email") as String
                             binding.bookdetailsOwnerTxt.setText(ownerEmail)
+
+                            val storage = Firebase.storage
+                            var storageRef = storage.reference
+                            var imageRef = storageRef.child("images/${imageUrl}")
+                            val localFile = File.createTempFile("images", "jpg")
+
+                            Log.d("asdasdasd","asdasdasd")
+                            imageRef.getFile(localFile).addOnSuccessListener {
+                                val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
+                                binding.bookdetailsImg.setImageBitmap(myBitmap)
+                                Log.d("BookdetailImage", "succ")
+                            }.addOnFailureListener {
+                                Log.d("noob", "noob")
+                            }
                         }
                     }
                 binding.bookdetailsBooknameTxt.setText(title)
                 binding.bookdetailsAuthorTxt.setText(author)
                 binding.bookdetailsPriceTxt.setText(priceString)
                 binding.bookdetailsDescriptionTxt.setText(description)
-
-                val storage = Firebase.storage
-                var storageRef = storage.reference
-                var imageRef = storageRef.child("images/${imageUrl}")
-                val localFile = File.createTempFile("images", "jpg")
-
-                Log.d("asdasdasd","asdasdasd")
-                imageRef.getFile(localFile).addOnSuccessListener {
-                    val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
-                    binding.bookdetailsImg.setImageBitmap(myBitmap)
-                    Log.d("BookdetailImage", "succ")
-                }.addOnFailureListener {
-                    Log.d("noob", "noob")
-                }
-
             } else {
                 Log.d("TAG", "No such document")
             }
