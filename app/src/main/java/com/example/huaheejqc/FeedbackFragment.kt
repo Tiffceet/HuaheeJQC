@@ -1,15 +1,18 @@
 package com.example.huaheejqc
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import com.example.huaheejqc.data.Feedback
 import com.example.huaheejqc.databinding.FragmentFeedbackBinding
 import com.example.huaheejqc.databinding.FragmentLoginBinding
@@ -18,6 +21,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,6 +45,7 @@ class FeedbackFragment : Fragment() {
     private lateinit var uploadedImageUri: Uri
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +59,8 @@ class FeedbackFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        storage = Firebase.storage
+
         db = Firebase.firestore
         auth = Firebase.auth
         _binding = FragmentFeedbackBinding.inflate(inflater, container, false)
@@ -70,14 +78,33 @@ class FeedbackFragment : Fragment() {
         binding.submitFeedbackBtn.setOnClickListener {
             val issue = binding.issueTextView.text.toString()
             val contactEmail = binding.contactEmailEditText.text.toString()
-            if (this::uploadedImageUri.isInitialized) {
-                // If user uploaded image
-            }
             val uid = auth.currentUser?.uid.toString()
-            val feedbackObj = Feedback(issue, contactEmail, uid)
-            db.collection("feedbacks").add(feedbackObj)
+            if (this::uploadedImageUri.isInitialized) {
+                var storageRef = storage.reference
+                val timestamp = System.currentTimeMillis() / 1000L
+                var imageRef = storageRef.child("images/${timestamp.toString()}")
+                imageRef.putFile(uploadedImageUri).addOnFailureListener {
+                    Log.d("FirebaseStorage", "Failed")
+                    binding.root.hideKeyboard()
+                }.addOnSuccessListener { taskSnapshot ->
+                    val feedbackObj = Feedback(issue, contactEmail, uid, timestamp.toString())
+                    db.collection("feedbacks").add(feedbackObj)
+                    Log.d("FirebaseStorage", "Success")
+                    binding.root.hideKeyboard()
+                }
+            } else {
+                val feedbackObj = Feedback(issue, contactEmail, uid, "")
+                db.collection("feedbacks").add(feedbackObj)
+                binding.root.hideKeyboard()
+            }
+
         }
         return view
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
