@@ -1,9 +1,12 @@
 package com.example.huaheejqc
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,6 +49,13 @@ class AddBook : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    val REQUEST_CODE = 200
+
+    fun capturePhoto() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, REQUEST_CODE)
     }
 
     override fun onCreateView(
@@ -136,8 +146,21 @@ class AddBook : Fragment() {
                     Log.w("TAG", "Error adding document", e)
                 }
 
+
+
+            binding.addbookAddimgBtn.setOnClickListener{ view: View ->
+                capturePhoto()
+            }
+
         }
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE && data != null){
+            binding.addbookImg.setImageBitmap(data.extras?.get("data") as Bitmap)
+        }
     }
 
     private fun View.hideKeyboard() {

@@ -74,13 +74,8 @@ class BookDetails : Fragment() {
                 db.collection("User").document(ownerid)
                     .get().addOnSuccessListener { document ->
                         if(document!=null){
-                            var ownerName = document.get("name") as String
-
-                            if (ownerName.isEmpty()){
-                                ownerName = "User#" + ownerid.take(5)
-                            }
-
-                            binding.bookdetailsOwnerTxt.setText(ownerName)
+                            var ownerEmail = document.get("email") as String
+                            binding.bookdetailsOwnerTxt.setText(ownerEmail)
                         }
 
                     }
