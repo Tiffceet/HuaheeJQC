@@ -6,7 +6,8 @@ data class User(
     var ic: String,
     var name: String,
     var amount: Number,
-    var email: String
+    var email: String,
+    var imageUrl: String
 ) {
     companion object {
         fun from(map: Map<String, Any>): User {
@@ -16,7 +17,8 @@ data class User(
             val name = if (map.containsKey("name")) map["name"] as String else ""
             val amount = if (map.containsKey("amount")) map["amount"] as Number else 0
             val email = if (map.containsKey("email")) map["email"] as String else ""
-            return User(address, contact, ic, name, amount as Number, email)
+            val imageUrl = if (map.containsKey("imageUrl")) map["imageUrl"] as String else ""
+            return User(address, contact, ic, name, amount as Number, email, imageUrl)
         }
     }
 }

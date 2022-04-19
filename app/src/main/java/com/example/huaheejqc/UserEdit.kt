@@ -1,12 +1,20 @@
 package com.example.huaheejqc
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.navigation.findNavController
 import com.example.huaheejqc.data.User
 import com.example.huaheejqc.databinding.FragmentLoginBinding
@@ -15,6 +23,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +44,11 @@ class UserEdit : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentUserEditBinding? = null
     private val binding get() = _binding!!
+
+    val REQUEST_IMAGE_CAPTURE = 1
+    private lateinit var storage: FirebaseStorage
+    var userUploadedImg = false
+    var uploadedImageBitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,94 +71,157 @@ class UserEdit : Fragment() {
         val stringID = userid.toString()
 
 
-
         val docRef = dbGet.collection("User").document(stringID)
         docRef.get()
-            .addOnSuccessListener {document ->
-                if(document != null){
-                    Log.d("exist","DocumentSnapshot data: ${document.data}")
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d("exist", "DocumentSnapshot data: ${document.data}")
+                    val imageUrl = document.get("imageUrl") as String
 
-                    if(document.getString("name") != null){
-                        binding.currentName.text = document.getString("name")
+                    if (document.getString("name") != null) {
                         binding.getNewName.setText(document.getString("name"))
-                    }else{
+                    } else {
                         binding.currentName.text = "Your data is not currently in the database"
                     }
 
-                    if(document.getString("contact") != null){
-                        binding.currentContact.text = document.getString("contact")
+                    if (document.getString("contact") != null) {
                         binding.getNewContact.setText(document.getString("contact"))
-                    }else{
+                    } else {
                         binding.currentContact.text = "Your data is not currently in the database"
                     }
 
-                    if(document.getString("ic") != null){
-                        binding.currentIc.text = document.getString("ic")
+                    if (document.getString("ic") != null) {
                         binding.getNewIc.setText(document.getString("ic"))
-                    }else{
+                    } else {
                         binding.currentIc.text = "Your data is not currently in the database"
                     }
 
-                    if(document.getString("address") != null){
+                    if (document.getString("address") != null) {
                         binding.getNewAddress.setText(document.getString("address"))
-                        binding.currentAddress.text = document.getString("address")
-                    }else{
+                    } else {
                         binding.currentAddress.text = "Your data is not currently in the database"
                     }
 
-                }else{
-                    Log.d("errordbGet","get failed")
+                    if (document.getString("imageUrl") != null) {
+                        binding.getNewContact.setText(document.getString("contact"))
+                    } else {
+                        binding.currentContact.text = "Your data is not currently in the database"
+                    }
+
+                    val storage = Firebase.storage
+                    var storageRef = storage.reference
+                    var imageRef = storageRef.child("images/${imageUrl}")
+                    val localFile = File.createTempFile("images", "jpg")
+
+                    imageRef.getFile(localFile).addOnSuccessListener {
+                        val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
+                        binding.profileImage.setImageBitmap(myBitmap)
+                        Log.d("BookdetailImage", "succ")
+                    }.addOnFailureListener {
+                        Log.d("noob", "noob")
+                    }
+
+                } else {
+                    Log.d("errordbGet", "get failed")
                 }
 
             }
 
-        binding.startEditUserProfile.setOnClickListener{ view: View ->
+        binding.startEditUserProfile.setOnClickListener { view: View ->
             val newName = binding.getNewName.text.toString()
             val newAddress = binding.getNewAddress.text.toString()
             val newContact = binding.getNewContact.text.toString()
             val newIC = binding.getNewIc.text.toString()
 
-            if(newName.isEmpty()){
+            if (newName.isEmpty()) {
                 binding.getNameStatusText.text = "Name cannot be empty!"
                 return@setOnClickListener
             }
-            if(newAddress.isEmpty()){
+            if (newAddress.isEmpty()) {
                 binding.getAddressStatusText.text = "Address cannot be empty!"
                 return@setOnClickListener
             }
-            if(newContact.isEmpty()){
+            if (newContact.isEmpty()) {
                 binding.getContactStatusText.text = "Contact cannot be empty!"
                 return@setOnClickListener
             }
-            if(newIC.isEmpty()){
+            if (newIC.isEmpty()) {
                 binding.getICStatusText.text = "IC cannot be empty!"
                 return@setOnClickListener
             }
 
 
-            val docRef = dbGet.collection("User").document(stringID)
-            docRef.get()
-                .addOnSuccessListener {document ->
-                    if(document!=null){
-                        var newAmount = document.get("amount") as Number
-                        var intamount:Double = newAmount.toDouble()
-                        var newEmail = document.getString("email")
+            val baos = ByteArrayOutputStream()
+            uploadedImageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
 
-                        db.collection("User").document(stringID).set(
-                            User(
-                                newName.toString(),
-                                newContact.toString(),
-                                newIC.toString(),
-                                newName.toString(),
-                                intamount,
-                                newEmail.toString()
+            val storage = Firebase.storage
+            var storageRef = storage.reference
+            val timestamp = System.currentTimeMillis() / 1000L
+            var imageRef = storageRef.child("images/${timestamp.toString()}")
+            var uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnFailureListener {
+                Log.d("Succ", "noob")
+            }.addOnSuccessListener { taskSnapshot ->
+                Log.d("Succ", "yay")
+
+                val docRef = dbGet.collection("User").document(stringID)
+                docRef.get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+                            var newAmount = document.get("amount") as Number
+                            var intamount: Double = newAmount.toDouble()
+                            var newEmail = document.getString("email")
+
+                            db.collection("User").document(stringID).set(
+                                User(
+                                    newName.toString(),
+                                    newContact.toString(),
+                                    newIC.toString(),
+                                    newName.toString(),
+                                    intamount,
+                                    newEmail.toString(),
+                                    imageUrl = timestamp.toString()
+                                )
                             )
-                        )
+                            view.findNavController().navigateUp()
+                        }
                     }
-                    view.findNavController().navigateUp()}
-                }
+            }
+
+
+
+        }
+
+        binding.captureImage.setOnClickListener{ view: View ->
+            Log.d("test","askjd")
+            dispatchTakePictureIntent()
+        }
 
         return view
+    }
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
+            // display error state to the user
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            uploadedImageBitmap = imageBitmap
+            userUploadedImg = true
+            binding.profileImage.setImageBitmap(imageBitmap)
+        }
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     companion object {

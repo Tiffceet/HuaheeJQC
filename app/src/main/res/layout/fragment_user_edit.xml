@@ -59,14 +59,6 @@
                         android:layout_toRightOf="@id/profile_image">
 
                         <Button
-                            android:id="@+id/gallery_image"
-                            android:layout_width="100dp"
-                            android:layout_height="60dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Upload Image" />
-
-                        <Button
                             android:id="@+id/capture_image"
                             android:layout_width="100dp"
                             android:layout_height="60dp"

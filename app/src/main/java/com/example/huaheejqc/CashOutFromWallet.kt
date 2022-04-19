@@ -87,6 +87,7 @@ class CashOutFromWallet : Fragment() {
                         var cashoutamount: Double = 0.0
                         var email = document.getString("email")
                         var test = binding.getReloadNumber.text.toString().toDouble()
+                        var imageUrl = document.get("imageUrl") as String
                         if (binding.getReloadNumber.text.toString().toDouble() > intamount) {
                             binding.CashOutPageStatusText.text =
                                 "Preferred Amount must be less than your wallet amount"
@@ -105,7 +106,8 @@ class CashOutFromWallet : Fragment() {
                                 ic.toString(),
                                 name.toString(),
                                 cashoutamount,
-                                email.toString()
+                                email.toString(),
+                                imageUrl.toString()
                             )
                         )
                         view.findNavController().navigateUp()

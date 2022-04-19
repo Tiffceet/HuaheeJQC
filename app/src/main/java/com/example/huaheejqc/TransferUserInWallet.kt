@@ -78,6 +78,7 @@ class TransferUserInWallet : Fragment() {
                         var intOutamount: Double = cashOutAmount.toDouble()
                         var cashoutamount: Double = 0.0
                         var email = document.getString("email")
+                        var imageUrl = document.getString("imageUrl")
 
                         Log.d("test_addnewamount", get_transfer_amount.toString())
                         Log.d("test_intamount", intOutamount.toString())
@@ -97,7 +98,8 @@ class TransferUserInWallet : Fragment() {
                                 ic.toString(),
                                 name.toString(),
                                 cashoutamount,
-                                email.toString()
+                                email.toString(),
+                                imageUrl.toString()
                             )
                         )
                     }
@@ -130,6 +132,7 @@ class TransferUserInWallet : Fragment() {
                         var amount = document.get("amount") as Number
                         var intamount: Double = amount.toDouble()
                         var email = document.get("email") as String
+                        var imageUrl = document.get("imageUrl") as String
 
                         reload_amount = intamount + get_transfer_amount
 
@@ -143,7 +146,8 @@ class TransferUserInWallet : Fragment() {
                                 ic.toString(),
                                 name.toString(),
                                 reload_amount,
-                                email.toString()
+                                email.toString(),
+                                imageUrl.toString()
                             )
                         ).addOnSuccessListener {
                             view.findNavController().navigateUp()
