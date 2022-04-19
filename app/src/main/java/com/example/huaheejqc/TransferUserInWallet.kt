@@ -1,16 +1,20 @@
 package com.example.huaheejqc
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import com.example.huaheejqc.data.User
 import com.example.huaheejqc.databinding.FragmentTransferUserInWalletBinding
 import com.example.huaheejqc.databinding.FragmentUserEditBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +53,88 @@ class TransferUserInWallet : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
 
-        return  view
-    }
+        binding.transferStart.setOnClickListener { view: View ->
+            var get_target_email = binding.getTransferName.text.toString()
+            var reload_amount: Double = 0.0
+            var get_transfer_amount: Double = DecimalFormat("####.00").format(
+                binding.getTransferAmount.text.toString().toDouble()
+            ).toDouble()
+
+            val docRef = dbGet.collection("User").document(stringID)
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        var name = document.getString("name")
+                        var address = document.getString("address")
+                        var ic = document.getString("ic")
+                        var contact = document.getString("contact")
+                        var cashOutAmount = document.get("amount") as Number
+                        var intOutamount: Double = cashOutAmount.toDouble()
+                        var cashoutamount: Double = 0.0
+                        var email = document.getString("email")
+
+                        Log.d("test_addnewamount", get_transfer_amount.toString())
+                        Log.d("test_intamount", intOutamount.toString())
+                        cashoutamount = intOutamount - get_transfer_amount
+
+
+                        db.collection("User").document(stringID).set(
+                            User(
+                                address.toString(),
+                                contact.toString(),
+                                ic.toString(),
+                                name.toString(),
+                                cashoutamount,
+                                email.toString()
+                            )
+                        )
+                    }
+                }
+
+            Log.d("checkEmail", get_target_email.toString())
+
+            // Create a reference to the cities collection
+            val citiesRef = db.collection("User")
+
+            // Create a query against the collection.
+            val query = citiesRef.whereEqualTo("email", get_target_email)
+            var targetId = ""
+
+            db.collection("User")
+                .whereEqualTo("email", get_target_email)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        targetId = document.id
+                        var name = document.get("name") as String
+                        var address = document.get("address") as String
+                        var ic = document.get("ic")as String
+                        var contact = document.get("contact") as String
+                        var amount = document.get("amount") as Number
+                        var intamount: Double = amount.toDouble()
+                        var email = document.get("email") as String
+
+                        reload_amount = intamount + get_transfer_amount
+
+                        Log.d("testing_target_amount", reload_amount.toString())
+                        Log.d("name", name.toString())
+
+                        db.collection("User").document(targetId).set(
+                            User(
+                                address.toString(),
+                                contact.toString(),
+                                ic.toString(),
+                                name.toString(),
+                                reload_amount,
+                                email.toString()
+                                        )
+                                    )
+                                }
+                            }
+                                view.findNavController().navigateUp()
+                            }
+                    return view
+                }
 
     companion object {
         /**
