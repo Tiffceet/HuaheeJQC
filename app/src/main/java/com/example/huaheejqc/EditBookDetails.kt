@@ -232,7 +232,7 @@ class EditBookDetails : Fragment() {
             val baos = ByteArrayOutputStream()
             uploadedImageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val data = baos.toByteArray()
-            var book = Book("", "", 0, "", 0, 0, "", "", "")
+            var book = Book("", "", 0, "", 0, 0, "", "", "","")
             val storage = Firebase.storage
             var storageRef = storage.reference
             val timestamp = System.currentTimeMillis() / 1000L
@@ -252,6 +252,7 @@ class EditBookDetails : Fragment() {
                         newCategory,
                         "Posted",
                         stringID,
+                        "",
                         imageUrl = timestamp.toString()
                     )
                 } else {
@@ -264,6 +265,7 @@ class EditBookDetails : Fragment() {
                         newCategory,
                         "Posted",
                         stringID,
+                        "",
                         oldimageUrl
                     )
                 }
