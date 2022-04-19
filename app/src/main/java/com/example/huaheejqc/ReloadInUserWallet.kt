@@ -56,78 +56,46 @@ class ReloadInUserWallet : Fragment() {
 
         var reload_amount:Double = 0.0
 
-        var checkOtherButton = 0
-
         binding.reloadRm50.setOnClickListener{ view:View ->
-            if(string_reload_amount != null){
-                binding.ReloadPageStatusText.text = "Reload amount RM 50 selected unsuccessfully because above amount has been filled in."
-                return@setOnClickListener
-            }else{
-                reload_amount = 50.00;
+            var chooseInt = 50
+            binding.getReloadNumber.setText(chooseInt.toString())
                 binding.ReloadPageStatusText.text = "Reload amount RM 50 selected successfully."
-                checkOtherButton = 1;
-            }
         }
 
         binding.reloadRm100.setOnClickListener{ view:View ->
-            if(string_reload_amount != null){
-                binding.ReloadPageStatusText.text = "Reload amount RM 100 selected unsuccessfully because above amount has been filled in."
-                return@setOnClickListener
-            }else{
-                reload_amount = 100.00;
-                checkOtherButton = 1;
+            var chooseInt = 100
+            binding.getReloadNumber.setText(chooseInt.toString())
                 binding.ReloadPageStatusText.text = "Reload amount RM 100 selected successfully."
-            }
         }
 
         binding.reloadRm150.setOnClickListener{ view:View ->
-            if(string_reload_amount != null){
-                binding.ReloadPageStatusText.text = "Reload amount RM 150 selected unsuccessfully because above amount has been filled in."
-                return@setOnClickListener
-            }else{
-                reload_amount = 150.00;
-                checkOtherButton = 1;
+            var chooseInt = 150
+            binding.getReloadNumber.setText(chooseInt.toString())
                 binding.ReloadPageStatusText.text = "Reload amount RM 150 selected successfully."
-            }
         }
 
         binding.reloadRm200.setOnClickListener{ view:View ->
-            if(string_reload_amount != null){
-                binding.ReloadPageStatusText.text = "Reload amount RM 200 selected unsuccessfully because above amount has been filled in."
-                return@setOnClickListener
-            }else{
-                reload_amount = 200.00;
-                checkOtherButton = 1;
+            var chooseInt = 200
+            binding.getReloadNumber.setText(chooseInt.toString())
                 binding.ReloadPageStatusText.text = "Reload amount RM 200 selected successfully."
-            }
         }
 
         binding.reloadRm250.setOnClickListener{ view:View ->
-            if(string_reload_amount != null){
-                binding.ReloadPageStatusText.text = "Reload amount RM 250 selected unsuccessfully because above amount has been filled in."
-                return@setOnClickListener
-            }else{
-                reload_amount = 250.00;
-                checkOtherButton = 1;
+            var chooseInt = 250
+            binding.getReloadNumber.setText(chooseInt.toString())
                 binding.ReloadPageStatusText.text = "Reload amount RM 250 selected successfully."
-            }
         }
 
         binding.reloadRm300.setOnClickListener{ view:View ->
-            if(string_reload_amount != null){
-                binding.ReloadPageStatusText.text = "Reload amount RM 300 selected unsuccessfully because above amount has been filled in."
-                return@setOnClickListener
-            }else{
-                reload_amount = 300.00;
-                checkOtherButton = 1;
+            var chooseInt = 300
+            binding.getReloadNumber.setText(chooseInt.toString())
                 binding.ReloadPageStatusText.text = "Reload amount RM 300 selected successfully."
-            }
         }
 
         binding.buttonStartReload.setOnClickListener { view: View ->
             string_reload_amount = binding.getReloadNumber.text.toString()
             Log.d("test001",string_reload_amount.toString())
-            if(string_reload_amount.isEmpty() && checkOtherButton == 0){
+            if(string_reload_amount.isEmpty()){
                 binding.ReloadPageStatusText.text = "Reload Amount should not be empty!"
                 return@setOnClickListener
 
