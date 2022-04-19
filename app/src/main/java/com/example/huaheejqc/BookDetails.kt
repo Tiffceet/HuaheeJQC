@@ -1,5 +1,6 @@
 package com.example.huaheejqc
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,8 +16,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import java.io.File
 import java.text.DecimalFormat
 import java.util.HashMap
 
@@ -58,6 +61,7 @@ class BookDetails : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
         var ownerid = ""
+
         Log.d("chin", args.viewbookid)
 
         val docRef = db.collection("books").document(bookid)
@@ -69,6 +73,7 @@ class BookDetails : Fragment() {
                 val price: Number = document.get("price") as Number
                 val description: String = document.get("description") as String
                 val priceString = "RM " + DecimalFormat("####.00").format(price).toString()
+                val imageUrl = document.get("imageUrl") as String
                 ownerid = document.get("userid").toString()
 
                 db.collection("User").document(ownerid)
@@ -77,12 +82,26 @@ class BookDetails : Fragment() {
                             var ownerEmail = document.get("email") as String
                             binding.bookdetailsOwnerTxt.setText(ownerEmail)
                         }
-
                     }
                 binding.bookdetailsBooknameTxt.setText(title)
                 binding.bookdetailsAuthorTxt.setText(author)
                 binding.bookdetailsPriceTxt.setText(priceString)
                 binding.bookdetailsDescriptionTxt.setText(description)
+
+                val storage = Firebase.storage
+                var storageRef = storage.reference
+                var imageRef = storageRef.child("images/${imageUrl}")
+                val localFile = File.createTempFile("images", "jpg")
+
+                Log.d("asdasdasd","asdasdasd")
+                imageRef.getFile(localFile).addOnSuccessListener {
+                    val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
+                    binding.bookdetailsImg.setImageBitmap(myBitmap)
+                    Log.d("BookdetailImage", "succ")
+                }.addOnFailureListener {
+                    Log.d("noob", "noob")
+                }
+
             } else {
                 Log.d("TAG", "No such document")
             }

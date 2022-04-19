@@ -16,9 +16,16 @@
 
             <ImageView
                 android:id="@+id/editbook_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center"
                 android:src="@drawable/ic_launcher_foreground" />
+
+            <TextView
+                android:id="@+id/editbook_image_ero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark" />
 
             <Button
                 android:id="@+id/editbook_changeimg_btn"

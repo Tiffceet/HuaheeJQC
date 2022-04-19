@@ -60,13 +60,6 @@ class AddBook : Fragment() {
         }
     }
 
-    val REQUEST_CODE = 200
-
-    fun capturePhoto() {
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(cameraIntent, REQUEST_CODE)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

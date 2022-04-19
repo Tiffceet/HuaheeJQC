@@ -1,9 +1,14 @@
 package com.example.huaheejqc
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +27,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.text.DecimalFormat
 import java.util.HashMap
 
@@ -43,6 +52,12 @@ class EditBookDetails : Fragment() {
     private var _binding: FragmentEditBookDetailsBinding? = null
     private val binding get() = _binding!!
     val args: EditBookDetailsArgs by navArgs()
+
+
+    val REQUEST_IMAGE_CAPTURE = 1
+    private lateinit var storage: FirebaseStorage
+    var userUploadedImg = false
+    var uploadedImageBitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,16 +88,31 @@ class EditBookDetails : Fragment() {
                 val page_amount:Number = document.get("page_amount") as Number
                 val category: Number = document.get("category") as Number
                 val status: String = document.get("status") as String
+                val imageUrl = document.get("imageUrl") as String
                 binding.editbookTitleTxt.setText(title)
                 binding.editbookAuthorTxt.setText(author)
                 binding.editbookPriceTxt.setText(DecimalFormat("####.00").format(price))
                 binding.editbookPageamountTxt.setText(page_amount.toString())
                 binding.editbookDescriptionTxt.setText(description)
                 binding.editbookCategorySpin.setSelection(category.toInt())
+                val storage = Firebase.storage
+                var storageRef = storage.reference
+                var imageRef = storageRef.child("images/${imageUrl}")
+                val localFile = File.createTempFile("images", "jpg")
+
+                Log.d("asdasdasd","asdasdasd")
+                imageRef.getFile(localFile).addOnSuccessListener {
+                    val myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath())
+                    binding.editbookImg.setImageBitmap(myBitmap)
+                    Log.d("BookdetailImage", "succ")
+                }.addOnFailureListener {
+                    Log.d("noob", "noob")
+                }
 
                 if (status == "PendingOrder") {
                     binding.editbookConfirmBtn.visibility = View.GONE
                     binding.editbookDeleteBtn.visibility = View.GONE
+                    binding.editbookChangeimgBtn.visibility = View.GONE
                     binding.editbookTitleTxt.isEnabled = false
                     binding.editbookAuthorTxt.isEnabled = false
                     binding.editbookPriceTxt.isEnabled = false
@@ -94,6 +124,7 @@ class EditBookDetails : Fragment() {
                 } else if (status == "Posted") {
                     binding.editbookConfirmBtn.visibility = View.VISIBLE
                     binding.editbookDeleteBtn.visibility = View.VISIBLE
+                    binding.editbookChangeimgBtn.visibility = View.VISIBLE
                     binding.editbookTitleTxt.isEnabled = true
                     binding.editbookAuthorTxt.isEnabled = true
                     binding.editbookPriceTxt.isEnabled = true
@@ -105,6 +136,7 @@ class EditBookDetails : Fragment() {
                 } else {
                     binding.editbookConfirmBtn.visibility = View.GONE
                     binding.editbookDeleteBtn.visibility = View.GONE
+                    binding.editbookChangeimgBtn.visibility = View.GONE
                     binding.editbookTitleTxt.isEnabled = false
                     binding.editbookAuthorTxt.isEnabled = false
                     binding.editbookPriceTxt.isEnabled = false
@@ -132,8 +164,7 @@ class EditBookDetails : Fragment() {
             val newPrice: String = binding.editbookPriceTxt.text.toString()
             val newDescription = binding.editbookDescriptionTxt.text.toString()
             val newPageAmount = binding.editbookPageamountTxt.text.toString()
-            val newCategory: Number =
-                binding.editbookCategorySpin.selectedItemPosition.toString().toInt()
+            val newCategory: Number = binding.editbookCategorySpin.selectedItemPosition.toString().toInt()
             val userid = Firebase.auth.currentUser?.uid
             val stringID = userid.toString()
 //            val bookArray = db.collection("user-book").document(stringID)
@@ -180,6 +211,12 @@ class EditBookDetails : Fragment() {
             } else {
                 binding.editbookCategoryEro.text = ""
             }
+            if (userUploadedImg == false) {
+                binding.editbookImageEro.text = "Must Upload Book Image"
+                return@setOnClickListener
+            }else{
+                binding.editbookImageEro.text = ""
+            }
 
 //            val book = hashMapOf(
 //                "Title" to newTitle,
@@ -189,26 +226,33 @@ class EditBookDetails : Fragment() {
 //                "Category" to newCategory,
 //                "Status" to "Posted"
 //            )
-            val book = Book(
-                newTitle,
-                newAuthor,
-                confirmPrice,
-                newDescription,
-                confirmPageAmount,
-                newCategory,
-                "Posted",
-                stringID
-            )
 
-            db.collection("books").document(bookid)
-                .set(book)
-                .addOnSuccessListener {
-                    Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
-                    view.hideKeyboard()
-                    view.findNavController().navigateUp()
-                }
-                .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
 
+            val baos = ByteArrayOutputStream()
+            uploadedImageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+
+            val storage = Firebase.storage
+            var storageRef = storage.reference
+            val timestamp = System.currentTimeMillis() / 1000L
+            var imageRef = storageRef.child("images/${timestamp.toString()}")
+            var uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnFailureListener {
+                Log.d("Succ", "noob")
+            }.addOnSuccessListener { taskSnapshot ->
+                Log.d("Succ", "yay")
+
+                val book = Book(newTitle,newAuthor,confirmPrice,newDescription,confirmPageAmount,newCategory,"Posted",stringID,imageUrl = timestamp.toString())
+
+                db.collection("books").document(bookid)
+                    .set(book)
+                    .addOnSuccessListener {
+                        Log.d(ContentValues.TAG, "DocumentSnapshot successfully written!")
+                        view.hideKeyboard()
+                        view.findNavController().navigateUp()
+                    }
+                    .addOnFailureListener { e -> Log.w(ContentValues.TAG, "Error writing document", e) }
+            }
         }
 
         binding.editbookDeleteBtn.setOnClickListener { view: View ->
@@ -221,13 +265,9 @@ class EditBookDetails : Fragment() {
                 .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
         }
 
-        binding.editbookChangeimgBtn.setOnClickListener { view: View ->
-            val action =
-                EditBookDetailsDirections.actionEditBookDetailsToBookDetails(
-                    bookid
-                )
-//                it.findNavController().navigate(R.id.action_chatFragment_to_conversationFragment)
-            view.findNavController().navigate(action)
+        binding.editbookChangeimgBtn.setOnClickListener{ view: View ->
+            Log.d("test","askjd")
+            dispatchTakePictureIntent()
         }
 
         var buyerid = ""
@@ -339,6 +379,24 @@ class EditBookDetails : Fragment() {
         }
         // Inflate the layout for this fragment
         return view
+    }
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        } catch (e: ActivityNotFoundException) {
+            // display error state to the user
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            uploadedImageBitmap = imageBitmap
+            userUploadedImg = true
+            binding.editbookImg.setImageBitmap(imageBitmap)
+        }
     }
 
     private fun View.hideKeyboard() {
