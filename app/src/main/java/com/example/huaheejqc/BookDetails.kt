@@ -13,6 +13,7 @@ import com.example.huaheejqc.data.Book
 import com.example.huaheejqc.data.CartItem
 import com.example.huaheejqc.databinding.FragmentAddBookBinding
 import com.example.huaheejqc.databinding.FragmentBookDetailsBinding
+import com.example.huaheejqc.sellerBookManagement.PendingOrder
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
@@ -41,7 +42,7 @@ class BookDetails : Fragment() {
     private var _binding: FragmentBookDetailsBinding? = null
     private val binding get() = _binding!!
     val args: BookDetailsArgs by navArgs()
-    private var dataArray:MutableList<Book> = ArrayList()
+    private var cartItemRefs:ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +64,7 @@ class BookDetails : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
         var ownerid = ""
-        dataArray=ArrayList()
+        cartItemRefs=ArrayList()
 
         Log.d("chin", args.viewbookid)
 
@@ -126,15 +127,47 @@ class BookDetails : Fragment() {
             }
 
         binding.bookdetailsPlaceorderBtn.setOnClickListener{
-            db.collection("carts").document(stringID).get()
-                .addOnSuccessListener { documents ->
-                    if(documents != null){
-//                        dataArray=documents.get(CartItem())
+            db.collection("carts")
+                .document(stringID)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document?.data != null) {
+                        // get cart items references
+                        cartItemRefs.addAll(document.data?.get("books") as ArrayList<String>)
+                        cartItemRefs.add(bookid)
+                        db.collection("carts")
+                            .document(stringID)
+                            .set(cartItemRefs)
+                            .addOnSuccessListener {
+                                db.collection("books")
+                                    .document(bookid)
+                                    .update("status","PendingOrder")
+                                    .addOnSuccessListener {
+                                        view.findNavController().navigate(R.id.action_bookDetails_to_shoppingCart)
+                                    }
+                            }
+
+                    }else{
+                        cartItemRefs.add(bookid)
+                        db.collection("carts")
+                            .document(stringID)
+                            .set(cartItemRefs)
+                            .addOnSuccessListener {
+                                db.collection("books").document(bookid)
+                                    .update("status", "PendingOrder")
+                                    .addOnSuccessListener {
+                                        view.findNavController().navigate(R.id.action_bookDetails_to_shoppingCart)
+                                    }
+                            }
+                            .addOnFailureListener{
+
+                            }
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Log.w("TAG", "Error getting documents: ", exception)
+                    Log.d("ShoppingCart", "get failed with ", exception)
                 }
+
         }
 
         binding.bookDetailsChatBtn.setOnClickListener {

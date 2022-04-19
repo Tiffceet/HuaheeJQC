@@ -126,6 +126,9 @@
         <action
             android:id="@+id/action_bookDetails_to_conversationFragment"
             app:destination="@id/conversationFragment" />
+        <action
+            android:id="@+id/action_bookDetails_to_shoppingCart"
+            app:destination="@id/shoppingCart" />
     </fragment>
     <fragment
         android:id="@+id/addBook"
