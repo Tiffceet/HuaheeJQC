@@ -51,7 +51,7 @@ class ToReceive : Fragment() {
 
                     val vval = document.data
                     vval as HashMap<String, Any>
-                    dataArray.add(Order(document.data["book"]as String,document.data["buyer"] as String, document.data["seller"]as String,document.data["ststus"]as String))
+//                    dataArray.add(Order(document.data["book"]as String,document.data["buyer"] as String, document.data["seller"]as String,document.data["ststus"]as String))
                 }
 //                postedItemAdapter?.notifyDataSetChanged()
             }
