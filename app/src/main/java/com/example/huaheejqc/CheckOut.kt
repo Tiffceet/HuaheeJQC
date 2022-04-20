@@ -36,8 +36,8 @@ private const val ARG_PARAM2 = "param2"
 class CheckOut : Fragment() {
     private var _binding: FragmentCheckOutBinding? = null
     private val binding get() = _binding!!
-    private var cartItemRefs:ArrayList<String> = ArrayList()
-    private var cartItems:ArrayList<Book> = ArrayList()
+    private var cartItemRefs: ArrayList<String> = ArrayList()
+    private var cartItems: ArrayList<Book> = ArrayList()
     private var totalPrice = 0.00;
     private lateinit var externalAdapter: CheckoutAdapter
     val userId = Firebase.auth.currentUser?.uid
@@ -83,7 +83,8 @@ class CheckOut : Fragment() {
 
                                         externalAdapter.notifyItemInserted(cartItems.size - 1)
                                         totalPrice += cartItem.price?.toDouble() ?: 0.00
-                                        binding.totalPriceAmount.text = String.format("RM %.2f", totalPrice)
+                                        binding.totalPriceAmount.text =
+                                            String.format("RM %.2f", totalPrice)
                                     } else {
                                         Log.d("ShoppingCart", "No such document")
                                     }
@@ -106,7 +107,7 @@ class CheckOut : Fragment() {
         val pageAmountLayout = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.orderDetailsList.layoutManager = pageAmountLayout
 
-        binding.checkOutButton.setOnClickListener{
+        binding.checkOutButton.setOnClickListener {
             for (cartItem in cartItems) {
                 val result = hashMapOf(
                     "book" to cartItem.bookid,
@@ -116,6 +117,12 @@ class CheckOut : Fragment() {
                 )
 
                 db.collection("orders").document().set(result)
+                db.collection("books").document(cartItem.bookid).update("status", "InTransit")
+                    .addOnSuccessListener {
+                        Log.d("CheckOut", "Succ")
+                    }.addOnFailureListener {
+                    Log.d("ChecOut", "Opps", it)
+                }
             }
 
             it.findNavController().navigate(R.id.action_checkOut_to_mainMenu)
