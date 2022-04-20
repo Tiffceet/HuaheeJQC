@@ -5,7 +5,7 @@
     tools:context=".search.SearchResultComFragment">
 
     <LinearLayout
-
+        android:id="@+id/searchResultComContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/layoutPadding"
