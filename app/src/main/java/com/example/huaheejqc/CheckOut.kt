@@ -121,9 +121,22 @@ class CheckOut : Fragment() {
                     .addOnSuccessListener {
                         Log.d("CheckOut", "Succ")
                     }.addOnFailureListener {
-                    Log.d("ChecOut", "Opps", it)
-                }
+                        Log.d("ChecOut", "Opps", it)
+                    }
             }
+            db.collection("carts").document(userId.toString()).get().addOnSuccessListener {
+                if (it.data == null) {
+                    return@addOnSuccessListener
+                }
+                val data = it.data as HashMap<String, Any>
+                val booksArr = data["books"] as ArrayList<String>
+                for (cartItem in cartItems) {
+                    booksArr.remove(cartItem.bookid)
+                }
+                data["books"] = booksArr
+                db.collection("carts").document(userId.toString()).set(data)
+            }
+                .addOnFailureListener {}
 
             it.findNavController().navigate(R.id.action_checkOut_to_mainMenu)
         }
