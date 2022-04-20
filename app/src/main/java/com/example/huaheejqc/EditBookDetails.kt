@@ -306,6 +306,8 @@ class EditBookDetails : Fragment() {
         binding.editbookShippingBtn.setOnClickListener { view: View ->
             var orderid = ""
             var bookprice = 0.00
+            var amount = 0.00
+            var confirmAmount = 0.00
             db.collection("orders")
                 .whereEqualTo("book", bookid)
                 .get()
@@ -330,9 +332,16 @@ class EditBookDetails : Fragment() {
                                                 bookprice = documents.get("price") as Double
 
                                                 db.collection("User").document(stringID)
-                                                    .update("amount",+bookprice)
+                                                    .get()
                                                     .addOnSuccessListener {
-                                                        view.findNavController().navigateUp()
+                                                        amount = documents.get("amount") as Double
+                                                        confirmAmount = amount + bookprice
+
+                                                        db.collection("User").document(stringID)
+                                                            .update("amount",DecimalFormat("####.00").format(confirmAmount))
+                                                            .addOnSuccessListener {
+                                                                view.findNavController().navigateUp()
+                                                            }
                                                     }
                                             }
                                         }
