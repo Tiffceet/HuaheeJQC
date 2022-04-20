@@ -77,6 +77,8 @@ class EditBookDetails : Fragment() {
         val db = Firebase.firestore
         val bookid: String = args.editbook.toString()
         var oldimageUrl = ""
+        val userid = Firebase.auth.currentUser?.uid
+        val stringID = userid.toString()
 
         val docRef = db.collection("books").document(bookid)
         docRef.get().addOnSuccessListener { document ->
@@ -110,7 +112,7 @@ class EditBookDetails : Fragment() {
                     Log.d("noob", "noob")
                 }
 
-                if (status == "PendingOrder") {
+                if (status == "InTransit") {
                     binding.editbookConfirmBtn.visibility = View.GONE
                     binding.editbookDeleteBtn.visibility = View.GONE
                     binding.editbookChangeimgBtn.visibility = View.GONE
@@ -167,8 +169,6 @@ class EditBookDetails : Fragment() {
             val newPageAmount = binding.editbookPageamountTxt.text.toString()
             val newCategory: Number =
                 binding.editbookCategorySpin.selectedItemPosition.toString().toInt()
-            val userid = Firebase.auth.currentUser?.uid
-            val stringID = userid.toString()
 //            val bookArray = db.collection("user-book").document(stringID)
 //            val list: ArrayList<String> = ArrayList()
 
@@ -302,9 +302,10 @@ class EditBookDetails : Fragment() {
             dispatchTakePictureIntent()
         }
 
-        var buyerid = ""
-        var orderid = ""
+
         binding.editbookShippingBtn.setOnClickListener { view: View ->
+            var orderid = ""
+            var bookprice = 0.00
             db.collection("orders")
                 .whereEqualTo("book", bookid)
                 .get()
@@ -312,17 +313,29 @@ class EditBookDetails : Fragment() {
                     for (document in documents) {
                         Log.d("TAG", "${document.id} => ${document.data}")
                         orderid = document.id
-                        buyerid = document.get("buyer") as String
                     }
                     db.collection("orders").document(orderid)
-                        .update("status", "in_transit")
+                        .update("status", "receive-order")
                         .addOnSuccessListener {
                             Log.d("TAG", "DocumentSnapshot successfully updated!")
                             db.collection("books").document(bookid)
-                                .update("status", "InTransit")
+                                .update("status", "CompletedOrder")
                                 .addOnSuccessListener {
                                     Log.d("TAG", "DocumentSnapshot successfully updated!")
-                                    view.findNavController().navigateUp()
+
+                                    db.collection("books").document(bookid)
+                                        .get()
+                                        .addOnSuccessListener { documents ->
+                                            if(documents != null){
+                                                bookprice = documents.get("price") as Double
+
+                                                db.collection("User").document(stringID)
+                                                    .update("amount",+bookprice)
+                                                    .addOnSuccessListener {
+                                                        view.findNavController().navigateUp()
+                                                    }
+                                            }
+                                        }
                                 }
                                 .addOnFailureListener { e ->
                                     Log.w(
@@ -339,10 +352,13 @@ class EditBookDetails : Fragment() {
                 }
         }
 
-        var bookprice = 0.00
-        var amount: Number = 0
-        var confirmAmount = 0.00
+
         binding.editbookCancelBtn.setOnClickListener { view: View ->
+            var bookprice = 0.00
+            var amount: Number = 0
+            var confirmAmount = 0.00
+            var orderid = ""
+            var buyerid = ""
             db.collection("orders")
                 .whereEqualTo("book", bookid)
                 .get()
