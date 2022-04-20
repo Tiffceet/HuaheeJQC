@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="total_price">Total Price</string>
     <string name="searchHint">Search...</string>
+    <string name="edit">Edit</string>
 
     <string-array name="category">
         <item>Action and Adventure</item>

@@ -16,16 +16,18 @@
         android:padding="@dimen/layoutPadding">
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/deleteBox"
+            style="@style/Widget.Material3.CompoundButton.CheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
             android:layout_weight="0"
+            android:scaleType="fitXY"
             tools:src="@tools:sample/avatars" />
 
         <LinearLayout

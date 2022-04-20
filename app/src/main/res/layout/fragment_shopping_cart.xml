@@ -23,10 +23,18 @@
             tools:layout_editor_absoluteX="10dp">
 
             <Button
+                android:id="@+id/finishButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#838383"
+                android:text="Finish"
+                android:visibility="gone" />
+
+            <Button
                 android:id="@+id/editButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit" />
+                android:text="@string/edit" />
 
         </LinearLayout>
 
@@ -82,26 +90,21 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/removeItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#F44336"
+                    android:text="Remove Item"
+                    android:visibility="gone" />
+
+                <Button
                     android:id="@+id/placeOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Place Order" />
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/layoutPadding"
-                android:paddingRight="@dimen/layoutPadding">
-
-                <CheckBox
-                    android:id="@+id/selectAll"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Select All" />
-            </LinearLayout>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

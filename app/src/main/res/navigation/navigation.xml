@@ -186,7 +186,11 @@
         android:id="@+id/shoppingCart"
         android:name="com.example.huaheejqc.ShoppingCart"
         android:label="Shopping Cart"
-        tools:layout="@layout/fragment_shopping_cart" />
+        tools:layout="@layout/fragment_shopping_cart" >
+        <action
+            android:id="@+id/action_shoppingCart_to_checkOut"
+            app:destination="@id/checkOut" />
+    </fragment>
     <fragment
         android:id="@+id/feedbackFragment"
         android:name="com.example.huaheejqc.FeedbackFragment"
@@ -210,4 +214,9 @@
         android:name="com.example.huaheejqc.Search"
         android:label="Search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/checkOut"
+        android:name="com.example.huaheejqc.CheckOut"
+        android:label="fragment_check_out"
+        tools:layout="@layout/fragment_check_out" />
 </navigation>

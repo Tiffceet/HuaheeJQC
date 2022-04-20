@@ -12,18 +12,12 @@
         android:paddingRight="@dimen/layoutPadding"
         android:paddingBottom="@dimen/layoutPadding">
 
-        <include
-            android:id="@+id/checkOutPanel"
-            layout="@layout/component_back_header"
-            app:headerTitle="@{`Check Out`}"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <LinearLayout
             android:id="@+id/addressPanel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/checkOutPanel"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="10dp">
 
             <TextView
@@ -105,57 +99,9 @@
                 android:text="Order Details"
                 android:textSize="16sp" />
 
-            <ScrollView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:id="@+id/orderItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/layoutPadding"
-                    android:layout_marginRight="@dimen/layoutPadding"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-                        android:id="@+id/checkBox2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0" />
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        tools:src="@tools:sample/avatars" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0"
-                        android:orientation="vertical"
-                        android:paddingLeft="@dimen/layoutPadding">
-
-                        <TextView
-                            android:id="@+id/orderTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:text="Order Title"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="match_parent"
-                            android:layout_height="110dp"
-                            android:layout_weight="0"
-                            android:text="TextView" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </ScrollView>
+                android:layout_height="244dp" />
 
             <LinearLayout
                 android:id="@+id/totalPricePanel"
@@ -174,7 +120,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/totalPriceAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
