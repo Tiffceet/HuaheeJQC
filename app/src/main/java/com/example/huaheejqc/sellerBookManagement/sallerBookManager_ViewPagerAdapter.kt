@@ -19,6 +19,9 @@ class sallerBookManager_ViewPagerAdapter(fragmentManager: FragmentManager, lifec
                 PendingOrder()
             }
             2->{
+                InTransit()
+            }
+            3->{
                 CompletedOrder()
             }
             else->{
