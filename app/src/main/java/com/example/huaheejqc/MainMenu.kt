@@ -42,6 +42,7 @@ class MainMenu : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        allBooks = ArrayList()
         _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
         val view = binding.root
 
