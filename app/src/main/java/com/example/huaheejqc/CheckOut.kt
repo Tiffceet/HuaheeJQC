@@ -6,11 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.huaheejqc.checkout.CheckoutAdapter
 import com.example.huaheejqc.data.Book
 import com.example.huaheejqc.data.CartItem
+import com.example.huaheejqc.data.Order
 import com.example.huaheejqc.data.SearchVal
 import com.example.huaheejqc.databinding.FragmentCheckOutBinding
 import com.example.huaheejqc.databinding.FragmentSearchBinding
+import com.example.huaheejqc.databinding.FragmentShoppingCartBinding
+import com.example.huaheejqc.search.SearchAdapter
 import com.example.huaheejqc.shoppingCart.CartItemViewAdapter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -31,9 +37,9 @@ class CheckOut : Fragment() {
     private var _binding: FragmentCheckOutBinding? = null
     private val binding get() = _binding!!
     private var cartItemRefs:ArrayList<String> = ArrayList()
-    private var cartItems:ArrayList<CartItem> = ArrayList()
+    private var cartItems:ArrayList<Book> = ArrayList()
     private var totalPrice = 0.00;
-    private lateinit var externalAdapter: CartItemViewAdapter
+    private lateinit var externalAdapter: CheckoutAdapter
     val userId = Firebase.auth.currentUser?.uid
     val db = Firebase.firestore
 
@@ -45,6 +51,7 @@ class CheckOut : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentCheckOutBinding.inflate(inflater, container, false)
         db.collection("carts")
             .document(userId.toString())
             .get()
@@ -60,12 +67,17 @@ class CheckOut : Fragment() {
                                 .get()
                                 .addOnSuccessListener { document ->
                                     if (document != null) {
-                                        val cartItem = CartItem(
+                                        val cartItem = Book(
+                                            document.get("title") as String,
+                                            document.get("author") as String,
+                                            document.get("price") as Number,
+                                            document.get("description") as String,
+                                            document.get("page_amount") as Number,
+                                            document.get("category") as Number,
+                                            document.get("status") as String,
+                                            document.get("userid") as String,
                                             document.id,
-                                            document.get("title") as String?,
-                                            document.get("description") as String?,
-                                            document.get("price") as Number?,
-                                            document.get("imageUrl") as String?
+                                            document.get("imageUrl") as String
                                         )
                                         cartItems.add(cartItem)
 
@@ -89,10 +101,29 @@ class CheckOut : Fragment() {
                 Log.d("ShoppingCart", "get failed with ", exception)
             }
 
+        externalAdapter = CheckoutAdapter(cartItems)
+        binding.orderDetailsList.adapter = externalAdapter
+        val pageAmountLayout = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.orderDetailsList.layoutManager = pageAmountLayout
+
+        binding.checkOutButton.setOnClickListener{
+            for (cartItem in cartItems) {
+                val result = hashMapOf(
+                    "book" to cartItem.bookid,
+                    "buyer" to userId,
+                    "seller" to cartItem.userid,
+                    "status" to "in_transit"
+                )
+
+                db.collection("orders").document().set(result)
+            }
+
+            it.findNavController().navigate(R.id.action_checkOut_to_mainMenu)
+        }
+
 
         // Inflate the layout for this fragment
         return binding.root
-
     }
 
     companion object {

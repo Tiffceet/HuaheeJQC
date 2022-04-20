@@ -218,5 +218,9 @@
         android:id="@+id/checkOut"
         android:name="com.example.huaheejqc.CheckOut"
         android:label="fragment_check_out"
-        tools:layout="@layout/fragment_check_out" />
+        tools:layout="@layout/fragment_check_out" >
+        <action
+            android:id="@+id/action_checkOut_to_mainMenu"
+            app:destination="@id/mainMenu" />
+    </fragment>
 </navigation>

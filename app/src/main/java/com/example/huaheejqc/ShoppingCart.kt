@@ -110,7 +110,7 @@ class ShoppingCart : Fragment() {
 
         binding.placeOrder.setOnClickListener{
             if (!cartItemRefs.isNullOrEmpty()) {
-                it.findNavController().navigate(R.id.action_shoppingCart_to_checkOut)
+                it.findNavController().navigate(ShoppingCartDirections.actionShoppingCartToCheckOut())
             }
         }
 
