@@ -98,6 +98,7 @@ class ChatFragment : Fragment() {
         value as HashMap<String, HashMap<String, Boolean>>
 
         // For Each chatID
+        var noChats = true
         for ((chatId, chatMembers) in value) {
             // Skip if this chat dont belong to this user
             if (!chatMembers.containsKey(logonUserID)) {
@@ -108,6 +109,7 @@ class ChatFragment : Fragment() {
                 continue
             }
 
+            noChats = false
             val memberList: MutableList<String> = ArrayList()
             for ((memberUserID, _) in chatMembers) {
                 memberList.add(memberUserID)
@@ -170,6 +172,9 @@ class ChatFragment : Fragment() {
                 })
                 binding.chatListLoadingPanel.visibility = View.GONE
             }
+        }
+        if(noChats) {
+            binding.chatListLoadingPanel.visibility = View.GONE
         }
     }
 
