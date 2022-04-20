@@ -96,9 +96,6 @@ class TransferUserInWallet : Fragment() {
                                     var email = document.getString("email")
                                     var imageUrl = document.getString("imageUrl")
 
-                                    Log.d("test_addnewamount", get_transfer_amount.toString())
-                                    Log.d("test_intamount", intOutamount.toString())
-
                                     if (binding.getTransferAmount.text.toString()
                                             .toDouble() > intOutamount
                                     ) {
@@ -106,6 +103,10 @@ class TransferUserInWallet : Fragment() {
                                             "Preferred Amount must be less than your wallet amount"
                                         return@addOnSuccessListener
                                     }
+
+                                    Log.d("test_addnewamount", get_transfer_amount.toString())
+                                    Log.d("test_intamount", intOutamount.toString())
+
 
                                     cashoutamount = intOutamount - get_transfer_amount
 

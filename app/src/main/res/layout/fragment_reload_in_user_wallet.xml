@@ -54,21 +54,22 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="95dp"
                 android:padding="@dimen/layoutPadding"
+                android:layout_marginStart="25dp"
                 android:layout_weight="1">
 
                 <Button
                     android:id="@+id/reload_rm50"
-                    android:layout_width="115dp"
-                    android:layout_height="70dp"
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"
                     android:text="RM 50"
                     android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/reload_rm100"
-                    android:layout_width="115dp"
-                    android:layout_height="70dp"
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"
                     android:text="RM 100"
                     android:textSize="20sp"
                     android:layout_marginLeft="20dp"
@@ -76,8 +77,8 @@
 
                 <Button
                     android:id="@+id/reload_rm150"
-                    android:layout_width="115dp"
-                    android:layout_height="70dp"
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"
                     android:text="RM 150"
                     android:textSize="20sp"
                     android:layout_marginLeft="20dp"
@@ -87,21 +88,22 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="95dp"
                 android:padding="@dimen/layoutPadding"
+                android:layout_marginStart="25dp"
                 android:layout_weight="1">
 
                 <Button
                     android:id="@+id/reload_rm200"
-                    android:layout_width="115dp"
-                    android:layout_height="70dp"
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"
                     android:text="RM 200"
                     android:textSize="20sp"/>
 
                 <Button
                     android:id="@+id/reload_rm250"
-                    android:layout_width="115dp"
-                    android:layout_height="70dp"
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/reload_rm200"
                     android:text="RM 250"
@@ -109,8 +111,8 @@
 
                 <Button
                     android:id="@+id/reload_rm300"
-                    android:layout_width="115dp"
-                    android:layout_height="70dp"
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"
                     android:text="RM 300"
                     android:textSize="20sp"
                     android:layout_marginLeft="20dp"
