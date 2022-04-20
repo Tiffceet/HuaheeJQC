@@ -44,6 +44,7 @@ class BookDetails : Fragment() {
     val args: BookDetailsArgs by navArgs()
     private var cartItemRefs:ArrayList<String> = ArrayList()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -64,6 +65,7 @@ class BookDetails : Fragment() {
         val userid = Firebase.auth.currentUser?.uid
         val stringID = userid.toString()
         var ownerid = ""
+        var hashMap:HashMap<String, ArrayList<String>> = HashMap()
         cartItemRefs=ArrayList()
 
         Log.d("chin", args.viewbookid)
@@ -135,9 +137,10 @@ class BookDetails : Fragment() {
                         // get cart items references
                         cartItemRefs.addAll(document.data?.get("books") as ArrayList<String>)
                         cartItemRefs.add(bookid)
+                        hashMap.put("books", cartItemRefs)
                         db.collection("carts")
                             .document(stringID)
-                            .set(cartItemRefs)
+                            .set(hashMap)
                             .addOnSuccessListener {
                                 db.collection("books")
                                     .document(bookid)
@@ -149,9 +152,10 @@ class BookDetails : Fragment() {
 
                     }else{
                         cartItemRefs.add(bookid)
+                        hashMap.put("books", cartItemRefs)
                         db.collection("carts")
                             .document(stringID)
-                            .set(cartItemRefs)
+                            .set(hashMap)
                             .addOnSuccessListener {
                                 db.collection("books").document(bookid)
                                     .update("status", "PendingOrder")
